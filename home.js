@@ -1,3 +1,19 @@
+function fetchContent(url) {
+  fetch(url)
+ .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP 错误！状态: ${response.status}`);
+      }
+      return response.text();
+    })
+ .then(data => {
+      document.getElementById('campusFood').innerHTML = data;
+    })
+ .catch(error => {
+      console.error('获取内容时出错:', error);
+    });
+}
+
 // 在页面加载完成时执行
 window.onload = function() {
     // 获取所有的 li 元素
@@ -94,15 +110,36 @@ window.onload = function() {
       }
     });
 
-    // 回到顶部按钮的点击事件监听
+    var eastStudentDiningLinks = document.querySelectorAll('#campusFood a');
+    eastStudentDiningLinks.forEach(function(link) {
+        if (link.textContent.includes('东区学生食堂（一楼）')) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                fetchContent('east-stu-dining-hall-1.html');
+            });
+        }
+    });
 
+    
+    // 回到顶部按钮的点击事件监听
     // 为按钮添加点击事件监听器
     document.getElementById('backToTop').onclick = function() {
-        console.log('点击事件被触发');
         window.scrollTo({
           top: 0,
           behavior:'smooth'
         });
-        console.log('执行了滚动操作');
       };
-};
+
+
+      // 东区学生食堂链接点击事件处理
+    var eastStudentDiningLinks = document.querySelectorAll('#campusFood a');
+    eastStudentDiningLinks.forEach(function(link) {
+        if (link.textContent.includes('东区学生食堂')) {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                fetchContent('east-stu-dining-hall-1.html');
+            });
+        }
+    });
+
+};  
