@@ -161,14 +161,14 @@ body {
     position: fixed; 
     bottom: 20px; 
     right: 20px; 
-    background-color: rgb(243, 155, 155); 
+    background-color: rgb(182, 183, 183); 
     border: none; 
     color: white; 
     padding: 10px 15px; 
     cursor: pointer; 
     border-radius: 50%;
     font-size: 16px;
-    z-index: 3004025852;
+    z-index: 300402;
   }
   
   #backToTop.show {
