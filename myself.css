@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  .menu {
+    width: 12%;
+    height: 100%;
+    top: 0;
+    text-align: center;
+    justify-content: center;
+    position: fixed;
+    background-color: lightgray;
+  }
+  
+  .icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .icons img { 
+    width: 60px;
+    height: 60px;
+    padding: 15px;
+  }
+  
+  .icons span.icon-text {
+    display: block;
+    margin-left: 0px;
+    margin-top: -5px;
+    font-size: 12px;
+    box-shadow: 10 10 10 10;
+  }
+  
+  
+
+  .content {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    height: 100%;
+    width: 85%;
+    background-color: lightblue;
+    flex-direction: column;
+    margin-left: 13%;  /* 新增这行，将内容向右推移 20%，从而占据右边 80%的区域 */
+  }
+ 
