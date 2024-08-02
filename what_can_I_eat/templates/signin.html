@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sign In</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url('yuntun.jpg');
+      /* 替换 'your_background_image.jpg' 为您的图片路径 */
+      background-size: cover;
+      /* 使图片覆盖整个页面 */
+      background-repeat: no-repeat;
+      /* 防止图片重复 */
+      display: flex;
+      /* 使用 flex 布局 */
+      justify-content: center;
+      /* 水平居中 */
+      align-items: center;
+      /* 垂直居中 */
+    }
+
+    .container {
+      width: 300px;
+      margin: 100px auto;
+      background-color: #E5F3FB;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 92.5%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h2>Sign In</h2>
+    <form method="post">
+      {% csrf_token %}
+      <label for="student_id">学号：</label>
+      <input type="text" id="student_id" placeholder="Student ID" name="student_id">
+      <label for="password">密码：</label>
+      <input type="password" id="password" placeholder="Password" name="password">
+      <input type="submit" value="Sign In">
+    </form>
+    {% if messages %}
+    <div>
+      {% for message in messages %}
+      <p>{{ message }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</body>
+
+</html>

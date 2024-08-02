@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我在科大吃什么</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+</head>
+<body>
+  <!--顶部海报 start-->
+  <div class="header">
+    <img src="{% static 'p4.jpg' %}" alt="海报">
+  </div>
+  <!--顶部海报 end-->
+
+  <!--导航 start-->
+  <div class="navi">
+    <div class="wrap">
+      <ul class="navi-text">
+        <li><a href="#">推荐内容</a></li>
+        <li><a href="#">校内美食</a></li>
+        <li><a href="#">校外美食</a></li>
+        <li><a href="#">我要点评</a></li>
+        <li><a href="#" id="myHomeLink">我的主页</a></li>
+        <li><a href="#">联系我们</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--导航 end-->
+
+  <!--搜索栏-->
+  <div class="search-container">
+    <input type="text" placeholder="搜索...">
+    <button type="submit">
+      <svg width="24" height="24">
+        <path fill-rule="evenodd" d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+      </svg>
+    </button>
+  </div>
+  <!--搜索栏-->
+
+  <!-- 回到顶部按钮 -->
+  <button id="backToTop" >^</button>
+  <!-- 回到顶部按钮 -->
+
+  <!--推荐内容-->
+  <div id="recommend" class="content-1 content-common">
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+   <p>推荐</p>
+  </div>
+  <!--推荐内容-->
+
+  <!--校内美食-->
+  <div id="campusFood" class="content-2 content-common">
+    
+    <table>
+      <tr>
+          <td style="font-family: Arial; font-size: 16px; background-color:#F4C1BD;">东校区</td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">东区学生食堂（一楼）</a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">东苑餐厅（二楼）</a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">东苑风味餐厅</a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">沁园春</a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">蜗壳茶餐厅</a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">星座餐厅（民族）</a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">美食广场</a>
+          </td>
+      </tr>
+      <tr>
+          <td>
+              <a href="">东区教工食堂</a>
+          </td>
+      </tr>
+    </table>
+
+  
+    <table>
+      <tr>
+        <td style="font-family: Arial; font-size: 16px; background-color:#F4C1BD;">西校区</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">西区学生食堂</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">西三餐厅</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">西苑餐厅</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">芳华餐厅</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">金桔园餐厅（民族）</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">正阳楼餐厅</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">西区教工餐厅</a>
+        </td>
+    </tr>
+    </table>
+
+  
+    <table>
+      <tr>
+        <td style="font-family: Arial; font-size: 16px; background-color:#F4C1BD;">中校区</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">桃李苑</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">夜餐部</a>
+        </td>
+    </tr>
+
+    
+     
+    
+      <tr>
+        <td style="font-family: Arial; font-size: 16px; background-color:#F4C1BD;">高新区</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">高新区学生食堂</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">高新区学生食堂B区</a>
+        </td>
+    </tr>
+    
+       
+    
+    
+      <tr>
+        <td style="font-family: Arial; font-size: 16px; background-color:#F4C1BD;">南校区</td>
+    </tr>
+    <tr>
+        <td>
+            <a href="">南区学生食堂</a>
+        </td>
+    </tr>
+    </table>
+    
+  </div>
+
+  <!--校内美食-->
+
+  <!--校外美食-->
+  <div id="offCampusFood"></div>
+  <!--校外美食-->
+
+  <!--我要点评-->
+   <div id="comment"></div>
+  <!--我要点评-->
+  <!--我的主页-->
+  <div id="myHome" class="content-common"></div>
+  <div id="myselfContent" class="content-common"></div>
+  <!--我的主页-->
+
+  <div id="content"></div>
+  <div id="contact"></div>
+  
+
+  
+
+  <script src="{% static 'home.js' %}"></script>
+</body>
+</html>
