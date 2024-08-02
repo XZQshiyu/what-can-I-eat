@@ -1,6 +1,6 @@
 function fetchContent(url, callback) {
   fetch(url)
-  .then(response => {
+    .then(response => {
       if (!response.ok) {
         // 更具体的错误提示
         alert(`HTTP 错误！状态: ${response.status}. 请检查 URL 或网络状况`);
@@ -8,6 +8,7 @@ function fetchContent(url, callback) {
       }
       return response.text();
     })
+<<<<<<< HEAD
   .then(data => {
       document.getElementById('myselfContent').innerHTML = data;
       if (callback) callback();
@@ -19,6 +20,14 @@ function fetchContent(url, callback) {
       } else {
         alert(`发生未知错误: ${error.message}`);
       }
+=======
+    .then(data => {
+      document.getElementById('myselfContent').innerHTML = data;
+      if (callback) callback();
+    })
+    .catch(error => {
+      console.error('获取内容时出错:', error);
+>>>>>>> 2d02ed65788ef394841d2fc68b11278587110f86
     });
 }
 
@@ -73,6 +82,7 @@ window.onload = function() {
           break;
         case '我的主页':
           fetchContent('myself.html', function() {
+<<<<<<< HEAD
             var myselfContentDiv = document.createElement('div');
             myselfContentDiv.id ='myselfContent';
             myselfContentDiv.style.position = 'relative';
@@ -82,6 +92,11 @@ window.onload = function() {
             displaySection('myselfContent');
         });
         break;
+=======
+            displaySection('myselfContent');
+          });
+          break;
+>>>>>>> 2d02ed65788ef394841d2fc68b11278587110f86
         case '联系我们':
           displaySection('contact');
           break;
