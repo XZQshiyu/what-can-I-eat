@@ -38,7 +38,7 @@ create table food_window
 (
     window_name varchar(30) primary key,
     canteen_name varchar(30) not null,
-    description varchar(100) not null,
+    window_description varchar(100) not null,
     foreign key (canteen_name) references canteen(canteen_name) ON DELETE CASCADE
 );
 
@@ -51,32 +51,34 @@ create table dish
     dish_name varchar(30) not null,
     context varchar(255) not null,
     image VARCHAR(255),
-    promulgator varchar(18) not null,
+    uploader_uid varchar(18) not null,
     publish_time date,
     price float not null,
-    place varchar(30) not null,
+    dish_location varchar(30) not null,
     like_number integer not null,
-    trample_number integer not null,
-    collect_number integer not null,
+    dislike_number integer not null,
+    favorite_number integer not null,
     foreign key (place) references food_window(window_name) ON DELETE CASCADE,
-    primary key (dish_name, promulgator, place),
-    foreign key (promulgator) references user(uid) ON DELETE CASCADE
+    primary key (dish_name, uploader_id, dish_location),
+    foreign key (uploader_uid) references user(uid) ON DELETE CASCADE
 );
 
 -- 虽然但是，promulgator最好是user的外键，即用user_id来表示，可以通过关联查找来定位user的name
 create table post
 (
-    promulgator varchar(18) primary key,
+    post_id varchar(18) primary key,
+    title varchar(30) not null,
+    uploader_id varchar(18) not null,
     context varchar(255) not null,
     image VARCHAR(255),
     publish_time date,
     like_number integer not null,
-    trample_number integer not null,
-    collect_number integer not null,
+    dislike_number integer not null,
+    favorite_number integer not null,
     tag_1 varchar(30) not null,
     tag_2 varchar(30),
     tag_3 varchar(30),
     tag_4 varchar(30),
     tag_5 varchar(30),
-    foreign key (promulgator) references user(uid) ON DELETE CASCADE
+    foreign key (uploader_id) references user(uid) ON DELETE CASCADE
 );
