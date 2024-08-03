@@ -39,7 +39,6 @@ create table food_window
     window_name varchar(30) primary key,
     canteen_name varchar(30) not null,
     window_description varchar(100) not null,
-    window_location varchar(30) not null,
     foreign key (canteen_name) references canteen(canteen_name) ON DELETE CASCADE
 );
 
@@ -52,17 +51,16 @@ create table dish
     dish_name varchar(30) not null,
     context varchar(255) not null,
     image VARCHAR(255),
-    uploader varchar(30) not null,
-    uploader_uid varcahr(30) not null,
+    uploader_uid varchar(18) not null,
     publish_time date,
     price float not null,
     dish_location varchar(30) not null,
     like_number integer not null,
     dislike_number integer not null,
     favorite_number integer not null,
-    foreign key (window_location) references food_window(window_name) ON DELETE CASCADE,
-    primary key (dish_name, uploader, window_location),
-    foreign key (uploader) references user(uid) ON DELETE CASCADE
+    foreign key (place) references food_window(window_name) ON DELETE CASCADE,
+    primary key (dish_name, uploader_id, dish_location),
+    foreign key (uploader_uid) references user(uid) ON DELETE CASCADE
 );
 
 -- 虽然但是，promulgator最好是user的外键，即用user_id来表示，可以通过关联查找来定位user的name
@@ -70,10 +68,9 @@ create table dish
 create table post
 -- 帖子应该要有一个title
 (
-    post_code varchar(30) primary key,
-    --新增帖子的编码
-    title varchar(30),
-    uploader varchar(30) not null,
+    post_id varchar(18) primary key,
+    title varchar(30) not null,
+    uploader_id varchar(18) not null,
     context varchar(255) not null,
     image VARCHAR(255),
     publish_time date,
@@ -85,6 +82,6 @@ create table post
     tag_3 varchar(30),
     tag_4 varchar(30),
     tag_5 varchar(30),
-    foreign key (uploader) references user(uid) ON DELETE CASCADE
+    foreign key (uploader_id) references user(uid) ON DELETE CASCADE
 );
 
