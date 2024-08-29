@@ -68,6 +68,7 @@ create table post
 (
     post_id varchar(18) primary key,
     title varchar(30) not null,
+    uploader varchar(30) not null,
     uploader_id varchar(18) not null,
     context varchar(255) not null,
     image VARCHAR(255),
