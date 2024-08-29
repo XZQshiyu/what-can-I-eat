@@ -71,7 +71,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- 获取该校区所有餐厅信息的存储过程
+-- 获取该餐厅所有窗口信息的存储过程
 DROP PROCEDURE IF EXISTS get_windows_by_canteen;
 DELIMITER //
 CREATE PROCEDURE get_windows_by_canteen (
@@ -82,5 +82,14 @@ BEGIN
     FROM food_window fw
     JOIN canteen ca ON fw.canteen_id = ca.canteen_id
     WHERE fw.canteen_id = p_canteen_id;
+END //
+DELIMITER ;
+
+-- 获取所有窗口的信息
+DROP PROCEDURE IF EXISTS get_all_windows;
+DELIMITER //
+CREATE PROCEDURE get_all_windows ()
+BEGIN
+    SELECT * FROM food_window;
 END //
 DELIMITER ;

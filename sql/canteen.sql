@@ -68,3 +68,28 @@ BEGIN
     AND (p_canteen_location IS NULL OR canteen_location LIKE CONCAT('%', p_canteen_location, '%'));
 END //
 DELIMITER ;
+
+-- 获取所有餐厅的信息
+DROP PROCEDURE IF EXISTS get_all_canteens;
+DELIMITER //
+CREATE PROCEDURE get_all_canteens ()
+BEGIN
+    SELECT * FROM canteen;
+END //
+DELIMITER ;
+
+-- 获取该校区所有餐厅信息的存储过程
+DROP PROCEDURE IF EXISTS get_canteens_by_campus;
+
+DELIMITER //
+
+CREATE PROCEDURE get_canteens_by_campus (
+    IN p_campus_name VARCHAR(30)
+)
+BEGIN
+    SELECT * 
+    FROM canteen 
+    WHERE canteen_location = p_campus_name;
+END //
+
+DELIMITER ;

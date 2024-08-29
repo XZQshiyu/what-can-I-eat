@@ -61,18 +61,11 @@ BEGIN
 END //
 DELIMITER ;
 
--- 获取该校区所有餐厅信息的存储过程
-DROP PROCEDURE IF EXISTS get_canteens_by_campus;
-
+-- 获取所有校区信息
+DROP PROCEDURE IF EXISTS get_all_campuses;
 DELIMITER //
-
-CREATE PROCEDURE get_canteens_by_campus (
-    IN p_campus_name VARCHAR(30)
-)
+CREATE PROCEDURE get_all_campuses ()
 BEGIN
-    SELECT * 
-    FROM canteen 
-    WHERE canteen_location = p_campus_name;
+    SELECT * FROM campus;
 END //
-
 DELIMITER ;
