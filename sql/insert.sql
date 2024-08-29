@@ -21,3 +21,6 @@ insert into food_window (window_id, window_name, canteen_id, window_description)
 insert into dish (dish_id, dish_name, context, image, price, dish_location, like_number, dislike_number, favorite_number) values ('ds001', '牛肉面', '有牛肉的面条，很好吃', 'image001', 12.0, 'fw004', 11, 45, 14);
 insert into dish (dish_id, dish_name, context, image, price, dish_location, like_number, dislike_number, favorite_number) values ('ds002', '羊肉面', '有羊肉的面条，一般好吃', 'image002', 13.0, 'fw004', 12, 46, 15);
 insert into dish (dish_id, dish_name, context, image, price, dish_location, like_number, dislike_number, favorite_number) values ('ds003', '凉面', '凉凉的面条，非常好吃', 'image003', 10.0, 'fw004', 13, 47, 17);
+
+insert into post (post_id, title, uploader, uploader_id, context, image, publish_time, like_number, dislike_number, favorite_number, tag_1, tag_2, tag_3, tag_4, tag_5) values ('ps000000000001','瓦？', 'xch', '000001','瓦香鸡怎么没了','123','2024-08-29 19:08:00','0','0','0','抽象','','','','');
+insert into post (post_id, title, uploader, uploader_id, context, image, publish_time, like_number, dislike_number, favorite_number, tag_1, tag_2, tag_3, tag_4, tag_5) values ('ps000000000002','瓦？', 'xch1', '000002','瓦香鸡怎么没了','123','2024-08-29 19:08:00','0','0','0','抽象','','','','');

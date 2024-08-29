@@ -24,7 +24,6 @@ create table campus
 (
     campus_id varchar(18) primary key,
     campus_name varchar(30) not null
-    campus_name varchar(30) not null
 );
 
 -- 这个canteen的location应该是 campus_name，因此需要一个外键约束，这样才能体现canteen和campus的关系
@@ -32,9 +31,7 @@ create table canteen
 (
     canteen_id varchar(18) primary key,
     canteen_name varchar(30) not null,
-    canteen_name varchar(30) not null,
     canteen_location varchar(30) not null,
-    foreign key (canteen_location) references campus(campus_id) ON DELETE CASCADE
     foreign key (canteen_location) references campus(campus_id) ON DELETE CASCADE
 );
 
@@ -54,7 +51,7 @@ create table food_window
 -- 如果要写外键约束，这两个变量类型应该相同，即varchar长度一致
 create table dish
 (
-    dish_id varchar(18) not null,
+    dish_id varchar(18) primary key,
     dish_name varchar(30) not null,
     context varchar(255) not null,
     image VARCHAR(255),
@@ -71,6 +68,7 @@ create table post
 (
     post_id varchar(18) primary key,
     title varchar(30) not null,
+    uploader varchar(30) not null,
     uploader_id varchar(18) not null,
     context varchar(255) not null,
     image VARCHAR(255),
