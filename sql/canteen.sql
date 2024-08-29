@@ -1,5 +1,4 @@
 use what_can_I_eat;
---（department）
 -- 创建餐厅存储过程
 drop procedure if exists add_canteen;
 delimiter //
@@ -21,7 +20,10 @@ CREATE PROCEDURE get_canteen_by_id (
     IN p_canteen_id VARCHAR(18)
 )
 BEGIN
-    SELECT * FROM canteen WHERE canteen_id = p_canteen_id;
+    SELECT can.canteen_id, can.canteen_name, c.campus_name 
+    FROM canteen can
+    join campus c on c.campus_id = can.canteen_location
+    WHERE canteen_id = p_canteen_id;
 END //
 delimiter ;
 
@@ -49,7 +51,7 @@ BEGIN
 END //
 DELIMITER ;
 
---模糊查询餐厅
+-- 模糊查询餐厅
 DROP PROCEDURE IF EXISTS search_canteen;
 DELIMITER //
 CREATE PROCEDURE search_canteen(
@@ -58,10 +60,11 @@ CREATE PROCEDURE search_canteen(
     IN p_canteen_location VARCHAR(30)
 )
 BEGIN
-    SELECT canteen_id, canteen_name, canteen_location
-    FROM canteen
-    WHERE canteen_location = p_canteen_location
-    AND (p_canteen_id IS NULL OR canteen_id LIKE CONCAT('%', p_canteen_id, '%'))
-    AND (p_canteen_name IS NULL OR canteen_name LIKE CONCAT('%', p_canteen_name, '%'));
+    SELECT ca.canteen_id, ca.canteen_name, c.campus_name
+    FROM canteen ca
+    join campus c on c.campus_id = ca.canteen_location
+    WHERE p_canteen_id IS NULL OR canteen_id = p_canteen_id
+    AND (p_canteen_name IS NULL OR canteen_name LIKE CONCAT('%', p_canteen_name, '%'))
+    AND (p_canteen_location IS NULL OR canteen_location LIKE CONCAT('%', p_canteen_location, '%'));
 END //
 DELIMITER ;
