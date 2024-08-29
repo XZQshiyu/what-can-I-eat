@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>我要点评</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .paper-box {
+            /* 去掉边框 */
+            border: none;
+            margin-left: 250px;
+            padding: 20px;
+            width: 700px;
+            background-color: #ffffffe0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            /* 调整宽度为大约一半屏幕宽度 */
+            width: 80%;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            border: none;
+            padding: 0;
+            margin-right: 10px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #077c83;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* 打星样式 */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse; /* Reverse the order of the stars */
+            justify-content: flex-end;
+            font-size: 24px;
+            /* 确保字体大小一致 */
+            position: relative;
+        }
+
+        /* 确保标签的伪元素显示 */
+        .star-rating label::before {
+            content: '\2606';
+            /* 星星符号 */
+            color: #ddd;
+            /* 默认星星颜色 */
+            transition: color 0.2s, text-shadow 0.2s;
+            /* 平滑过渡效果 */
+        }
+
+        /* 悬停时显示金色的星星 */
+        .star-rating label:hover::before,
+        .star-rating label:hover~label::before {
+            color: gold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 当单选按钮被选中时，显示金色的星星 */
+        .star-rating input[type="radio"] {
+            display: none;
+            /* 隐藏实际的单选按钮 */
+        }
+
+        .star-rating input[type="radio"]:checked~label::before {
+            color: gold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .star-rating input[type="radio"]:checked~label~label::before {
+            color: gold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+    <script>
+        function updateCanteenOptions(selectedCampus) {
+            var canteenSelect = document.getElementById('canteen');
+            canteenSelect.innerHTML = '';
+
+            if (selectedCampus === '东校区') {options = ['东区学生食堂（一楼）', '东苑餐厅（二楼）', '东苑风味餐厅', '沁园春', '蜗壳茶餐厅', '星座餐厅（民族）', '美食广场', '东区教工食堂'];
+            } else if (selecte
+                var dCampus === '西校区') {
+                var options = ['西区学生食堂', '西三餐厅', '西苑餐厅', '芳华餐厅', '金桔园餐厅（民族）', '正阳楼餐厅', '西区教工餐厅'];
+            } else if (selectedCampus === '中校区') {
+                var options = ['桃李苑', '夜餐部'];
+            } else if (selectedCampus === '南校区') {
+                var options = ['南区学生食堂'];
+            } else if (selectedCampus === '高新区') {
+                var options = ['高新区学生食堂', '高新区学生食堂 B 区'];
+            }
+
+            for (var option of options) {
+                var opt = document.createElement('option');
+                opt.value = option;
+                opt.innerHTML = option;
+                canteenSelect.appendChild(opt);
+            }
+        }
+
+        // 在页面加载时默认选择东校区，并更新食堂选项
+        window.onload = function () {
+            var campusSelect = document.getElementsByName('campus')[0];
+            campusSelect.value = '东校区';
+            updateCanteenOptions('东校区');
+
+            var fileInputs = [];
+            for (var i = 0; i < 2; i++) {
+                var fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.style.marginRight = '10px';
+                fileInput.addEventListener('change', function (event) {
+                    var file = event.target.files[0];
+                    if (file) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) {
+                            var imagePreview = document.createElement('img');
+                            imagePreview.src = e.target.result;
+                            imagePreview.style.width = '50px';
+                            imagePreview.style.height = '50px';
+                            event.target.parentNode.insertBefore(imagePreview, event.target.nextSibling);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+                fileInputs.push(fileInput);
+            }
+
+            var container = document.createElement('div');
+            container.style.display = 'flex';
+            container.style.justifyContent = 'flex-start';
+            fileInputs.forEach(input => container.appendChild(input));
+            document.getElementById('imageInputs').appendChild(container);
+        };
+    </script>
+</head>
+
+<body>
+    <!--导航 start-->
+    <div class="navi">
+        <div class="wrap">
+            <ul class="navi-text">
+                <li><a href="/home">推荐内容</a></li>
+                <li><a href="/campusFood">校内美食</a></li>
+                <li><a href="/offCampusFood">校外美食</a></li>
+                <li><a href="/comment">我要点评</a></li>
+                <li><a href="/myself">我的主页</a></li>
+                <li><a href="/contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--导航 end-->
+    <div class="paper-box">
+        <form action="">
+            <label>菜品名称：</label><br>
+            <input type="text" name="dish_name"><br><br>
+            <label>上传图片：</label><br>
+            <div id="imageInputs"></div><br>
+            <label>点评：</label><br>
+            <textarea name="comment" rows="4" cols="50"></textarea><br>
+            <label>打星：</label><br>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
+            </div>
+            <label>校区：</label><br>
+            <select name="campus" onchange="updateCanteenOptions(this.value)">
+                <option value="东校区">东校区</option>
+                <option value="西校区">西校区</option>
+                <option value="中校区">中校区</option>
+                <option value="南校区">南校区</option>
+                <option value="高新区">高新区</option>
+            </select><br><br>
+            <label>食堂：</label><br>
+            <select name="canteen" id="canteen"></select><br><br>
+        </form>
+        <br>
+        <input type="submit" value="上传" style="background-color:#077c83; color: white; margin-top: 20px;">
+    </div>
+</body>
+
+</html>

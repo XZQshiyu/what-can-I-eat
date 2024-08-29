@@ -24,4 +24,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.signin),
     path("index/", views.index),
+    path("comment/",views.comment),
+    path("contact/",views.contact),
+    path("myself/",views.myself),
+    path("offCampusFood/",views.offCampusFood),
+    path("campusFood/",views.campusFood),
+    path("home/",views.home),
 ]

@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+  }
+
+  /*导航*/
+ .navi{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background-color:#bdbebe;
+    font-size: 12px;
+    position: fixed;
+    top: 0%;
+    
+  }
+  
+  .navi ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    
+    /*横向排列*/
+    display: flex;
+    justify-content: space-between;
+   
+  }
+  
+  /*向右移动*/
+  .navi ul li {
+    margin-left: 70px;  /* 可根据需要调整数值，以达到期望的右移效果 */
+  }
+  
+  .navi li {
+    flex: 1;
+  }
+  
+  .navi ul li.clicked {
+    background-color: #e0e0e0;  /* 变浅的背景颜色 */
+  }
+  
+  .menu {
+    width: 12%;
+    height: 100%;
+    top: 40px;
+    text-align: center;
+    justify-content: center;
+    position: fixed;
+    background-color: lightgray;
+  }
+  
+  .icons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+  }
+  
+  .icons img { 
+    width: 60px;
+    height: 60px;
+    padding: 15px;
+  }
+  
+  .icons span.icon-text {
+    display: block;
+    margin-left: 0px;
+    margin-top: -5px;
+    font-size: 12px;
+    box-shadow: 10 10 10 10;
+  }
+  
+  
+
+  .content {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    height: 100%;
+    width: 85%;
+    margin-top:40px;
+    background-color: lightblue;
+    flex-direction: column;
+    margin-left: 13%;  /* 新增这行，将内容向右推移 20%，从而占据右边 80%的区域 */
+  }

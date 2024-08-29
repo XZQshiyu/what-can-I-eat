@@ -2,15 +2,29 @@
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="./myself.css">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'myself.css' %}">
 </head>
 
 <body>
-
+<!--导航 start-->
+<div class="navi">
+    <div class="wrap">
+      <ul class="navi-text">
+        <li><a href="/home">推荐内容</a></li>
+        <li><a href="/campusFood">校内美食</a></li>
+        <li><a href="/offCampusFood">校外美食</a></li>
+        <li><a href="/comment">我要点评</a></li>
+        <li><a href="/myself" >我的主页</a></li>
+        <li><a href="/contact">联系我们</a></li>
+      </ul>
+    </div>
+  </div>
+  <!--导航 end-->
   <div class="menu">
         <div class="icons">
           <a href="https://www.example.com">
-            <img src="icons/赞 (1).svg" alt="赞">
+            <img src="{% static 'icons/赞 (1).svg' %}" alt="赞">
           </a>
           <a href="https://www.example.com">
             <span class="icon-text">赞</span> 
@@ -18,7 +32,7 @@
 
 
           <a href="https://www.example.com">
-            <img src="icons/踩.svg" alt="踩">
+            <img src="{% static 'icons/踩.svg' %}" alt="踩">
           </a>
           <a href="https://www.example.com">
             <span class="icon-text">踩</span>
@@ -26,7 +40,7 @@
 
 
           <a href="https://www.example.com">
-            <img src="icons/评论 (1).svg" alt="评论">
+            <img src="{% static 'icons/评论 (1).svg' %}" alt="评论">
           </a>
           <a href="https://www.example.com">
             <span class="icon-text">评论</span>
@@ -34,7 +48,7 @@
 
     
           <a href="https://www.example.com">
-            <img src="icons/我的作品 (1).svg" alt="我的作品">
+            <img src="{% static 'icons/我的作品 (1).svg' %}" alt="我的作品">
           </a>
           <a href="https://www.example.com">
             <span class="icon-text">我的作品</span>
@@ -42,7 +56,7 @@
           
         
           <a href="https://www.example.com">
-            <img src="icons/收藏 (1).svg" alt="我的收藏">
+            <img src="{% static 'icons/收藏 (1).svg' %}" alt="我的收藏">
           </a>
           <a href="https://www.example.com">
             <span class="icon-text">我的收藏</span>
@@ -51,7 +65,7 @@
           </div>   
    </div>
    <div class="content">
-    <p>我是内容</p>
+    <p>我是第一</p>
     <p>我是内容</p>
     <p>我是内容</p>
     <p>我是内容</p>

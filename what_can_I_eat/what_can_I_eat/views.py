@@ -22,3 +22,21 @@ def signin(request):
 
 def index(request):
     return render(request, "home.html")
+
+def comment(request):
+    return render(request,"comment.html")
+
+def contact(request):
+    return render(request,"contact.html")
+
+def myself(request):
+    return render(request,"myself.html")
+
+def offCampusFood(request):
+    return render(request,"offCampusFood.html")
+
+def campusFood(request):
+    return render(request,"campusFood.html")
+
+def home(request):
+    return render(request,"home.html")
