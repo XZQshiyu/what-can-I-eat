@@ -24,3 +24,10 @@ insert into dish (dish_id, dish_name, context, image, price, dish_location, like
 
 insert into post (post_id, title, uploader, uploader_id, context, image, publish_time, like_number, dislike_number, favorite_number, tag_1, tag_2, tag_3, tag_4, tag_5) values ('ps000000000001','瓦？', 'xch', '000001','瓦香鸡怎么没了','123','2024-08-29 19:08:00','0','0','0','抽象','','','','');
 insert into post (post_id, title, uploader, uploader_id, context, image, publish_time, like_number, dislike_number, favorite_number, tag_1, tag_2, tag_3, tag_4, tag_5) values ('ps000000000002','瓦？', 'xch1', '000002','瓦香鸡怎么没了','123','2024-08-29 19:08:00','0','0','0','抽象','','','','');
+
+insert into dish_comment (comment_id, dish_id, user_id, context, publish_time, like_number) values ('ds_cmt001', 'ds001', '000001', '感觉不如羊肉面', '20240830', 17);
+insert into dish_comment (comment_id, dish_id, user_id, context, publish_time, like_number) values ('ds_cmt002', 'ds001', '000002', '牛肉面是我叠', '20240831', 6);
+insert into dish_comment (comment_id, dish_id, user_id, context, publish_time, like_number) values ('ds_cmt003', 'ds001', '000003', '呃呃了', '20240830', 20);
+
+insert into post_comment (comment_id, post_id, user_id, context, publish_time, like_number) values ('ps_cmt001', 'ps000000000001', '000001', '一眼串子', '20240830', 12);
+insert into post_comment (comment_id, post_id, user_id, context, publish_time, like_number) values ('ps_cmt002', 'ps000000000002', '000002', '？', '20240831', 33);

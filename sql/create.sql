@@ -84,7 +84,7 @@ create table post
     foreign key (uploader_id) references user(user_id) ON DELETE CASCADE
 );
 
-create table comment
+create table dish_comment
 (
     comment_id varchar(18) primary key,
     dish_id varchar(18) not null,
@@ -94,4 +94,16 @@ create table comment
     like_number integer not null,
     foreign key (dish_id) references dish(dish_id) ON DELETE CASCADE,
     foreign key (user_id) references user(user_id) ON DELETE CASCADE
-)
+);
+
+create table post_comment
+(
+    comment_id varchar(18) primary key,
+    post_id varchar(18) not null,
+    user_id varchar(18) not null,
+    context varchar(255) not null,
+    publish_time date,
+    like_number integer not null,
+    foreign key (post_id) references post(post_id) ON DELETE CASCADE,
+    foreign key (user_id) references user(user_id) ON DELETE CASCADE
+);
