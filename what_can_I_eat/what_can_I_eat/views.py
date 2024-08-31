@@ -1,7 +1,12 @@
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.db import connection
+from django.urls import reverse
+from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponseNotFound
 from django.contrib import messages
-
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 def signin(request):
     if request.method == 'POST':
         data = request.POST.dict()
@@ -22,3 +27,14 @@ def signin(request):
 
 def index(request):
     return render(request, "home.html")
+
+
+
+# def add_campus(id, name):
+#     campus_id = id
+#     campus_name = name
+#     with connection.cursor() as cursor:
+#         cursor.callproc('add_campus', [campus_id, campus_name])
+
+# print(1)
+# add_campus("10000", "USTC")
