@@ -42,6 +42,38 @@
             border-color: #0062cc;
         }
 
+       .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+       .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+       .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #fff;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+       .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -67,21 +99,30 @@
     <div class="container">
         <div class="button-group">
             <a href="/create_windows" class="btn btn-primary">创建窗口</a>
-            <a href="/modify_windows" class="btn btn-primary">修改窗口</a>
         </div>
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>窗口</th>
-                    <th>窗口号</th>
-                    <!-- <th>操作</th> -->
+                    <th>窗口名</th>
+                    <th>窗口菜单</th>
+                    <th>窗口介绍</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody>
                 {% for window in windows %}
                 <tr>
-                    <td>{{ fw.window_description }}</td>
-                    <td>{{ fw.window_id }}</td>
+                    <td>{{ window.1 }}</td>
+                    <td>{{ window.2 }}</td>
+                    <td>{{ window.3 }}</td>
+                    <td>
+
+                        <a href="/food_review" class="btn btn-success">查看评价</a>
+                        <a href="/modify_window" class="btn btn-primary">修改窗口</a>
+                        <a href="/delete_window" class="btn btn-danger">删除窗口</a>
+
+                      
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

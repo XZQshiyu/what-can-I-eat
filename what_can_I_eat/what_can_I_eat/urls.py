@@ -31,7 +31,8 @@ urlpatterns = [
     path("update_campus", views.update_campus, name="update_campus"),
     path("delete_campus", views.delete_campus, name="delete_campus"),
 
-
+    # windows test
+    path("view_window/<str:canteen_id>", views.view_windows, name="view_windows"),
 
     path("comment/",views.comment),
     path("contact/",views.contact),
@@ -63,5 +64,7 @@ urlpatterns = [
     path("Qinyuanchun/",views.Qinyuanchun),
 
     path("canteens/",views.canteens),
+
+    path("add_review/<str:canteen_id>/<str:window_id>", views.add_review, name="add_review"),
 
 ]
