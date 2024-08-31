@@ -1,0 +1,1 @@
+CALL DeletePost('ps000000000002');
