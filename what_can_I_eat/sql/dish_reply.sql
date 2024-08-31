@@ -49,7 +49,7 @@ CREATE PROCEDURE delete_reply (
     IN p_reply_id VARCHAR(18)
 )
 BEGIN
-    DELETE FROM dish_comment WHERE reply_id = p_reply_id;
+    DELETE FROM dish_reply WHERE reply_id = p_reply_id;
 END //
 DELIMITER ;
 
