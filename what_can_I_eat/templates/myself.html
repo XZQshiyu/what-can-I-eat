@@ -3,9 +3,82 @@
 
 <head>
   {% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'myself.css' %}">
+ 
 </head>
+<style>
+  /* 导航栏样式 */
+ .navi {
+      background-color: #343a40;
+      padding: 10px 0;
+  }
 
+ .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  }
+
+ .navi-text li {
+      display: inline-block;
+      margin-right: 20px;
+  }
+
+ .navi-text a {
+      text-decoration: none;
+      color: #fff;
+      font-size: 16px;
+      transition: color 0.3s ease;
+  }
+
+ .navi-text a:hover {
+      color: #ffc107;
+  }
+
+  /* 图标区域样式 */
+.menu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex-direction: row;
+}
+
+.menu a {
+  margin-right: 20px;
+}
+
+.icons a {
+  display: inline-flex; /* 或者 display: inline-block */
+  align-items: center;
+  margin-right: 20px;
+}
+
+.icons img {
+  width: 30px;
+  height: 30px;
+}
+
+.icon-text {
+  font-size: 14px;
+  color: #333;
+}
+  /* 内容区域样式 */
+ .content {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+ .content p {
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 10px;
+  }
+</style>
 <body>
 <!--导航 start-->
 <div class="navi">

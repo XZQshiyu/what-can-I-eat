@@ -76,12 +76,12 @@ WSGI_APPLICATION = "what_can_I_eat.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "database_name",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "what_can_I_eat",
         "HOST": "127.0.0.1",
-        "PORT": "3306",
+        "PORT": 3306,
         "USER": "root",
-        "PASSWORD": "password",
+        "PASSWORD": "Hjiayuan202011!",
     }
 }
 

@@ -24,12 +24,21 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.signin),
     path("index/", views.index),
+    # campus test
+    path("campus_management/", views.campus_management, name="campus_management"),
+    # path("add_campus/", views.add_campus, name="add_campus"),
+    path("view_campus", views.view_campus, name="view_campus"),
+    path("update_campus", views.update_campus, name="update_campus"),
+    path("delete_campus", views.delete_campus, name="delete_campus"),
+
+
+
     path("comment/",views.comment),
     path("contact/",views.contact),
     path("myself/",views.myself),
     path("offCampusFood/",views.offCampusFood),
     path("campusFood/",views.campusFood),
-    path("home/",views.home),
+    path("Zhuye/",views.Zhuye),
     path("review/",views.review),
 
 
@@ -42,7 +51,7 @@ urlpatterns = [
 
     path("Taoliyuan/",views.Taoliyuan),
     path("Yecanbu/",views.Yecanbu),
-    path("food_review/",views.food_review),
+    # path("food_review/",views.food_review),
 
     
     path("Donfeng/",views.Donfeng),
@@ -52,5 +61,7 @@ urlpatterns = [
     path("Xingzuo/",views.Xingzuo),
     path("Woke/",views.Woke),
     path("Qinyuanchun/",views.Qinyuanchun),
+
+    path("canteens/",views.canteens),
 
 ]

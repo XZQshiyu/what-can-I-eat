@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib import messages
+from django.db import connection
+
 
 def signin(request):
     if request.method == 'POST':
@@ -38,8 +40,8 @@ def offCampusFood(request):
 def campusFood(request):
     return render(request,"campusFood.html")
 
-def home(request):
-    return render(request,"home.html")
+def Zhuye(request):
+    return render(request,"Zhuye.html")
 
 def review(request):
     return render(request,"review.html")
@@ -85,48 +87,72 @@ def Qinyuanchun(request):
 
 
 
+# def food_review(request):
+#     if request.method == 'POST':
+#         # 获取表单数据
+#         dish_name = request.POST.get('dish_name')
+#         image_files = request.FILES.getlist('image_files')
+#         review_text = request.POST.get('review_text')
+#         rating = request.POST.get('rating')
+#         campus = request.POST.get('campus')
+#         canteen = request.POST.get('canteen')
+#         window = request.POST.get('window')
 
+#         errors = {}
 
+#         if not dish_name:
+#             errors['dish_name'] = '菜品名称不能为空'
 
+#         if not image_files:
+#             errors['image_files'] = '请上传图片'
 
-def food_review(request):
-    if request.method == 'POST':
-        # 获取表单数据
-        dish_name = request.POST.get('dish_name')
-        image_files = request.FILES.getlist('image_files')
-        review_text = request.POST.get('review_text')
-        rating = request.POST.get('rating')
-        campus = request.POST.get('campus')
-        canteen = request.POST.get('canteen')
-        window = request.POST.get('window')
-
-        errors = {}
-
-        if not dish_name:
-            errors['dish_name'] = '菜品名称不能为空'
-
-        if not image_files:
-            errors['image_files'] = '请上传图片'
-
-        if not review_text:
-            errors['review_text'] = '评价内容不能为空'
+#         if not review_text:
+#             errors['review_text'] = '评价内容不能为空'
        
-        if not rating:
-            errors['rating'] = '评分不能为空'
+#         if not rating:
+#             errors['rating'] = '评分不能为空'
 
-        if not campus:
-            errors['campus'] = '校区不能为空'
+#         if not campus:
+#             errors['campus'] = '校区不能为空'
 
-        if not canteen:
-            errors['canteen'] = '食堂不能为空'
+#         if not canteen:
+#             errors['canteen'] = '食堂不能为空'
 
-        if not window:
-            errors['window'] = '窗口不能为空'
+#         if not window:
+#             errors['window'] = '窗口不能为空'
 
-        if errors:
-            return render(request, "comment.html", {"errors": errors})
-        else:
+#         if errors:
+#             return render(request, "comment.html", {"errors": errors})
+#         else:
 
-            return redirect(reverse("your_app_name:review_list"))
-    return render(request, "comment.html")
+#             return redirect(reverse("your_app_name:review_list"))
+#     return render(request, "comment.html")
 
+
+
+# campus test
+def campus_management(request):
+    with connection.cursor() as cursor:
+        cursor.callproc('get_all_campuses')
+        results = cursor.fetchall()
+    return render(request, "campus/campus_management.html", {"campuses": results})
+
+# def add_campus(request):
+def view_campus(request, campus_id):
+    return 
+
+def update_campus(request, campus_id):
+    return
+
+def delete_campus(request, campus_id):
+    return 
+
+def canteens(request):
+    return render(request,"canteens.html")
+
+def window_selection(request):
+    with connection.cursor() as cursor:
+        # 获取所有窗口信息
+        cursor.callproc('get_all_windows')
+        all_windows = cursor.fetchall()
+    return render(request, 'canteens.html', {'windows': all_windows})
