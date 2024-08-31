@@ -22,7 +22,6 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-
         label {
             font-weight: bold;
         }
@@ -57,7 +56,8 @@
         /* 打星样式 */
         .star-rating {
             display: flex;
-            flex-direction: row-reverse; /* Reverse the order of the stars */
+            flex-direction: row-reverse;
+            /* Reverse the order of the stars */
             justify-content: flex-end;
             font-size: 24px;
             /* 确保字体大小一致 */
@@ -102,9 +102,9 @@
             var canteenSelect = document.getElementById('canteen');
             canteenSelect.innerHTML = '';
 
-            if (selectedCampus === '东校区') {options = ['东区学生食堂（一楼）', '东苑餐厅（二楼）', '东苑风味餐厅', '沁园春', '蜗壳茶餐厅', '星座餐厅（民族）', '美食广场', '东区教工食堂'];
-            } else if (selecte
-                var dCampus === '西校区') {
+            if (selectedCampus === '东校区') {
+                var options = ['东区学生食堂（一楼）', '东苑餐厅（二楼）', '东苑风味餐厅', '沁园春', '蜗壳茶餐厅', '星座餐厅（民族）', '美食广场', '东区教工食堂'];
+            } else if (selectedCampus === '西校区') {
                 var options = ['西区学生食堂', '西三餐厅', '西苑餐厅', '芳华餐厅', '金桔园餐厅（民族）', '正阳楼餐厅', '西区教工餐厅'];
             } else if (selectedCampus === '中校区') {
                 var options = ['桃李苑', '夜餐部'];
@@ -122,11 +122,43 @@
             }
         }
 
+        function showFoodOptions(selectedCanteen) {
+            var windowSelect = document.getElementById('windowOptions');
+            windowSelect.innerHTML = '';
+
+            if (selectedCanteen === '东区学生食堂（一楼）') {
+                var windowOptions = ['窗口 1', '窗口 2', '窗口 3'];
+               
+            } else if (selectedCanteen === '东苑餐厅（二楼）') {
+                var windowOptions = ['窗口 4', '窗口 5', '窗口 6'];
+               
+            } else {
+                windowSelect.innerHTML = '暂无对应窗口信息';
+            }
+            for (var windowOption of windowOptions) {
+                    var opt = document.createElement('option');
+                    opt.value = windowOption;
+                    opt.innerHTML = windowOption;
+                    windowSelect.appendChild(opt);
+                }
+        }
+
+        function createFileInput() {
+            var imageInputsDiv = document.getElementById('imageInputs');
+            var fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.name = 'image_files';
+            fileInput.multiple = true;
+            imageInputsDiv.appendChild(fileInput);
+        }
+
         // 在页面加载时默认选择东校区，并更新食堂选项
         window.onload = function () {
             var campusSelect = document.getElementsByName('campus')[0];
             campusSelect.value = '东校区';
             updateCanteenOptions('东校区');
+            showFoodOptions('东区学生食堂（一楼）');
+
 
             var fileInputs = [];
             for (var i = 0; i < 2; i++) {
@@ -156,6 +188,10 @@
             fileInputs.forEach(input => container.appendChild(input));
             document.getElementById('imageInputs').appendChild(container);
         };
+
+        
+             // 在校区、食堂、窗口逻辑处理完成后调用创建文件输入框的函数
+             createFileInput();
     </script>
 </head>
 
@@ -168,22 +204,24 @@
                 <li><a href="/campusFood">校内美食</a></li>
                 <li><a href="/offCampusFood">校外美食</a></li>
                 <li><a href="/comment">我要点评</a></li>
-                <li><a href="/myself">我的主页</a></li>
+                <li><a href="/myself" id="myHomeLink">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
             </ul>
         </div>
     </div>
     <!--导航 end-->
     <div class="paper-box">
-        <form action="">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
             <label>菜品名称：</label><br>
             <input type="text" name="dish_name"><br><br>
             <label>上传图片：</label><br>
-            <div id="imageInputs"></div><br>
+            <div id="imageInputs" ></div><br>
+           
             <label>点评：</label><br>
-            <textarea name="comment" rows="4" cols="50"></textarea><br>
+            <textarea name="review_text" rows="4" cols="50"></textarea><br>
             <label>打星：</label><br>
-            <div class="star-rating">
+            <div class="star-rating" name="rating">
                 <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
                 <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
                 <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
@@ -198,12 +236,16 @@
                 <option value="南校区">南校区</option>
                 <option value="高新区">高新区</option>
             </select><br><br>
+
             <label>食堂：</label><br>
-            <select name="canteen" id="canteen"></select><br><br>
+            <select name="canteen" id="canteen" onchange="showFoodOptions(this.value)"></select><br><br>
+            <label>窗口：</label><br>
+            <select name="window" id="windowOptions"></select>
         </form>
         <br>
         <input type="submit" value="上传" style="background-color:#077c83; color: white; margin-top: 20px;">
     </div>
+    
 </body>
 
 </html>

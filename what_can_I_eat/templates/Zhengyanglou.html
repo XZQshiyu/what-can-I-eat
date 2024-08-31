@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正阳楼餐厅</title>
+</head>
+<style>
+   .image-row {
+      display: flex;
+      justify-content: space-between;
+    }
+
+   .image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+  img {
+    width: 300px;
+    height: 200px;
+  }
+  a {
+      text-decoration: none;
+    }
+
+  span {
+      background-color: rgb(117, 117, 117);
+      border-radius: 5px;
+      padding: 5px;
+      color: white;
+      transition: background-color 0.3s ease;
+    }
+
+  span:hover {
+      background-color: #d3cdcd; /* 鼠标悬停时的颜色变浅 */
+    }
+</style>
+
+<body>
+    {% load static %}
+    <img src="{% static 'icons/正阳-麻辣烫.jpg' %}" alt="正阳-麻辣烫">
+    <a href="/zhengyang1">
+      <span >麻辣烫</span>
+    </a>
+  
+    {% load static %}
+    <img src="{% static 'icons/正阳-麻辣香锅.jpg' %}" alt="正阳-麻辣香锅">
+    <a href="/zhengyang2">
+      <span>麻辣香锅</span>
+    </a>
+  
+    {% load static %}
+    <img src="{% static 'icons/正阳-贵州牛肉粉.jpg' %}" alt="正阳-贵州牛肉粉">
+    <a href="/zhengyang3">
+      <span >贵州牛肉粉</span>
+    </a>
+
+    {% load static %}
+   <img src="{% static 'icons/正阳-辣个状元.jpg' %}" alt="正阳-辣个状元">
+    <a href=/zhengyang4">
+      <span >辣个状元</span>
+    </a>
+
+    {% load static %}
+    <img src="{% static 'icons/正阳-猪脚饭.jpg' %}" alt="正阳-猪脚饭">
+    <a href="/zhengyang5">
+      <span>猪脚饭</span>
+    </a>
+  
+    {% load static %}
+    <img src="{% static 'icons/正阳-千里香馄饨.jpg' %}" alt="正阳-千里香馄饨">
+    <a href="/zhengyang6">
+      <span>千里香馄饨</span>
+    </a>
+    
+
+    {% load static %}
+    <img src="{% static 'icons/正阳-瓦香鸡米饭.jpg' %}" alt="正阳-瓦香鸡米饭">
+    <a href="/zhengyang7">
+      <span>瓦香鸡米饭</span>
+    </a>
+
+</body>
+
+</html>

@@ -30,4 +30,27 @@ urlpatterns = [
     path("offCampusFood/",views.offCampusFood),
     path("campusFood/",views.campusFood),
     path("home/",views.home),
+    path("review/",views.review),
+
+
+    path("XiYuan/",views.XiYuan),
+    path("Xiyuan1/",views.Xiyuan1),
+
+
+    path("Jinjuyuan/",views.Jinjuyuan),
+    path("Zhengyanglou/",views.Zhengyanglou),
+
+    path("Taoliyuan/",views.Taoliyuan),
+    path("Yecanbu/",views.Yecanbu),
+    path("food_review/",views.food_review),
+
+    
+    path("Donfeng/",views.Donfeng),
+    path("Donxue/",views.Donxue),
+    path("Donyuan/",views.Donyuan),
+    path("Meiguang/",views.Meiguang),
+    path("Xingzuo/",views.Xingzuo),
+    path("Woke/",views.Woke),
+    path("Qinyuanchun/",views.Qinyuanchun),
+
 ]
