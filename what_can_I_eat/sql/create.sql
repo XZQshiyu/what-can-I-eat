@@ -56,7 +56,6 @@ create table post
     image VARCHAR(255),
     publish_time date,
     like_number integer not null,
-    dislike_number integer not null,
     favorite_number integer not null,
     tag_1 varchar(30) not null,
     tag_2 varchar(30),
