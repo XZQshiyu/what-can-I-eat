@@ -39,8 +39,11 @@ insert into food_window (window_id, window_name, canteen_id, window_description)
 insert into food_window (window_id, window_name, canteen_id, window_description) values ('fw025001', '刀削面', 'can025','一般般');
 
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000001', 'fw031001', '瓦香鸡', '000001', '感觉不如羊肉面', '20240830', 17);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000005', 'fw031001', '牛肉面', '000005', '牛肉面好好吃', '20240831', 8);
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000002', 'fw025001', '泸溪河', '000002', '牛肉面是我叠', '20240831', 6);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000004', 'fw025001', '牛肉面', '000004', '太香了', '20240831', 7);
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000003', 'fw014001', '热带风味冰红茶', '000003', '呃呃了', '20240830', 20);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000006', 'fw014001', '牛肉面', '000006', '还凑合', '20240831', 7);
 
 insert into post_comment (comment_id, post_id, user_id, context, publish_time, like_number) values ('ps_cmt001', 'ps000000000001', '000001', '一眼串子', '20240830', 12);
 insert into post_comment (comment_id, post_id, user_id, context, publish_time, like_number) values ('ps_cmt002', 'ps000000000002', '000002', '？', '20240831', 33);
