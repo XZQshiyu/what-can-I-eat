@@ -14,7 +14,7 @@ def signin(request):
         print(user_id)
         print(password)
         if user_id and password:
-            if user_id == "ustc" and password == "639":
+            if user_id == "xch" and password == "305":
                 return render(request, "home.html")
             else:
                 messages.error(request, "Invalid username or passowrd")
