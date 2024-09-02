@@ -152,7 +152,7 @@ def delete_window_route(request,window_id):
             cursor.callproc('delete_window', [window_id])
             connection.commit()
         return HttpResponse("窗口删除成功")
-     
+          
 # 更新窗口
 def update_window(request,window_id):
     if request.method == 'POST':
@@ -179,4 +179,4 @@ def add_window(request):
             connection.commit()
         return HttpResponse("窗口添加成功")
     return render(request, 'windows/add_window.html')
-#?餐厅id要输入还是用来匹配的？
+
