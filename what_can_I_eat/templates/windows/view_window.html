@@ -121,7 +121,7 @@
                     <td>{{ window.2 }}</td>
                     <td>{{ window.3 }}</td>
                     <td>
-                        <a href="/food_review" class="btn btn-success">查看评价</a>
+                        <a href="{% url 'food_review' window.0 %}" class="btn btn-success">查看评价</a>
                         <a href="/update_window" class="btn btn-primary">修改窗口</a>
                         <a href="#" onclick="if(confirmDelete()){window.location.href='/delete_window?window_id={{ window.0 }}';}" class="btn btn-danger">删除窗口</a>
                     </td>
