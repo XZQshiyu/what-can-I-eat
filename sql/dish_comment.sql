@@ -4,15 +4,16 @@ drop procedure if exists add_comment;
 delimiter //
 CREATE PROCEDURE add_comment (
     IN p_comment_id varchar(18),
-    IN p_dish_id varchar(18),
+    IN p_window_id varchar(18),
+    IN p_dish_name varchar(18),
     IN p_user_id varchar(18),
     IN p_context varchar(255),
     IN p_publish_time date,
     IN p_like_number integer
 )
 BEGIN
-    INSERT INTO dish_comment (comment_id, dish_id, user_id, context, publish_time, like_number)
-    VALUES (p_comment_id, p_dish_id, p_user_id, p_context, p_publish_time, p_like_number);
+    INSERT INTO dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number)
+    VALUES (p_comment_id, p_window_id, p_dish_name, p_user_id, p_context, p_publish_time, p_like_number);
 END //
 delimiter ;
 
@@ -66,10 +67,14 @@ END //
 DELIMITER ;
 
 -- 获取所有评论
-DROP PROCEDURE IF EXISTS get_all_comments;
+DROP PROCEDURE IF EXISTS get_all_comments_from_window;
 DELIMITER //
-CREATE PROCEDURE get_all_comments ()
+CREATE PROCEDURE get_all_comments_from_window (
+    IN p_window_id varchar(18)
+)
 BEGIN
-    SELECT * FROM dish_comment;
+    SELECT *
+    FROM dish_comment
+    WHERE window_id = p_window_id;
 END //
 DELIMITER ;
