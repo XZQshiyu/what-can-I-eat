@@ -23,10 +23,13 @@ def signin(request):
     return render(request, "signin.html")
 
 def index(request):
-    return render(request, "Zhuye.html")
+    return render(request, "home.html")
 
 def comment(request):
     return render(request,"comment.html")
+
+def home(request):
+    return render(request,"home.html")
 
 def contact(request):
     return render(request,"contact.html")
@@ -40,8 +43,6 @@ def offCampusFood(request):
 def campusFood(request):
     return render(request,"campusFood.html")
 
-def Zhuye(request):
-    return render(request,"Zhuye.html")
 
 def review(request):
     return render(request,"review.html")
@@ -87,14 +88,14 @@ def Qinyuanchun(request):
 
 
 #提交表单
-def add_review(request, canteen_id, window_id):
+def add_review(request, window_id):
     if request.method == 'POST':
         dish_name = request.POST.get('dish_name')
         image_files = request.POST.get('image_files')
         review_text = request.POST.get('review_text')
         rating = request.POST.get('rating')
         with connection.cursor() as cursor:
-            cursor.callproc('add_review', [canteen_id, window_id, dish_name, image_files, review_text, rating])
+            cursor.callproc('add_review', [ window_id, dish_name, image_files, review_text, rating])
         return HttpResponse("Review added successfully") 
     return render(request, 'add_review.html')
 
@@ -119,6 +120,8 @@ def delete_campus(request, campus_id):
 def canteens(request):
     return render(request,"canteens.html")
 
+
+
 # windows test
 
 
@@ -132,11 +135,48 @@ def view_windows(request, canteen_id):
     return render(request, 'windows/view_window.html', {'windows': windows_list})
 
 # review test
-def food_review(request, canteen_id, window_id):
+def food_review(request, window_id):
     review_list = []
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
-            cursor.callproc('get_comment_by_id', [canteen_id], [window_id])
+            cursor.callproc('get_comment_by_id', [window_id])
             review_list = cursor.fetchall()
-    return render(request, 'foodreview.html', {'comments': review_list})
+    return render(request, 'food_review.html', {'comments': review_list})
+
+# 删除窗口
+def delete_window_route(request,window_id):
+     if request.method == 'GET':
+        with connection.cursor() as cursor:
+            # 调用存储过程进行删除操作
+            cursor.callproc('delete_window', [window_id])
+            connection.commit()
+        return HttpResponse("窗口删除成功")
+     
+# 更新窗口
+def update_window(request,window_id):
+    if request.method == 'POST':
+        data = request.POST.dict()
+        window_name = data.get("p_window_name")
+        canteen_id = data.get("p_canteen_id")
+        window_description = data.get("p_window_description")  #图片
+        with connection.cursor() as cursor:
+            cursor.callproc('update_window', [window_id, window_name, window_description, canteen_id])
+            connection.commit()
+        return HttpResponse("窗口更新成功")
+    return render(request, 'windows/update_window.html')
+
+# 添加窗口
+def add_window(request):
+    if request.method == 'POST':
+        data = request.POST.dict()
+        window_id = data.get("p_window_id")
+        window_name = data.get("p_window_name")
+        canteen_id = data.get("p_canteen_id")
+        window_description = data.get("p_window_description")  #图片
+        with connection.cursor() as cursor:
+            cursor.callproc('add_window', [window_id,window_name, window_description, canteen_id])
+            connection.commit()
+        return HttpResponse("窗口添加成功")
+    return render(request, 'windows/add_window.html')
+#?餐厅id要输入还是用来匹配的？

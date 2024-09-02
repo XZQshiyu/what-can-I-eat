@@ -92,13 +92,18 @@
             font-weight: bold;
         }
     </style>
+    <script>
+        function confirmDelete(windowId) {
+            return confirm("请确认是否删除该窗口？");
+        }
+    </script>
 </head>
 
 <body>
     <h2 class="mt-4">窗口选择</h2>
     <div class="container">
         <div class="button-group">
-            <a href="/create_windows" class="btn btn-primary">创建窗口</a>
+            <a href="/add_window" class="btn btn-primary">创建窗口</a>
         </div>
         <table class="table table-striped">
             <thead>
@@ -116,12 +121,9 @@
                     <td>{{ window.2 }}</td>
                     <td>{{ window.3 }}</td>
                     <td>
-
                         <a href="/food_review" class="btn btn-success">查看评价</a>
-                        <a href="/modify_window" class="btn btn-primary">修改窗口</a>
-                        <a href="/delete_window" class="btn btn-danger">删除窗口</a>
-
-                      
+                        <a href="/update_window" class="btn btn-primary">修改窗口</a>
+                        <a href="#" onclick="if(confirmDelete()){window.location.href='/delete_window?window_id={{ window.0 }}';}" class="btn btn-danger">删除窗口</a>
                     </td>
                 </tr>
                 {% endfor %}

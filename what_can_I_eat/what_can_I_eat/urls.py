@@ -39,8 +39,9 @@ urlpatterns = [
     path("myself/",views.myself),
     path("offCampusFood/",views.offCampusFood),
     path("campusFood/",views.campusFood),
-    path("Zhuye/",views.Zhuye),
+   
     path("review/",views.review),
+    path("home/",views.home),
 
 
     path("XiYuan/",views.XiYuan),
@@ -65,6 +66,9 @@ urlpatterns = [
 
     path("canteens/",views.canteens),
 
-    path("add_review/<str:canteen_id>/<str:window_id>", views.add_review, name="add_review"),
+    path("food_review/<str:window_id>", views.food_review, name="food_review"),
+    path("add_review/<str:window_id>", views.add_review, name="add_review"),
 
+    path("update_window/<str:window_id>", views.update_window, name="update_window"),
+    path("add_window/", views.add_window, name="add_window"),
 ]
