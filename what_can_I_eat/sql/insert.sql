@@ -47,6 +47,3 @@ insert into dish_comment (comment_id, window_id, dish_name, user_id, context, pu
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000004', 'fw025001', '牛肉面', '000004', '太香了', '20240831', 7);
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000003', 'fw014001', '热带风味冰红茶', '000003', '呃呃了', '20240830', 20);
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000006', 'fw014001', '牛肉面', '000006', '还凑合', '20240831', 7);
-
-insert into post_comment (comment_id, post_id, user_id, context, publish_time, like_number) values ('ps_cmt001', 'ps000000000001', '000001', '一眼串子', '20240830', 12);
-insert into post_comment (comment_id, post_id, user_id, context, publish_time, like_number) values ('ps_cmt002', 'ps000000000002', '000002', '？', '20240831', 33);
