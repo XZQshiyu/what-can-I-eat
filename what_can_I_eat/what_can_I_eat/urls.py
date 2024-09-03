@@ -34,7 +34,7 @@ urlpatterns = [
     # windows test
     path("view_window/<str:canteen_id>", views.view_windows, name="view_windows"),
 
-    path("comment/",views.comment),
+    path("comment/",views.comment, name = "comment"),
     path("contact/",views.contact),
     path("myself/",views.myself),
     path("offCampusFood/",views.offCampusFood),
