@@ -140,7 +140,7 @@ def food_review(request, window_id):
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
-            cursor.callproc('get_all_comments_from_window', [window_id])
+            cursor.callproc('get_comment_by_id', [window_id])
             review_list = cursor.fetchall()
     return render(request, 'food_review.html', {'comments': review_list})
 
@@ -152,7 +152,7 @@ def delete_window_route(request,window_id):
             cursor.callproc('delete_window', [window_id])
             connection.commit()
         return HttpResponse("窗口删除成功")
-     
+          
 # 更新窗口
 def update_window(request,window_id):
     if request.method == 'POST':
@@ -179,13 +179,4 @@ def add_window(request):
             connection.commit()
         return HttpResponse("窗口添加成功")
     return render(request, 'windows/add_window.html')
-#?餐厅id要输入还是用来匹配的？
 
-# 储存点赞数
-def add_like(request,comment_id):
-    if request.method == 'POST':
-        with connection.cursor() as cursor:
-            cursor.callproc('add_like', [comment_id])
-            connection.commit()
-        return HttpResponse("点赞成功")
-    return render(request, 'food_review.html')
