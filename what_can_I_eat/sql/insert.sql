@@ -20,6 +20,14 @@ insert into canteen (canteen_id, canteen_name, canteen_location) values ('can015
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can016', '东区教工食堂', 'c_1');
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can017', '东区学生餐厅', 'c_1');
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can018', '东苑风味餐厅', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can011', '东苑餐厅', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can012', '蜗壳时光餐厅', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can013', '星座餐厅', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can014', '美食广场', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can015', '沁园春', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can016', '东区教工食堂', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can017', '东区学生餐厅', 'c_1');
+insert into canteen (canteen_id, canteen_name, canteen_location) values ('can018', '东苑风味餐厅', 'c_1');
 
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can021', '金桔园餐厅', 'c_2');
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can022', '西区学生餐厅', 'c_2');

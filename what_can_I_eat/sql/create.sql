@@ -45,24 +45,6 @@ create table food_window
     foreign key (canteen_id) references canteen(canteen_id) ON DELETE CASCADE
 );
 
--- dish的主键约束修改了
--- dish 要有一个外键约束，指向food_window
--- 111, varchar真能1000吗，我印象中就到255
--- 如果要写外键约束，这两个变量类型应该相同，即varchar长度一致
-create table dish
-(
-    dish_id varchar(18) primary key,
-    dish_name varchar(30) not null,
-    context varchar(255) not null,
-    image VARCHAR(255),
-    price float not null,
-    dish_location varchar(30) not null,
-    like_number integer not null,
-    dislike_number integer not null,
-    favorite_number integer not null,
-    foreign key (dish_location) references food_window(window_id) ON DELETE CASCADE
-);
-
 -- 虽然但是，promulgator最好是user的外键，即用user_id来表示，可以通过关联查找来定位user的name
 create table post
 (
@@ -87,12 +69,13 @@ create table post
 create table dish_comment
 (
     comment_id varchar(18) primary key,
-    dish_id varchar(18) not null,
+    window_id varchar(18) not null,
+    dish_name varchar(18) not  null,
     user_id varchar(18) not null,
     context varchar(255) not null,
     publish_time date,
     like_number integer not null,
-    foreign key (dish_id) references dish(dish_id) ON DELETE CASCADE,
+    foreign key (window_id) references food_window(window_id) ON DELETE CASCADE,
     foreign key (user_id) references user(user_id) ON DELETE CASCADE
 );
 
