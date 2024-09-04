@@ -20,14 +20,6 @@ insert into canteen (canteen_id, canteen_name, canteen_location) values ('can015
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can016', '东区教工食堂', 'c_1');
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can017', '东区学生餐厅', 'c_1');
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can018', '东苑风味餐厅', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can011', '东苑餐厅', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can012', '蜗壳时光餐厅', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can013', '星座餐厅', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can014', '美食广场', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can015', '沁园春', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can016', '东区教工食堂', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can017', '东区学生餐厅', 'c_1');
-insert into canteen (canteen_id, canteen_name, canteen_location) values ('can018', '东苑风味餐厅', 'c_1');
 
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can021', '金桔园餐厅', 'c_2');
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('can022', '西区学生餐厅', 'c_2');
@@ -50,9 +42,9 @@ insert into food_window (window_id, window_name, canteen_id, window_description)
 insert into food_window (window_id, window_name, canteen_id, window_description) values ('fw014001', '瓦香鸡（美广）', 'can014','sigoi');
 insert into food_window (window_id, window_name, canteen_id, window_description) values ('fw025002', '刀削面', 'can025','一般般');
 
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000001', 'fw031001', '瓦香鸡', '000001', '感觉不如羊肉面', '20240830', 17);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000005', 'fw031001', '牛肉面', '000005', '牛肉面好好吃', '20240831', 8);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000002', 'fw025001', '泸溪河', '000002', '牛肉面是我叠', '20240831', 6);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000004', 'fw025001', '牛肉面', '000004', '太香了', '20240831', 7);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000003', 'fw014001', '热带风味冰红茶', '000003', '呃呃了', '20240830', 20);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number) values ('000000000006', 'fw014001', '牛肉面', '000006', '还凑合', '20240831', 7);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('000000000001', 'fw031001', '瓦香鸡', '000001', '感觉不如羊肉面', '20240830', 17, 2);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('000000000005', 'fw031001', '牛肉面', '000005', '牛肉面好好吃', '20240831', 8, 3);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('000000000002', 'fw025001', '泸溪河', '000002', '牛肉面是我叠', '20240831', 6, 1);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('000000000004', 'fw025001', '牛肉面', '000004', '太香了', '20240831', 7, 2);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('000000000003', 'fw014001', '热带风味冰红茶', '000003', '呃呃了', '20240830', 20, 5);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('000000000006', 'fw014001', '牛肉面', '000006', '还凑合', '20240831', 7, 4);
