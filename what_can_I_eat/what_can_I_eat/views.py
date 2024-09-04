@@ -1,7 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.db import connection
+from django.urls import reverse
 
 
 def signin(request):
@@ -180,3 +181,86 @@ def add_window(request):
         return HttpResponse("窗口添加成功")
     return render(request, 'windows/add_window.html')
 
+# 储存点赞数
+def add_like(request,comment_id):
+    if request.method == 'POST':
+        with connection.cursor() as cursor:
+            cursor.callproc('add_like', [comment_id])
+            connection.commit()
+        return HttpResponse("点赞成功")
+    return render(request, 'food_review.html')
+
+
+
+#dish_comment   smx
+#发布dish_comment
+def add_dish_comment(request):
+    #后端没有鲁棒性支持，所以先没有error
+    if request.method == 'POST':
+        import datetime
+        #获取表单数据
+        #我不清楚你们怎么分配comment_id，user_id应该也不能让用户自己填写，先这样写着，再商量
+        comment_id = request.POST.get('comment_id')
+        window_id = request.POST.get('window_id')
+        dish_name = request.POST.get('dish_name')
+        user_id = request.POST.get('user_id')
+        context = request.POST.get('context')
+        publish_time = datetime.datetime.now()
+        like_number = 0
+
+        with connection.cursor() as cursor:
+            cursor.callproc('add_comment', [comment_id, window_id, dish_name, user_id, context, publish_time, like_number])
+
+        return redirect(reverse('what_can_I_eat:comment'))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
+    else:
+        return render(request, "add_dish_comment.html") #前端再做这个页面
+        
+#通过comment_id搜索commment
+def view_comment_by_id(request, comment_id):
+    with connection.cursor() as cursor:
+        cursor.callproc('get_comment_by_id', [comment_id])
+        comment = cursor.fetchone()
+        if not comment:
+            return HttpResponse("评论不存在")
+        else:
+            return render(request, "view_comment_by_id.html",{'comment':comment})   #前端再做这个页面 
+
+#修改评论
+def update_comment(request, comment_id):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM dish_comment WHERE comment_id = %s', comment_id)
+        comment = cursor.fetchone()
+    if not comment:
+        return HttpResponse("评论不存在")
+    
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        if not comment:
+            return HttpResponse("请输入新评论！")
+        with connection.cursor() as cursor:
+            cursor.callproc('update_comment',[comment, comment])
+            connection.commit()
+        return HttpResponse("评论修改成功！")   #觉得修改完评论后应该回到评论页面的话，修改这里做重定向
+    
+    return render(request, "update_comment.html")
+
+#删除评论
+def delete_comment(request, comment_id):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM dish_comment WHERE comment_id = %s", comment_id)
+        comment = cursor.fetchone()
+        if not comment:
+            return HttpResponse("评论不存在")
+        cursor.callproc('delete_comment',comment_id)
+        return HttpResponse("评论已删除")
+    
+#根据用户搜索评论
+def view_comments_by_user(request, user_id):
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+        user = cursor.fetchone()
+        if not user:
+            return HttpResponse("用户不存在")
+        cursor.callproc("search_comment_by_user", [user_id])
+        user_comments = cursor.fetchall()
+    return render(request, "view_comments_by_user", {"user_comments": user_comments})
