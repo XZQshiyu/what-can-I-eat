@@ -7,6 +7,78 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
     <style>
+
+          /* 导航栏样式 */
+      .navi {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+
+      .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+      .navi-text li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+      .navi-text a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+      .navi-text a:hover {
+            color: #ffc107;
+        }
+
+        /* 表单样式 */
+      .paper-box {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+      .paper-box label {
+            font-size: 18px;
+            color: #343a40;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+      .paper-box input[type="text"] {
+            width: 80%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+      .paper-box input[type="submit"] {
+            background-color: #077c83;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+      .paper-box input[type="submit"]:hover {
+            background-color: #05686d;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -136,8 +208,23 @@
 </head>
 
 <body>
+      <!--导航 start-->
+      <div class="navi">
+        <div class="wrap">
+            <ul class="navi-text">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/campusFood">校内美食</a></li>
+                <li><a href="/offCampusFood">校外美食</a></li>
+                <li><a href="/comment">我要点评</a></li>
+                <li><a href="/myself">我的主页</a></li>
+                <li><a href="/contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--导航 end-->
+    
     <div class="paper-box">
-        <form action="/your_submit_url/" method="post" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <label>菜品名称：</label><br>
             <input type="text" name="dish_name"><br><br>

@@ -2,200 +2,357 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>菜品评价</title>
-  <style>
-    a {
-      z-index: 9999999999;
-      position: fixed;
-      top: 20px;
-      right: 50px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜品评价</title>
+    <style>
 
-    a:hover {
-      /* 改变颜色 */
-      color: rgb(156, 255, 240);
-      /* 增大尺寸 */
-      transform: scale(1.2);
-      /* 添加阴影 */
-      box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
-    }
+     /* 导航栏样式 */
+     .navi {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
 
-    img {
-      width: 30px;
-      height: 30px;
-    }
+      .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    /* 回到顶部 */
-    #backToTop {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: rgb(182, 183, 183);
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      cursor: pointer;
-      border-radius: 50%;
-      font-size: 16px;
-      z-index: 300402;
-    }
+      .navi-text li {
+       display: inline-block;
+       margin-right: 25px; /* 调整间距 */
+   }
 
-    #backToTop.show {
-      opacity: 1;
-    }
+      .navi-text a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
+      .navi-text a:hover {
+            color: #ffc107;
+        }
 
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
+        /* 表单样式 */
+      .paper-box {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-    th {
-      background-color: #ffad79;
-      color: white;
-    }
+      .paper-box label {
+            font-size: 18px;
+            color: #343a40;
+            display: block;
+            margin-bottom: 10px;
+        }
 
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
+      .paper-box input[type="text"] {
+            width: 80%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
 
-    .comment-item {
+      .paper-box input[type="submit"] {
+            background-color: #077c83;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-      align-items: center;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-    }
+      .paper-box input[type="submit"]:hover {
+            background-color: #05686d;
+        }
 
-    .comment-item:last-child {
-      border-bottom: none;
-    }
 
-    .item-image {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      margin-right: 15px;
-    }
+        /* 表单样式 */
+      .paper-box {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
 
-    .rating {
-      font-weight: bold;
-      margin-right: 20px;
-    }
+      .paper-box label {
+            font-size: 18px;
+            color: #343a40;
+            display: block;
+            margin-bottom: 10px;
+        }
 
-    .like-container {
-      display: flex;
-      align-items: center;
-      margin-right: 20px;
-    }
+      .paper-box input[type="text"] {
+            width: 80%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
 
-    .like-container img {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-    }
+      .paper-box input[type="submit"] {
+            background-color: #077c83;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-    .comment-action img {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-    }
+      .paper-box input[type="submit"]:hover {
+            background-color: #05686d;
+        }
+        
+        a {
+            z-index: 9999999999;
+            position: fixed;
+            top: 20px;
+            right: 50px;
+        }
 
-    table th,
-    table td {
-      width: 20%;
-    }
-  </style>
+        a:hover {
+            /* 改变颜色 */
+            color: rgb(156, 255, 240);
+            /* 增大尺寸 */
+            transform: scale(1.2);
+            /* 添加阴影 */
+            box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
+        }
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* 回到顶部 */
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgb(182, 183, 183);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 16px;
+            z-index: 300402;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ffad79;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+       .comment-item {
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+       .comment-item:last-child {
+            border-bottom: none;
+        }
+
+       .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+       .rating {
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+       .like-container {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+       .like-container img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+       .comment-action img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+
+        table th,
+        table td {
+            width: 15%;
+        }
+
+        /* 隐藏的评论输入框样式 */
+       .comment-input {
+            display: none;
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
-  <h2 class="mt-4">菜品评价</h2>
-  <div class="container">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>菜品名称</th>
-          <th>菜品图片</th>
-          <th>菜品评分</th>
-          <th>菜品评价</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for comment in comments %}
-        <tr class="comment-item">
-          <td>{{ comment.2 }}</td>
-          <td>{{ comment.1 }}</td>
-          <td class="rating">{{ comment.3 }}</td>
-          <td>{{ comment.4 }}</td>
-          <td>
-            <div class="like-container">
-              {% load static %}
-              <img src="{% static 'icons/赞.svg' %}" alt="赞" width="50px" height="50px"
-              onclick="toggleLike(this)">
-              <span>{{ comment.6 }}</span>
-            </div>
-            <div class="comment-action">
-              {% load static %}
-              <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px">
-            </div>
-            <div class="comment-action">
-              {% load static %}
-              <img src="{% static 'icons/收藏 (1).svg' %}" alt="收藏" width="50px" height="50px">
-            </div>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
 
-  <a href="/add_review">
-    {% load static %}
-    <img src="{% static 'icons/创作.svg' %}" alt="创作">
-  </a>
-  <!-- 回到顶部按钮 -->
-  <button id="backToTop">^</button>
-  <!-- 回到顶部按钮 -->
+      <!--导航 start-->
+      <div class="navi">
+        <div class="wrap">
+            <ul class="navi-text">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/campusFood">校内美食</a></li>
+                <li><a href="/offCampusFood">校外美食</a></li>
+                <li><a href="/comment">我要点评</a></li>
+                <li><a href="/myself">我的主页</a></li>
+                <li><a href="/contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--导航 end-->
+
+    <h2 class="mt-4">菜品评价</h2>
+    <div class="container">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>用户id</th>
+                    <th>菜品名称</th>
+                    <th>菜品图片</th>
+                    <th>菜品评分</th>
+                    <th>菜品评价</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in comments %}
+                <tr class="comment-item">
+                    <td>{{ comment.3 }}</td>
+                    <td>{{ comment.2 }}</td>
+                    <td>{{ comment.0 }}</td>
+                    <td class="rating">{{ comment.7 }}</td>
+                    <td>{{ comment.4 }}</td>
+                    <td>
+                        <div class="like-container">
+                            {% load static %}
+                            <img src="{% static 'icons/赞.svg' %}" alt="赞" width="50px" height="50px" onclick="toggleLike(this)">
+                            <span>{{ comment.6 }}</span>
+                        </div>
+                        <div class="comment-action">
+                            {% load static %}
+                            <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px" onclick="showCommentInput(this)">
+                        </div>
+                        <div class="comment-action">
+                            {% load static %}
+                            <img src="{% static 'icons/收藏 (1).svg' %}" alt="收藏" width="50px" height="50px">
+                        </div>
+                        <!-- 隐藏的评论输入框 -->
+                        <input class="comment-input" type="text">
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/add_dish_comment">
+        {% load static %}
+        <img src="{% static 'icons/创作.svg' %}" alt="创作">
+    </a>
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop">^</button>
+    <!-- 回到顶部按钮 -->
 </body>
 <script>
-  var backToTopButton = document.getElementById('backToTop');
-  window.addEventListener('scroll', function () {
-    if (window.scrollY > 200) {
-      backToTopButton.style.display = 'block';
-    } else {
-      backToTopButton.style.display = 'none';
-    }
-  });
-
-  document.getElementById('backToTop').onclick = function () {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+    var backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 200) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
     });
-  };
 
+    document.getElementById('backToTop').onclick = function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
 
-  function toggleLike(likeButton) {
+    function toggleLike(likeButton) {
         let likesCountElement = likeButton.nextElementSibling;
         let currentLikes = parseInt(likesCountElement.textContent);
         if (likeButton.classList.contains('liked')) {
             likeButton.classList.remove('liked');
             likesCountElement.textContent = currentLikes > 0? currentLikes - 1 : 0;
+            likeButton.style.transform = 'scale(1)';
         } else {
             likeButton.classList.add('liked');
             likesCountElement.textContent = currentLikes + 1;
+            likeButton.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                likeButton.style.transform = 'scale(1)';
+            }, 200);
         }
     }
 
+    function showCommentInput(commentButton) {
+    console.log('Comment button clicked');
+    let parentTd = commentButton.parentNode.parentNode; // 获取包含评论图标和输入框的 `<td>` 元素
+    let inputBox = parentTd.querySelector('.comment-input');
+    console.log('Input box:', inputBox);
+    if (inputBox) {
+        inputBox.style.display = inputBox.style.display === 'none'? 'block' : 'none';
+    } else {
+        console.error('Input box not found');
+    }
+}
 </script>
 
 </html>

@@ -75,6 +75,7 @@ create table dish_comment
     context varchar(255) not null,
     publish_time date,
     like_number integer not null,
+    rating integer not null,
     foreign key (window_id) references food_window(window_id) ON DELETE CASCADE,
     foreign key (user_id) references user(user_id) ON DELETE CASCADE
 );
