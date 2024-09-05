@@ -91,6 +91,7 @@ def Qinyuanchun(request):
 #提交表单
 def add_review(request, window_id):
     if request.method == 'POST':
+
         dish_name = request.POST.get('dish_name')
         image_files = request.POST.get('image_files')
         review_text = request.POST.get('review_text')

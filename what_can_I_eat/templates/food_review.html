@@ -135,7 +135,19 @@
             /* 添加阴影 */
             box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
         }
+        a:hover {
+            /* 改变颜色 */
+            color: rgb(156, 255, 240);
+            /* 增大尺寸 */
+            transform: scale(1.2);
+            /* 添加阴影 */
+            box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
+        }
 
+        img {
+            width: 30px;
+            height: 30px;
+        }
         img {
             width: 30px;
             height: 30px;
@@ -156,7 +168,25 @@
             font-size: 16px;
             z-index: 300402;
         }
+        /* 回到顶部 */
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgb(182, 183, 183);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 16px;
+            z-index: 300402;
+        }
 
+        #backToTop.show {
+            opacity: 1;
+        }
         #backToTop.show {
             opacity: 1;
         }
@@ -165,7 +195,17 @@
             border-collapse: collapse;
             width: 100%;
         }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
         th,
         td {
             border: 1px solid #ddd;
@@ -181,7 +221,15 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
 
+       .comment-item {
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
        .comment-item {
             align-items: center;
             border-bottom: 1px solid #ddd;
@@ -191,7 +239,16 @@
        .comment-item:last-child {
             border-bottom: none;
         }
+       .comment-item:last-child {
+            border-bottom: none;
+        }
 
+       .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 15px;
+        }
        .item-image {
             width: 80px;
             height: 80px;
@@ -203,7 +260,16 @@
             font-weight: bold;
             margin-right: 20px;
         }
+       .rating {
+            font-weight: bold;
+            margin-right: 20px;
+        }
 
+       .like-container {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
        .like-container {
             display: flex;
             align-items: center;
@@ -216,13 +282,38 @@
             cursor: pointer;
             transition: transform 0.3s ease;
         }
+       .like-container img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
 
        .comment-action img {
             width: 30px;
             height: 30px;
             cursor: pointer;
         }
+       .comment-action img {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
 
+        table th,
+        table td {
+            width: 15%;
+        }
+
+        /* 隐藏的评论输入框样式 */
+       .comment-input {
+            display: none;
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+    </style>
         table th,
         table td {
             width: 15%;
