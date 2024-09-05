@@ -38,9 +38,12 @@ insert into canteen (canteen_id, canteen_name, canteen_location) values ('20', '
 insert into canteen (canteen_id, canteen_name, canteen_location) values ('21', '高新学生食堂B二楼', '4');
 
 -- 东苑餐厅
-insert into food_window (window_id, window_name, canteen_id, window_description) values ('1','','1'.'行');
+insert into food_window (window_id, window_name, canteen_id, window_description) values ('1','自选菜','1'.'行');
+
 -- 蜗壳时光餐厅
-insert into food_window (window_id, window_name, canteen_id, window_description) values ('11', '', '2','行');
+insert into food_window (window_id, window_name, canteen_id, window_description) values ('2','1号窗口', '2','行');
+insert into food_window (window_id, window_name, canteen_id, window_description) values ('3','2号窗口','1'.'行');
+
 -- 星座餐厅
 insert into food_window (window_id, window_name, canteen_id, window_description) values ('21','','3'.'行');
 -- 美食广场
