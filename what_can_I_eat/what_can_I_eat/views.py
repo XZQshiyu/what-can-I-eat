@@ -91,6 +91,7 @@ def Qinyuanchun(request):
 #提交表单
 def add_review(request, window_id):
     if request.method == 'POST':
+
         dish_name = request.POST.get('dish_name')
         image_files = request.POST.get('image_files')
         review_text = request.POST.get('review_text')
@@ -201,20 +202,19 @@ def add_dish_comment(request):
         import datetime
         #获取表单数据
         #我不清楚你们怎么分配comment_id，user_id应该也不能让用户自己填写，先这样写着，再商量
-        comment_id = request.POST.get('comment_id')
-        window_id = request.POST.get('window_id')
+        
         dish_name = request.POST.get('dish_name')
-        user_id = request.POST.get('user_id')
         context = request.POST.get('context')
         publish_time = datetime.datetime.now()
         like_number = 0
+        rating = request.POST.get('rating')
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [comment_id, window_id, dish_name, user_id, context, publish_time, like_number])
+            cursor.callproc('add_comment', [comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating])
 
-        return redirect(reverse('what_can_I_eat:comment'))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
-    else:
-        return render(request, "add_dish_comment.html") #前端再做这个页面
+        #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
+    
+        return render(request, "add_review.html") #前端再做这个页面
         
 #通过comment_id搜索commment
 def view_comment_by_id(request, comment_id):

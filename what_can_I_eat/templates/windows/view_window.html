@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food in Canteens</title>
     <style>
-        body {
+    /* CSS样式部分，页面样式定义*/
+    /* 字体、背景颜色，文字颜色 */
+            body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
         }
-
+        /* 页面内容容器：居中、内边距、背景和阴影 */
        .container {
             max-width: 1200px;
             margin: 30px auto;
@@ -19,13 +21,14 @@
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
+        /* h2标题的样式，字体大小、颜色、底部间距 */
         h2 {
             font-size: 28px;
             color: #343a40;
             margin-bottom: 20px;
         }
-
+        /* 按钮类 */
+        /* 有悬停效果的蓝色按钮 */
        .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
@@ -36,12 +39,12 @@
             color: #fff;
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-
+        
        .btn-primary:hover {
             background-color: #0069d9;
             border-color: #0062cc;
         }
-
+        /* 表示危险，带有删除操作的红色按钮 */
        .btn-danger {
             background-color: #dc3545;
             border-color: #dc3545;
@@ -57,7 +60,7 @@
             background-color: #c82333;
             border-color: #bd2130;
         }
-
+        /* 表示成功的绿色按钮 */
        .btn-success {
             background-color: #28a745;
             border-color: #28a745;
@@ -73,25 +76,26 @@
             background-color: #218838;
             border-color: #1e7e34;
         }
-
+        /* 定义表格样式，宽度，单元格边框合并，顶部外边框 */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-
+        /* 定义表格单元格的样式，设置内边距、左对齐、有浅灰色的边框 */
         table th,
         table td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-
+        /* 为表头设置背景和加粗的字体 */
         table th {
             background-color: #f8f9fa;
             font-weight: bold;
         }
     </style>
+    <!-- JavaScript函数conformDelete（）用于在删除文件时提示确认操作 -->
     <script>
         function confirmDelete(windowId) {
             return confirm("请确认是否删除该窗口？");
@@ -99,13 +103,20 @@
     </script>
 </head>
 
+<!-- 网页内容开始，前方高能 -->
 <body>
+    <!-- 页面主标题，顶部有额外的外边距 -->
     <h2 class="mt-4">窗口选择</h2>
+    <!-- 定义页面主要容器，应用了container类 -->
     <div class="container">
+        <!-- 用于包裹按钮的分组容器 -->
         <div class="button-group">
+            <!-- 定义一个超链接href，跳转到/add_window,文本为创建窗口 -->
             <a href="/add_window" class="btn btn-primary">创建窗口</a>
         </div>
+        <!-- 表格开始，提供表格的基础样式和交替行背景颜色 -->
         <table class="table table-striped">
+            <!-- 表头部分，定义列的名称 -->
             <thead>
                 <tr>
                     <th>窗口名</th>
@@ -115,17 +126,24 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- 循环遍历window列表 -->
                 {% for window in windows %}
+                <!-- 每个循环生成一行<tr>，每列显示不同的window（Django模版变量）数据 -->
+                <!-- 动态填充内容 -->
                 <tr>
                     <td>{{ window.1 }}</td>
                     <td>{{ window.2 }}</td>
                     <td>{{ window.3 }}</td>
                     <td>
+                        <!-- 在每一行的操作列，生成一个绿色按钮。点击后跳转到指定窗口的评论页面，动态生成url -->
                         <a href="{% url 'food_review' window.0 %}" class="btn btn-success">查看评价</a>
-                        <a href="/update_window" class="btn btn-primary">修改窗口</a>
+                        <!-- 生成修改窗口的蓝色按钮，点击后跳转到修改页面 -->
+                        <a href="{% url 'update_window' window.0 %}" class="btn btn-primary">修改窗口</a>
+                        <!-- 生成一个“删除窗口”的红色按钮，点击后弹出确认框，用户确认后将跳转到删除操作的URL。 -->
                         <a href="#" onclick="if(confirmDelete()){window.location.href='/delete_window?window_id={{ window.0 }}';}" class="btn btn-danger">删除窗口</a>
                     </td>
                 </tr>
+                <!-- 终止循环 -->
                 {% endfor %}
             </tbody>
         </table>
