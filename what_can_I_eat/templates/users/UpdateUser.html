@@ -154,10 +154,13 @@
     <h2 class="mt-4">更新窗口信息</h2>
     <div class="container">
         <form action="/update_window" method="post" enctype="multipart/form-data">
-            <label for="window_name">窗口名：</label>
-            <input type="text" id="window_name" name="window_name" required>
-            <label for="window_image">窗口图片：</label>
-            <input type="file" id="window_description" name="window_description">
+            <label for="user_name">用户昵称：</label>
+            <input type="text" id="user_name" name="user_name" required>
+            <label for="introduction">个人简介：</label>
+            <input type="text" id="introduction" name="introduction" required>
+            <label for="head_portrait">用户头像：</label>
+            <input type="file" id="head_portrait" name="head_portrait">
+            <br><br>
             <button type="submit">提交更新</button>
 
         </form>
