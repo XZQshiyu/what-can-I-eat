@@ -188,6 +188,7 @@ def add_window(request,canteen_id):
     return render(request, 'windows/add_window.html')
 #?餐厅id要输入还是用来匹配的？
 
+
 # 储存点赞数
 def add_like(request,comment_id):
     if request.method == 'POST':
