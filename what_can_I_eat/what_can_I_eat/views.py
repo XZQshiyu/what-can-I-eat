@@ -327,7 +327,7 @@ def AddUser(request):
                 errors['database'] = 'err' # 这个database我不知道要不要改
                 return render(request, "users/AddUser.html", {"errors": errors})
             else:
-                return redirect(reverse("banksystem:client")) # 这个我不知道怎么改
+                return redirect(reverse("users/user_management.html")) # 这个我不知道怎么改
     return render(request, "users/AddUser.html")
 
 # 更新用户信息
@@ -351,7 +351,7 @@ def UpdateUser(request, user_id): # 这个user_id应该是点击对应的用户�
         if errors:
             return render(request, "users/UpdateUser.html", {"errors": errors})
         else:
-            return redirect(reverse("banksystem:client"))
+            return redirect(reverse("users/user_management.html"))   
         
     return render(request, "users/UpdateUser.html")
 
