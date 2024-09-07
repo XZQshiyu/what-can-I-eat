@@ -70,7 +70,8 @@ urlpatterns = [
     path("add_dish_comment/", views.add_dish_comment, name="add_dish_comment"),
 
     path("update_window/<str:window_id>", views.update_window, name="update_window"),
-    path("add_window/", views.add_window, name="add_window"),
+    path("add_window/<str:canteen_id>", views.add_window, name="add_window"),
+    path("delete_window/<str:window_id>", views.delete_window_route, name="delete_window"),
 
     path("user_management/", views.user_management, name="user_management"),
     path("AddUser/", views.AddUser, name="AddUser"),

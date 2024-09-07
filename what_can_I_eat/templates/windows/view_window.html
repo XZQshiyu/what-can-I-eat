@@ -234,9 +234,8 @@
                         <!-- 生成修改窗口的蓝色按钮，点击后跳转到修改页面 -->
                         <a href="{% url 'update_window' window.0 %}" class="btn btn-primary">修改窗口</a>
                         <!-- 生成一个“删除窗口”的红色按钮，点击后弹出确认框，用户确认后将跳转到删除操作的URL。 -->
-                        <a href="#"
-                            onclick="if(confirmDelete()){window.location.href='/delete_window?window_id={{ window.0 }}';}"
-                            class="btn btn-danger">删除窗口</a>
+                        <!--<a href="#" onclick="if(confirmDelete()){window.location.href='/delete_window?window_id={{ window.0 }}';}" class="btn btn-danger">删除窗口</a>-->
+                        <a href="{% url 'delete_window' window.0 %}" class="btn btn-danger">删除窗口</a>
                     </td>
                 </tr>
                 <!-- 终止循环 -->
