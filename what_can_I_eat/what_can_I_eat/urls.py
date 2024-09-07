@@ -71,4 +71,5 @@ urlpatterns = [
 
     path("update_window/<str:window_id>", views.update_window, name="update_window"),
     path("add_window/", views.add_window, name="add_window"),
+    path("delete_window/<str:window_id>", views.delete_window_route, name="delete_window"),
 ]
