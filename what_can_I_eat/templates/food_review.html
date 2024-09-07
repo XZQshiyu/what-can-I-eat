@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>菜品评价</title>
     <style>
-
-     /* 导航栏样式 */
-     .navi {
+         /* 导航栏样式 */
+         .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
@@ -22,9 +21,9 @@
         }
 
       .navi-text li {
-       display: inline-block;
-       margin-right: 25px; /* 调整间距 */
-   }
+            display: inline-block;
+            margin-right: 20px;
+        }
 
       .navi-text a {
             text-decoration: none;
@@ -37,90 +36,8 @@
             color: #ffc107;
         }
 
-        /* 表单样式 */
-      .paper-box {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-      .paper-box label {
-            font-size: 18px;
-            color: #343a40;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-      .paper-box input[type="text"] {
-            width: 80%;
-            height: 100px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-
-      .paper-box input[type="submit"] {
-            background-color: #077c83;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-      .paper-box input[type="submit"]:hover {
-            background-color: #05686d;
-        }
-
-
-        /* 表单样式 */
-      .paper-box {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-      .paper-box label {
-            font-size: 18px;
-            color: #343a40;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-      .paper-box input[type="text"] {
-            width: 80%;
-            height: 100px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-
-      .paper-box input[type="submit"] {
-            background-color: #077c83;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-      .paper-box input[type="submit"]:hover {
-            background-color: #05686d;
-        }
-        
-        a {
+      
+        .am {
             z-index: 9999999999;
             position: fixed;
             top: 20px;
@@ -135,19 +52,7 @@
             /* 添加阴影 */
             box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
         }
-        a:hover {
-            /* 改变颜色 */
-            color: rgb(156, 255, 240);
-            /* 增大尺寸 */
-            transform: scale(1.2);
-            /* 添加阴影 */
-            box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
-        }
 
-        img {
-            width: 30px;
-            height: 30px;
-        }
         img {
             width: 30px;
             height: 30px;
@@ -168,25 +73,7 @@
             font-size: 16px;
             z-index: 300402;
         }
-        /* 回到顶部 */
-        #backToTop {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: rgb(182, 183, 183);
-            border: none;
-            color: white;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 50%;
-            font-size: 16px;
-            z-index: 300402;
-        }
 
-        #backToTop.show {
-            opacity: 1;
-        }
         #backToTop.show {
             opacity: 1;
         }
@@ -195,17 +82,7 @@
             border-collapse: collapse;
             width: 100%;
         }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
 
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
         th,
         td {
             border: 1px solid #ddd;
@@ -221,15 +98,7 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
 
-       .comment-item {
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
        .comment-item {
             align-items: center;
             border-bottom: 1px solid #ddd;
@@ -239,16 +108,7 @@
        .comment-item:last-child {
             border-bottom: none;
         }
-       .comment-item:last-child {
-            border-bottom: none;
-        }
 
-       .item-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            margin-right: 15px;
-        }
        .item-image {
             width: 80px;
             height: 80px;
@@ -260,16 +120,7 @@
             font-weight: bold;
             margin-right: 20px;
         }
-       .rating {
-            font-weight: bold;
-            margin-right: 20px;
-        }
 
-       .like-container {
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
-        }
        .like-container {
             display: flex;
             align-items: center;
@@ -282,38 +133,13 @@
             cursor: pointer;
             transition: transform 0.3s ease;
         }
-       .like-container img {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
 
        .comment-action img {
             width: 30px;
             height: 30px;
             cursor: pointer;
         }
-       .comment-action img {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
 
-        table th,
-        table td {
-            width: 15%;
-        }
-
-        /* 隐藏的评论输入框样式 */
-       .comment-input {
-            display: none;
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            margin-top: 10px;
-        }
-    </style>
         table th,
         table td {
             width: 15%;
@@ -331,21 +157,19 @@
 </head>
 
 <body>
-
-      <!--导航 start-->
-      <div class="navi">
+    <!-- 导航栏 start -->
+    <div class="navi">
         <div class="wrap">
             <ul class="navi-text">
                 <li><a href="/home">Home</a></li>
                 <li><a href="/campusFood">校内美食</a></li>
                 <li><a href="/offCampusFood">校外美食</a></li>
-                <li><a href="/comment">我要点评</a></li>
-                <li><a href="/myself">我的主页</a></li>
+                <li><a href="/comment">我要评价</a></li>
                 <li><a href="/contact">联系我们</a></li>
             </ul>
         </div>
     </div>
-    <!--导航 end-->
+    <!-- 导航栏 end -->
 
     <h2 class="mt-4">菜品评价</h2>
     <div class="container">
@@ -391,7 +215,7 @@
         </table>
     </div>
 
-    <a href="/add_dish_comment">
+    <a href="/add_dish_comment" class="am">
         {% load static %}
         <img src="{% static 'icons/创作.svg' %}" alt="创作">
     </a>
@@ -434,16 +258,16 @@
     }
 
     function showCommentInput(commentButton) {
-    console.log('Comment button clicked');
-    let parentTd = commentButton.parentNode.parentNode; // 获取包含评论图标和输入框的 `<td>` 元素
-    let inputBox = parentTd.querySelector('.comment-input');
-    console.log('Input box:', inputBox);
-    if (inputBox) {
-        inputBox.style.display = inputBox.style.display === 'none'? 'block' : 'none';
-    } else {
-        console.error('Input box not found');
+        console.log('Comment button clicked');
+        let parentTd = commentButton.parentNode.parentNode; // 获取包含评论图标和输入框的 `<td>` 元素
+        let inputBox = parentTd.querySelector('.comment-input');
+        console.log('Input box:', inputBox);
+        if (inputBox) {
+            inputBox.style.display = inputBox.style.display === 'none'? 'block' : 'none';
+        } else {
+            console.error('Input box not found');
+        }
     }
-}
 </script>
 
 </html>
