@@ -152,12 +152,13 @@ def food_review(request, window_id):
 
 # 删除窗口
 def delete_window_route(request,window_id):
-     if request.method == 'GET':
+    if request.method == 'GET':
         with connection.cursor() as cursor:
             # 调用存储过程进行删除操作
             cursor.callproc('delete_window', [window_id])
             connection.commit()
-        return HttpResponse("窗口删除成功")
+        # return HttpResponse("窗口删除成功")
+    return render(request, 'windows/view_window.html')
      
 # 更新窗口
 def update_window(request,window_id):
@@ -168,7 +169,7 @@ def update_window(request,window_id):
         with connection.cursor() as cursor:
             cursor.callproc('update_window', [window_id, window_name, window_description])
             connection.commit()
-        return HttpResponse("窗口更新成功")
+        # return HttpResponse("窗口更新成功")
     return render(request, 'windows/update_window.html')
 
 # 添加窗口
@@ -188,7 +189,7 @@ def add_window(request,canteen_id):
         with connection.cursor() as cursor:
             cursor.callproc('add_window', [window_id,window_name, canteen_id, window_description])
             connection.commit()
-        return HttpResponse("窗口添加成功")
+        # return HttpResponse("窗口添加成功")
     return render(request, 'windows/add_window.html')
 #?餐厅id要输入还是用来匹配的？
 
