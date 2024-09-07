@@ -127,14 +127,81 @@
             windowSelect.innerHTML = '';
 
             if (selectedCanteen === '东区学生食堂（一楼）') {
-                var windowOptions = ['窗口 1', '窗口 2', '窗口 3'];
-               
+                var windowOptions = ['自选菜品', '18-19号', '徽州小吃','韩式小吃','广东小吃','成都小吃'];
+            
             } else if (selectedCanteen === '东苑餐厅（二楼）') {
-                var windowOptions = ['窗口 4', '窗口 5', '窗口 6'];
+                var windowOptions = ['自选菜'];
                
-            } else {
-                windowSelect.innerHTML = '暂无对应窗口信息';
+            } else if (selectedCanteen === '东苑风味餐厅') {
+                var windowOptions = ['1号窗口','2号窗口','3号窗口','4号窗口','5号窗口','6号窗口'];
+               
             }
+            else if (selectedCanteen === '沁园春') {
+                var windowOptions = ['自选菜'];
+               
+            }
+            else if (selectedCanteen === '蜗壳茶餐厅') {
+                var windowOptions = ['1号','2号','3号','4号'];
+               
+            }
+            else if (selectedCanteen === '星座餐厅（民族）') {
+                var windowOptions = ['临时窗口'];
+               
+            }
+            else if (selectedCanteen === '美食广场') {
+                var windowOptions = ['自选菜','精品套餐饭','卤肉饭','早点','美味土豆泥拌饭','叉烧饭','朱家小馆','湖南渔粉','麻辣香锅','诶哟喂麻辣烫','铁板意面/饭','烤盘饭','广式猪扒饭','千里香馄饨'];
+               
+            }
+            else if (selectedCanteen === '西区学生食堂') {
+                var windowOptions = ['自选菜'];
+               
+            }
+            else if (selectedCanteen === '西三餐厅') {
+                var windowOptions = ['自选菜'];
+               
+            }
+            else if (selectedCanteen === '西苑餐厅') {
+                var windowOptions = ['1号','2号','3号','4号','5号','6号','7号','8号','9号','10号','11号','12号'];
+               
+            }
+            else if (selectedCanteen === '芳华餐厅') {
+                var windowOptions = ['自选菜'];
+               
+            }
+            else if (selectedCanteen === '金桔园餐厅（民族）') {
+                var windowOptions = ['自选菜','1号','2号','3号','4号',];
+               
+            }
+            else if (selectedCanteen === '正阳楼餐厅') {
+                var windowOptions = ['麻辣烫','麻辣香锅','贵州牛肉粉','辣个状元','猪脚饭','千里香馄饨','瓦香鸡米饭'];
+               
+            }
+            else if (selectedCanteen === '西区教工餐厅') {
+                var windowOptions = ['自选菜'];
+               
+            }
+            else if (selectedCanteen === '桃李苑') {
+                var windowOptions = ['0号','1号','2号','3号','4号','5号','6号','7号','8号','9号','10号','11号','12号'];
+               
+            }
+            else if (selectedCanteen === '夜餐部') {
+                var windowOptions = ['1号','2号','3号','4号','5号','6号','7号'];
+               
+            }
+            else if (selectedCanteen === '南区学生食堂') {
+                var windowOptions = ['自选菜'];
+               
+            }
+            else if (selectedCanteen === '高新区学生食堂') {
+                var windowOptions = ['自选菜'];
+               
+            }
+            else if (selectedCanteen === '高新区学生食堂 B 区') {
+                var windowOptions = ['自选菜'];
+               
+            }
+           
+
             for (var windowOption of windowOptions) {
                     var opt = document.createElement('option');
                     opt.value = windowOption;

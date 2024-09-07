@@ -91,6 +91,7 @@ def Qinyuanchun(request):
 #提交表单
 def add_review(request, window_id):
     if request.method == 'POST':
+
         dish_name = request.POST.get('dish_name')
         image_files = request.POST.get('image_files')
         review_text = request.POST.get('review_text')
@@ -158,25 +159,30 @@ def delete_window_route(request,window_id):
 def update_window(request,window_id):
     if request.method == 'POST':
         data = request.POST.dict()
-        window_name = data.get("p_window_name")
-        canteen_id = data.get("p_canteen_id")
-        window_description = data.get("p_window_description")  #图片
+        window_name = data.get("window_name")
+        window_description = data.get("window_description")  #图片
         with connection.cursor() as cursor:
-            cursor.callproc('update_window', [window_id, window_name, window_description, canteen_id])
+            cursor.callproc('update_window', [window_id, window_name, window_description])
             connection.commit()
         return HttpResponse("窗口更新成功")
     return render(request, 'windows/update_window.html')
 
 # 添加窗口
-def add_window(request):
+def add_window(request,canteen_id):
     if request.method == 'POST':
-        data = request.POST.dict()
-        window_id = data.get("p_window_id")
-        window_name = data.get("p_window_name")
-        canteen_id = data.get("p_canteen_id")
-        window_description = data.get("p_window_description")  #图片
+        data = request.POST.dict()   
         with connection.cursor() as cursor:
-            cursor.callproc('add_window', [window_id,window_name, window_description, canteen_id])
+            cursor.execute('SELECT * FROM window WHERE canteen_id = %s', canteen_id)
+            window_id_list = cursor.fetchone()
+        window_id = 0
+        if window_id_list:
+            window_id = window_id_list[-1][0] + 1
+        else:
+            window_id = 0
+        window_name = data.get("window_name")     
+        window_description = data.get("window_description")  #图片
+        with connection.cursor() as cursor:
+            cursor.callproc('add_window', [window_id,window_name, canteen_id, window_description])
             connection.commit()
         return HttpResponse("窗口添加成功")
     return render(request, 'windows/add_window.html')
@@ -200,17 +206,16 @@ def add_dish_comment(request):
     if request.method == 'POST':
         import datetime
         #获取表单数据
-        #我不清楚你们怎么分配comment_id，user_id应该也不能让用户自己填写，先这样写着，再商量
-        comment_id = request.POST.get('comment_id')
-        window_id = request.POST.get('window_id')
         dish_name = request.POST.get('dish_name')
-        user_id = request.POST.get('user_id')
+        file = request.POST.get('file')
         context = request.POST.get('context')
-        publish_time = datetime.datetime.now()
+        rating = request.POST.get('rating')
         like_number = 0
-        #调用存储过程
+        publish_time = datetime.datetime.now()
+     
+
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [comment_id, window_id, dish_name, user_id, context, publish_time, like_number])
+            cursor.callproc('add_comment', [dish_name, file, context, rating, publish_time])
 
         return redirect(reverse('what_can_I_eat:comment'))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
     else:

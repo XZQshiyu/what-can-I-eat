@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>更新窗口</title>
     <style>
-        /* 导航栏样式 */
-        .navi {
+           /* 导航栏样式 */
+      .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
-        .wrap {
+      .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -20,24 +20,24 @@
             align-items: center;
         }
 
-        .navi-text li {
+      .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
-        .navi-text a {
+      .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
             transition: color 0.3s ease;
         }
 
-        .navi-text a:hover {
+      .navi-text a:hover {
             color: #ffc107;
         }
 
         /* 表单样式 */
-        .paper-box {
+      .paper-box {
             max-width: 600px;
             margin: 30px auto;
             padding: 20px;
@@ -45,14 +45,14 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .paper-box label {
+      .paper-box label {
             font-size: 18px;
             color: #343a40;
             display: block;
             margin-bottom: 10px;
         }
 
-        .paper-box input[type="text"] {
+      .paper-box input[type="text"] {
             width: 80%;
             height: 100px;
             padding: 10px;
@@ -62,7 +62,7 @@
             margin-bottom: 20px;
         }
 
-        .paper-box input[type="submit"] {
+      .paper-box input[type="submit"] {
             background-color: #077c83;
             border: none;
             padding: 12px 24px;
@@ -73,10 +73,9 @@
             transition: background-color 0.3s ease;
         }
 
-        .paper-box input[type="submit"]:hover {
+      .paper-box input[type="submit"]:hover {
             background-color: #05686d;
         }
-
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
@@ -150,7 +149,8 @@
         </div>
     </div>
     <!--导航 end-->
-
+   
+    {% for window in windows %}
     <h2 class="mt-4">更新窗口信息</h2>
     <div class="container">
         <form action="/update_window" method="post" enctype="multipart/form-data">
