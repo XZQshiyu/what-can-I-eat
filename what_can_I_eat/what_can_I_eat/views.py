@@ -87,6 +87,9 @@ def Meiguang(request):
 def Qinyuanchun(request):
     return render(request,"Qinyuanchun.html")
 
+def user1(request):
+    return render(request,"user1.html")
+
 
 #提交表单
 def add_review(request, window_id):
@@ -135,6 +138,7 @@ def view_windows(request, canteen_id):
             cursor.callproc('get_windows_by_canteen', [canteen_id])
             windows_list = cursor.fetchall()
     return render(request, 'windows/view_window.html', {'windows': windows_list})
+
 
 # review test
 def food_review(request, window_id):
