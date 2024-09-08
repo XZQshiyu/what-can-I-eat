@@ -158,7 +158,7 @@ def delete_window_route(request,window_id):
             cursor.callproc('delete_window', [window_id])
             connection.commit()
             cursor.execute('SELECT canteen_id FROM food_window WHERE window_id = %s', window_id)
-            canteen_id = cursor.fetchone
+            canteen_id = cursor.fetchone()
         # return HttpResponse("窗口删除成功")
     return render(request, 'windows/delete_window.html',{"canteen_id": canteen_id})
      
