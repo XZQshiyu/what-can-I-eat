@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>campusFood</title>
+    <style>
+        /* 导航栏样式 */
+        .navi {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navi-text li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .navi-text a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navi-text a:hover {
+            color: #ffc107;
+        }
+
+        /* 主体内容样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        #campusFood {
+            margin-top: 30px;
+        }
+
+        #eastCampus table,
+        #westCampus table,
+        #otherCampuses table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #eastCampus table tr td,
+        #westCampus table tr td,
+        #otherCampuses table tr td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #eastCampus table tr td:first-child,
+        #westCampus table tr td:first-child,
+        #otherCampuses table tr td:first-child {
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+
+        #eastCampus table tr td a,
+        #westCampus table tr td a,
+        #otherCampuses table tr td a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        #eastCampus table tr td a:hover,
+        #westCampus table tr td a:hover,
+        #otherCampuses table tr td a:hover {
+            color: #007bff;
+        }
+
+        #otherCampuses div {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!--导航 start-->
+    <div class="navi">
+        <div class="wrap">
+            <ul class="navi-text">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/campusFood">校内美食</a></li>
+                <li><a href="/offCampusFood">校外美食</a></li>
+                <li><a href="/comment">我要点评</a></li>
+                <li><a href="/myself">我的主页</a></li>
+                <li><a href="/contact">联系我们</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--导航 end-->
+
+    <p> 窗口删除成功</p>
+
+    <a href="{% url 'view_window' canteen_id%}"> 返回 </a>
+
+</body>
+
+</html>
