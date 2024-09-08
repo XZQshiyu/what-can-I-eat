@@ -155,13 +155,12 @@
         {% csrf_token %}
         <div class="mb-3">
             <label for="window_name" class="form-control">窗口名：</label>
-            <input type="text" class="form-control" id="window_name" name="window_name"
-            required><br><br>
+            <input type="text" class="form-control" id="window_name" name="window_name", value="{{ window.1 }}" required><br><br>
         </div>
         <div class="mb-3">
-            <label for="window_image" class="form-control">窗口图片：</label>
-            <input type="file" class="form-control" id="window_description" name="window_description"
-            readonly><br><br>
+            <label for="window_description" class="form-control">窗口描述：</label>
+            <input type="text" class="form-control" id="window_description" name="window_description", value="{{ window.3 }}"
+            required><br><br>
         </div> 
             <button type="submit" class="btn btn-primary">提交更新</button>
         </form>

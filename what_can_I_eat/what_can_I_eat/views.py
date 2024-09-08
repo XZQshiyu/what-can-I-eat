@@ -162,23 +162,24 @@ def delete_window_route(request,window_id):
      
 # 更新窗口
 def update_window(request, window_id):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM food_window WHERE window_id = %s', [window_id])
+        window = cursor.fetchone()
+    if not window:
+        return HttpResponse("窗口不存在")
+
     if request.method == 'POST':
         data = request.POST.dict()
         window_name = data.get("window_name")
         window_description = data.get("window_description")  #图片
-        canteen_id = 0
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM food_window WHERE window_id = %s', window_id)
-            window = cursor.fetchone()
-        if not window:
-            return HttpResponse("窗口不存在")
-        else:
-            canteen_id = window[2]
+        canteen_id = window[2]
+        print(window_name, window_description, canteen_id)
+        print(window_id)
         with connection.cursor() as cursor:
             cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description])
             connection.commit()
-        # return HttpResponse("窗口更新成功")
-    return render(request, 'windows/update_window.html')
+        return redirect(reverse('view_windows', kwargs={'canteen_id': canteen_id}))
+    return render(request, 'windows/update_window.html', {'window_id': window_id, 'window': window})
 
 # 添加窗口
 def add_window(request,canteen_id):
