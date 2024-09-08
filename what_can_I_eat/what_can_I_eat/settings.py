@@ -80,8 +80,8 @@ DATABASES = {
         "NAME": "what_can_I_eat",
         "HOST": "127.0.0.1",
         "PORT": 3306,
-        "USER": "root",
-        "PASSWORD": "Lyz791387210",
+        "USER": "root", 
+        "PASSWORD": "Hjiayuan202011!",
     }
 }
 
