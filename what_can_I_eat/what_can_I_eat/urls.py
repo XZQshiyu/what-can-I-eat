@@ -45,8 +45,8 @@ urlpatterns = [
 
 
     path("XiYuan/",views.XiYuan),
-    path("Xiyuan1/",views.Xiyuan1),
-
+  
+    
 
     path("Jinjuyuan/",views.Jinjuyuan),
     path("Zhengyanglou/",views.Zhengyanglou),
@@ -67,8 +67,15 @@ urlpatterns = [
     path("canteens/",views.canteens),
 
     path("food_review/<str:window_id>", views.food_review, name="food_review"),
-    path("add_review/<str:window_id>", views.add_review, name="add_review"),
+    path("add_dish_comment/", views.add_dish_comment, name="add_dish_comment"),
 
     path("update_window/<str:window_id>", views.update_window, name="update_window"),
     path("add_window/", views.add_window, name="add_window"),
+    path("delete_window/<str:window_id>", views.delete_window_route, name="delete_window"),
+
+    path("user_management/", views.user_management, name="user_management"),
+    path("AddUser/", views.AddUser, name="AddUser"),
+    path("UpdateUser/<str:user_id>", views.UpdateUser, name="UpdateUser"),
+    path("DeleteUser/<str:user_id>", views.DeleteUser, name="DeleteUser"),
+    path("user1/", views.user1, name="user1"),
 ]

@@ -87,10 +87,14 @@ def Meiguang(request):
 def Qinyuanchun(request):
     return render(request,"Qinyuanchun.html")
 
+def user1(request):
+    return render(request,"user1.html")
+
 
 #提交表单
 def add_review(request, window_id):
     if request.method == 'POST':
+
         dish_name = request.POST.get('dish_name')
         image_files = request.POST.get('image_files')
         review_text = request.POST.get('review_text')
@@ -135,6 +139,7 @@ def view_windows(request, canteen_id):
             windows_list = cursor.fetchall()
     return render(request, 'windows/view_window.html', {'windows': windows_list})
 
+
 # review test
 def food_review(request, window_id):
     review_list = []
@@ -147,40 +152,47 @@ def food_review(request, window_id):
 
 # 删除窗口
 def delete_window_route(request,window_id):
-     if request.method == 'GET':
+    if request.method == 'GET':
         with connection.cursor() as cursor:
             # 调用存储过程进行删除操作
             cursor.callproc('delete_window', [window_id])
             connection.commit()
-        return HttpResponse("窗口删除成功")
+        # return HttpResponse("窗口删除成功")
+    return render(request, 'windows/view_window.html')
      
 # 更新窗口
 def update_window(request,window_id):
     if request.method == 'POST':
         data = request.POST.dict()
-        window_name = data.get("p_window_name")
-        canteen_id = data.get("p_canteen_id")
-        window_description = data.get("p_window_description")  #图片
+        window_name = data.get("window_name")
+        window_description = data.get("window_description")  #图片
         with connection.cursor() as cursor:
-            cursor.callproc('update_window', [window_id, window_name, window_description, canteen_id])
+            cursor.callproc('update_window', [window_id, window_name, window_description])
             connection.commit()
-        return HttpResponse("窗口更新成功")
+        # return HttpResponse("窗口更新成功")
     return render(request, 'windows/update_window.html')
 
 # 添加窗口
-def add_window(request):
+def add_window(request,canteen_id):
     if request.method == 'POST':
-        data = request.POST.dict()
-        window_id = data.get("p_window_id")
-        window_name = data.get("p_window_name")
-        canteen_id = data.get("p_canteen_id")
-        window_description = data.get("p_window_description")  #图片
+        data = request.POST.dict()   
         with connection.cursor() as cursor:
-            cursor.callproc('add_window', [window_id,window_name, window_description, canteen_id])
+            cursor.execute('SELECT * FROM window WHERE canteen_id = %s', canteen_id)
+            window_id_list = cursor.fetchone()
+        window_id = 0
+        if window_id_list:
+            window_id = window_id_list[-1][0] + 1
+        else:
+            window_id = 0
+        window_name = data.get("window_name")     
+        window_description = data.get("window_description")  #图片
+        with connection.cursor() as cursor:
+            cursor.callproc('add_window', [window_id,window_name, canteen_id, window_description])
             connection.commit()
-        return HttpResponse("窗口添加成功")
+        # return HttpResponse("窗口添加成功")
     return render(request, 'windows/add_window.html')
 #?餐厅id要输入还是用来匹配的？
+
 
 # 储存点赞数
 def add_like(request,comment_id):
@@ -200,17 +212,16 @@ def add_dish_comment(request):
     if request.method == 'POST':
         import datetime
         #获取表单数据
-        #我不清楚你们怎么分配comment_id，user_id应该也不能让用户自己填写，先这样写着，再商量
-        comment_id = request.POST.get('comment_id')
-        window_id = request.POST.get('window_id')
         dish_name = request.POST.get('dish_name')
-        user_id = request.POST.get('user_id')
+        file = request.POST.get('file')
         context = request.POST.get('context')
-        publish_time = datetime.datetime.now()
+        rating = request.POST.get('rating')
         like_number = 0
+        publish_time = datetime.datetime.now()
+     
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [comment_id, window_id, dish_name, user_id, context, publish_time, like_number])
+            cursor.callproc('add_comment', [dish_name, file, context, rating, publish_time])
 
         return redirect(reverse('what_can_I_eat:comment'))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
     else:
@@ -265,3 +276,108 @@ def view_comments_by_user(request, user_id):
         cursor.callproc("search_comment_by_user", [user_id])
         user_comments = cursor.fetchall()
     return render(request, "view_comments_by_user", {"user_comments": user_comments})
+
+# zyh 没写完
+# 用户接口：
+
+# 展示所有用户 (需要添加："user/user_management.html"、{"users": results}) （可以自己改）
+def user_management(request):
+    with connection.cursor() as cursor:
+        cursor.callproc('GetAllEntity')
+        results = cursor.fetchall()
+    return render(request, "users/user_management.html", {"users": results})
+
+# 添加用户
+def AddUser(request):
+    if request.method == 'POST':
+        # 获取表单数据
+        user_id = request.POST.get('user_id')
+        user_name = request.POST.get('user_name')
+        introduction = request.POST.get('introduction')
+        haed_portrait = request.POST.get('head_portrait')
+
+        #初始化错误信息
+        errors = {}
+
+        # 检查id，要求为正整数
+        if not user_id:
+            errors['user_id'] = 'id 不能为空'
+        else:
+            try:
+                user_id = int(user_id)
+                if user_id <= 0:
+                    errors['user_id'] = 'id必须是正整数'
+            except ValueError:
+                errors['user_id'] = 'id 必须是正整数'
+        
+        # 检查昵称
+        if not user_name:
+            errors['user_name'] = '昵称不能为空'
+        
+        # 检查简介
+        if not introduction:
+            errors['introduction'] = '简介不能为空'
+        # 检查性别
+        if  not haed_portrait :
+            errors['head_portrait'] = "头像不能为空"
+        
+        # 调用存储过程
+        with connection.cursor() as cursor:
+            err = ''
+            cursor.callproc('AddUser', [user_id, user_name, introduction, haed_portrait, err
+            ])
+            cursor.execute('SELECT @_AddUser_4')
+            err = cursor.fetchone()[0]
+            print(err)
+            if err:
+                errors['database'] = 'err' # 这个database我不知道要不要改
+                return render(request, "users/AddUser.html", {"errors": errors})
+            else:
+                return redirect(reverse("banksystem:client")) # 这个我不知道怎么改
+    return render(request, "users/AddUser.html")
+
+# 更新用户信息
+def UpdateUser(request, user_id): # 这个user_id应该是点击对应的用户之后自动传上去的，但是我不知道怎么做（
+    if request.method == 'POST':
+        user_name = request.POST.get('user_name')
+        introduction = request.POST.get('introduction')
+        head_portrait = request.POST.get('head_portrait')
+
+        errors = {}
+
+        if not errors:
+            with connection.cursor() as cursor:
+                err = ''
+                cursor.callproc('UpdateUser', [user_id, user_name or None, introduction or None, head_portrait or None, err])
+                cursor.execute('SELECT @_UpdateUser_4')
+                err = cursor.fetclone()[0]
+                if err:
+                    errors['datanase'] = err # 这个database同理 我也不知道怎么改……
+
+        if errors:
+            return render(request, "users/UpdateUser.html", {"errors": errors})
+        else:
+            return redirect(reverse("banksystem:client"))
+        
+    return render(request, "users/UpdateUser.html")
+
+# 删除用户信息
+def DeleteUser(request, user_id):
+     if request.method == 'GET':
+        with connection.cursor() as cursor:
+            # 调用存储过程进行删除操作
+            cursor.callproc('DeleteUser', [user_id])
+            connection.commit()
+        return HttpResponse("用户删除成功")
+
+# 通过id和name查询用户
+def search_user(request):
+    results = []
+    if request.method == 'POST':
+        user_name = request.POST.get('user_name', None)
+        user_id = request.POST.get('user_id', None)
+
+        with connection.cursor() as cursor:
+            cursor.callproc('search_user', [user_name, user_id])
+            results = cursor.fetchall()
+    return render(request, "users/search_user.html", {"results": results})
