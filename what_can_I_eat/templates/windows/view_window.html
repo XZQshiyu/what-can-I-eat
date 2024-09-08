@@ -6,14 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food in Canteens</title>
     <style>
-
-          /* 导航栏样式 */
-      .navi {
+        /* 导航栏样式 */
+        .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
-      .wrap {
+        .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -21,24 +20,24 @@
             align-items: center;
         }
 
-      .navi-text li {
+        .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
-      .navi-text a {
+        .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
             transition: color 0.3s ease;
         }
 
-      .navi-text a:hover {
+        .navi-text a:hover {
             color: #ffc107;
         }
 
         /* 表单样式 */
-      .paper-box {
+        .paper-box {
             max-width: 600px;
             margin: 30px auto;
             padding: 20px;
@@ -46,14 +45,14 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-      .paper-box label {
+        .paper-box label {
             font-size: 18px;
             color: #343a40;
             display: block;
             margin-bottom: 10px;
         }
 
-      .paper-box input[type="text"] {
+        .paper-box input[type="text"] {
             width: 80%;
             height: 100px;
             padding: 10px;
@@ -63,7 +62,7 @@
             margin-bottom: 20px;
         }
 
-      .paper-box input[type="submit"] {
+        .paper-box input[type="submit"] {
             background-color: #077c83;
             border: none;
             padding: 12px 24px;
@@ -74,32 +73,35 @@
             transition: background-color 0.3s ease;
         }
 
-      .paper-box input[type="submit"]:hover {
+        .paper-box input[type="submit"]:hover {
             background-color: #05686d;
         }
-        
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #333;
         }
+
         /* 页面内容容器：居中、内边距、背景和阴影 */
-       .container {
+        .container {
             max-width: 1200px;
             margin: 30px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         /* h2标题的样式，字体大小、颜色、底部间距 */
         h2 {
             font-size: 28px;
             color: #343a40;
             margin-bottom: 20px;
         }
+
         /* 按钮类 */
         /* 有悬停效果的蓝色按钮 */
-       .btn-primary {
+        .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
             padding: 8px 16px;
@@ -109,13 +111,14 @@
             color: #fff;
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
-        
-       .btn-primary:hover {
+
+        .btn-primary:hover {
             background-color: #0069d9;
             border-color: #0062cc;
         }
+
         /* 表示危险，带有删除操作的红色按钮 */
-       .btn-danger {
+        .btn-danger {
             background-color: #dc3545;
             border-color: #dc3545;
             padding: 8px 16px;
@@ -126,12 +129,13 @@
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-       .btn-danger:hover {
+        .btn-danger:hover {
             background-color: #c82333;
             border-color: #bd2130;
         }
+
         /* 表示成功的绿色按钮 */
-       .btn-success {
+        .btn-success {
             background-color: #28a745;
             border-color: #28a745;
             padding: 8px 16px;
@@ -142,16 +146,18 @@
             transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
-       .btn-success:hover {
+        .btn-success:hover {
             background-color: #218838;
             border-color: #1e7e34;
         }
+
         /* 定义表格样式，宽度，单元格边框合并，顶部外边框 */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
+
         /* 定义表格单元格的样式，设置内边距、左对齐、有浅灰色的边框 */
         table th,
         table td {
@@ -159,6 +165,7 @@
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         /* 为表头设置背景和加粗的字体 */
         table th {
             background-color: #f8f9fa;
@@ -174,6 +181,7 @@
 </head>
 
 <!-- 网页内容开始，前方高能 -->
+
 <body>
 
     <!--导航 start-->
@@ -190,7 +198,7 @@
         </div>
     </div>
     <!--导航 end-->
-   
+
 
     <h2 class="mt-4">窗口选择</h2>
     <!-- 定义页面主要容器，应用了container类 -->
@@ -227,7 +235,7 @@
                         <a href="{% url 'update_window' window.0 %}" class="btn btn-primary">修改窗口</a>
                         <!-- 生成一个“删除窗口”的红色按钮，点击后弹出确认框，用户确认后将跳转到删除操作的URL。 -->
                         <!--<a href="#" onclick="if(confirmDelete()){window.location.href='/delete_window?window_id={{ window.0 }}';}" class="btn btn-danger">删除窗口</a>-->
-                        <a href="{% url 'delete_window' window.0 %}" class="btn btn-danger">删除窗口</a>
+                        <a href="{% url 'delete_window' window.0 window.4 %}" class="btn btn-danger">删除窗口</a>
                     </td>
                 </tr>
                 <!-- 终止循环 -->

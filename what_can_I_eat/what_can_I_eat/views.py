@@ -151,14 +151,17 @@ def food_review(request, window_id):
     return render(request, 'food_review.html', {'comments': review_list})
 
 # 删除窗口
-def delete_window_route(request,window_id):
+def delete_window_route(request,window_id, canteen_id):
+    windows_list = []
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 调用存储过程进行删除操作
             cursor.callproc('delete_window', [window_id])
             connection.commit()
+            cursor.callproc('get_windows_by_canteen', [canteen_id])
+            windows_list = cursor.fetchall()
         # return HttpResponse("窗口删除成功")
-    return render(request, 'windows/view_window.html')
+    return render(request, 'windows/view_window.html', {'windows': windows_list})
      
 # 更新窗口
 def update_window(request,window_id):
