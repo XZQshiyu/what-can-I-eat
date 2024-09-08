@@ -156,15 +156,23 @@ def delete_window_route(request,window_id):
         return HttpResponse("窗口删除成功")
      
 # 更新窗口
-def update_window(request,window_id):
+def update_window(request, window_id):
     if request.method == 'POST':
         data = request.POST.dict()
         window_name = data.get("window_name")
         window_description = data.get("window_description")  #图片
+        canteen_id = 0
         with connection.cursor() as cursor:
-            cursor.callproc('update_window', [window_id, window_name, window_description])
+            cursor.execute('SELECT * FROM food_window WHERE window_id = %s', window_id)
+            window = cursor.fetchone()
+        if not window:
+            return HttpResponse("窗口不存在")
+        else:
+            canteen_id = window[2]
+        with connection.cursor() as cursor:
+            cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description])
             connection.commit()
-        return HttpResponse("窗口更新成功")
+        return redirect(reverse('what_can_I_eat:view_windows', args=[canteen_id]))
     return render(request, 'windows/update_window.html')
 
 # 添加窗口

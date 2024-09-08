@@ -69,6 +69,7 @@ urlpatterns = [
     path("food_review/<str:window_id>", views.food_review, name="food_review"),
     path("add_dish_comment/", views.add_dish_comment, name="add_dish_comment"),
 
+    
     path("update_window/<str:window_id>", views.update_window, name="update_window"),
     path("add_window/", views.add_window, name="add_window"),
 
