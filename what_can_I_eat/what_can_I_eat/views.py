@@ -3,7 +3,8 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.db import connection
 from django.urls import reverse
-
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 
 def signin(request):
     if request.method == 'POST':
@@ -151,6 +152,7 @@ def food_review(request, window_id):
             # 获取一个窗口的所有评论
             cursor.callproc('get_all_comments_from_window', [window_id])
             review_list = cursor.fetchall()
+            print(review_list)
     return render(request, 'food_review.html', {'comments': review_list})
 
 # 删除窗口
@@ -180,8 +182,15 @@ def update_window(request, window_id):
         canteen_id = window[2]
         print(window_name, window_description, canteen_id)
         print(window_id)
+        image_file = request.FILES.get('window_image')
+        image_url = None
+        if image_file:
+            image_name = f"images/{window_name.replace(' ', '_').lower()}.jpg"
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            image_url = f"/media/{image_path}"
+        
         with connection.cursor() as cursor:
-            cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description])
+            cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description, image_url])
             connection.commit()
         return redirect(reverse('view_windows', kwargs={'canteen_id': canteen_id}))
     return render(request, 'windows/update_window.html', {'window_id': window_id, 'window': window})
@@ -200,9 +209,20 @@ def add_window(request,canteen_id):
         else:
             window_id = 0
         window_name = data.get("window_name")     
-        window_description = data.get("window_description")  #图片
+        window_description = data.get("window_description")  #描述
+        # 读取图像文件
+        image_file = request.FILES.get('window_image')
+        print(image_file)
+        image_url = None
+        if image_file:
+            # 生成图片文件名
+            image_name =  f"images/{window_name.replace(' ', '_').lower()}.jpg"
+            # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
         with connection.cursor() as cursor:
-            cursor.callproc('add_window', [window_id, window_name, canteen_id, window_description])
+            cursor.callproc('add_window', [window_id, window_name, canteen_id, window_description, image_url])
             connection.commit()
         return redirect(reverse('view_windows', args=[canteen_id]))
     return render(request, 'windows/add_window.html', {'canteen_id': canteen_id})

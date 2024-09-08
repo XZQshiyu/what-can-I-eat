@@ -6,11 +6,12 @@ CREATE PROCEDURE add_window (
     IN p_window_id VARCHAR(18),
     IN p_window_name VARCHAR(30),
     IN p_canteen_id VARCHAR(30),
-    IN p_window_description VARCHAR(100)
+    IN p_window_description VARCHAR(100),
+    IN p_window_image varchar(255)
 )
 BEGIN
-    INSERT INTO food_window (window_id, window_name, canteen_id, window_description)
-    VALUES (p_window_id, p_window_name, p_canteen_id, p_window_description);
+    INSERT INTO food_window (window_id, window_name, canteen_id, window_description, window_image)
+    VALUES (p_window_id, p_window_name, p_canteen_id, p_window_description, p_window_image);
 END //
 delimiter ;
 
@@ -21,7 +22,7 @@ CREATE PROCEDURE get_window_by_id (
     IN p_window_id VARCHAR(18)
 )
 BEGIN
-    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description
+    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description, fw.window_image
     FROM food_window fw
     JOIN canteen ca ON fw.canteen_id = ca.canteen_id
     WHERE window_id = p_window_id;
@@ -35,10 +36,11 @@ CREATE PROCEDURE update_window (
     IN p_window_id VARCHAR(18),
     IN p_window_name VARCHAR(30),
     IN p_canteen_id VARCHAR(30),
-    IN p_window_description VARCHAR(100)
+    IN p_window_description VARCHAR(100),
+    IN p_window_image varchar(255)
 )
 BEGIN
-    UPDATE food_window SET window_name = p_window_name, canteen_id = p_canteen_id, window_description = p_window_description WHERE window_id = p_window_id;
+    UPDATE food_window SET window_name = p_window_name, canteen_id = p_canteen_id, window_description = p_window_description, window_image = p_window_image WHERE window_id = p_window_id;
 END //
 delimiter ;
 
@@ -62,7 +64,7 @@ CREATE PROCEDURE search_window(
     IN p_canteen_id VARCHAR(30)
 )
 BEGIN
-    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description
+    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description, fw.window_image
     FROM food_window fw
     JOIN canteen ca ON fw.canteen_id = ca.canteen_id
     WHERE (window_id = p_window_id OR p_window_id IS NULL)
@@ -78,7 +80,7 @@ CREATE PROCEDURE get_windows_by_canteen (
     IN p_canteen_id VARCHAR(30)
 )
 BEGIN
-    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description
+    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description, fw.window_image
     FROM food_window fw
     JOIN canteen ca ON fw.canteen_id = ca.canteen_id
     WHERE fw.canteen_id = p_canteen_id;

@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>菜品评价</title>
     <style>
-         /* 导航栏样式 */
-         .navi {
+        /* 导航栏样式 */
+        .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
-      .wrap {
+        .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -20,23 +20,23 @@
             align-items: center;
         }
 
-      .navi-text li {
+        .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
-      .navi-text a {
+        .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
             transition: color 0.3s ease;
         }
 
-      .navi-text a:hover {
+        .navi-text a:hover {
             color: #ffc107;
         }
 
-      
+
         .am {
             z-index: 9999999999;
             position: fixed;
@@ -78,10 +78,10 @@
             opacity: 1;
         }
 
-       
+
 
         /* 隐藏的评论输入框样式 */
-       .comment-input {
+        .comment-input {
             display: none;
             width: 300px;
             padding: 10px;
@@ -95,7 +95,7 @@
             font-family: 'Roboto', sans-serif;
         }
 
-       .post {
+        .post {
             border: 1px solid #ccc;
             padding: 10px;
             width: 500px;
@@ -105,15 +105,15 @@
             position: relative;
         }
 
-       .user-info {
-           
+        .user-info {
+
             margin-left: 10px;
             margin-top: 10px;
             align-items: center;
             gap: 20px;
         }
 
-       .user-avatar {
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -121,24 +121,24 @@
             box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
         }
 
-       .user-id {
+        .user-id {
             font-weight: bold;
             color: #333;
             font-size: 18px;
         }
 
-       .text-content {
+        .text-content {
             margin-top: 10px;
             position: relative;
         }
 
-       .star-rating {
+        .star-rating {
             margin-top: 10px;
             color: gold;
             position: relative;
         }
 
-       .image-container {
+        .image-container {
             display: flex;
             justify-content: space-between;
             /* 让两张图片横向排列且间隔开 */
@@ -147,7 +147,7 @@
 
         }
 
-       .image {
+        .image {
             height: 180px;
             width: 180px;
             border-radius: 10px;
@@ -155,14 +155,14 @@
         }
 
 
-       .button-row {
+        .button-row {
             display: flex;
             justify-content: space-between;
             margin-top: 0px;
             position: relative;
         }
 
-       .button {
+        .button {
             cursor: pointer;
             border-radius: 20px;
             transition: background-color 0.3s;
@@ -170,11 +170,11 @@
 
         }
 
-       .button:hover {
+        .button:hover {
             background-color: #d0d0d0;
         }
 
-       .image1 {
+        .image1 {
             height: 20px;
             width: 20px;
         }
@@ -184,7 +184,7 @@
         function goBack() {
             window.history.back();
         }
-      </script>
+    </script>
 </head>
 
 <body>
@@ -211,13 +211,19 @@
             <div class="user-id">{{ comment.3 }}</div>
 
             <div class="text-content">
-                <p>{{comment.4}}</p>
+                <p>{{ comment.4 }}</p>
 
-                <span v-if="{{comment.7}} === 1" class="star-rating">★☆☆☆☆</span>
-                <span v-if="{{comment.7}}  === 2" class="star-rating">★★☆☆☆</span>
-                <span v-if="{{comment.7}} === 3" class="star-rating">★★★☆☆</span>
-                <span v-if="{{comment.7}}  === 4" class="star-rating">★★★★☆</span>
-                <span v-if="{{comment.7}}  === 5" class="star-rating">★★★★★</span>
+                {% if comment.7 == 1 %}
+                <span class="star-rating">★☆☆☆☆</span>
+                {% elif comment.7 == 2 %}
+                <span class="star-rating">★★☆☆☆</span>
+                {% elif comment.7 == 3 %}
+                <span class="star-rating">★★★☆☆</span>
+                {% elif comment.7 == 4 %}
+                <span class="star-rating">★★★★☆</span>
+                {% elif comment.7 == 5 %}
+                <span class="star-rating">★★★★★</span>
+                {% endif %}
             </div>
 
             {% load static %}
@@ -277,7 +283,7 @@
         let currentLikes = parseInt(likesCountElement.textContent);
         if (likeButton.classList.contains('liked')) {
             likeButton.classList.remove('liked');
-            likesCountElement.textContent = currentLikes > 0? currentLikes - 1 : 0;
+            likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
             likeButton.style.transform = 'scale(1)';
         } else {
             likeButton.classList.add('liked');
@@ -289,48 +295,48 @@
         }
     }
 
-   
+
     function showCommentInput(commentButton) {
-            console.log('Comment button clicked');
-            let parentTd = commentButton.parentNode.parentNode;
-            let inputBox = parentTd.querySelector('.comment-input');
-            console.log('Input box:', inputBox);
+        console.log('Comment button clicked');
+        let parentTd = commentButton.parentNode.parentNode;
+        let inputBox = parentTd.querySelector('.comment-input');
+        console.log('Input box:', inputBox);
 
-            if (inputBox) {
-                inputBox.style.display = inputBox.style.display === 'none'? 'block' : 'none';
+        if (inputBox) {
+            inputBox.style.display = inputBox.style.display === 'none' ? 'block' : 'none';
 
-                // 检查提交按钮是否存在
-                let submitButton = parentTd.querySelector('button');
+            // 检查提交按钮是否存在
+            let submitButton = parentTd.querySelector('button');
 
-                if (inputBox.style.display === 'block') {
-                    if (!submitButton) {
-                        // 如果输入框显示且提交按钮不存在，则添加提交按钮
-                        submitButton = document.createElement('button');
-                        submitButton.textContent = '提交';
-                        submitButton.addEventListener('click', function () {
-                            let commentValue = inputBox.value;
-                            console.log('提交的评论：', commentValue);
-                            // 可添加将评论发送到服务器等操作
-                            inputBox.value = '';
-                            inputBox.style.display = 'none';
-                            if (submitButton) {
-                                submitButton.remove();
-                            }
-                        });
-                        inputBox.parentNode.insertBefore(submitButton, inputBox.nextSibling);
-                    }
-                } else {
-                    // 如果输入框隐藏且提交按钮存在，则移除提交按钮
-                    if (submitButton) {
-                        submitButton.remove();
-                    }
+            if (inputBox.style.display === 'block') {
+                if (!submitButton) {
+                    // 如果输入框显示且提交按钮不存在，则添加提交按钮
+                    submitButton = document.createElement('button');
+                    submitButton.textContent = '提交';
+                    submitButton.addEventListener('click', function () {
+                        let commentValue = inputBox.value;
+                        console.log('提交的评论：', commentValue);
+                        // 可添加将评论发送到服务器等操作
+                        inputBox.value = '';
+                        inputBox.style.display = 'none';
+                        if (submitButton) {
+                            submitButton.remove();
+                        }
+                    });
+                    inputBox.parentNode.insertBefore(submitButton, inputBox.nextSibling);
                 }
             } else {
-                console.error('Input box not found');
+                // 如果输入框隐藏且提交按钮存在，则移除提交按钮
+                if (submitButton) {
+                    submitButton.remove();
+                }
             }
+        } else {
+            console.error('Input box not found');
         }
+    }
 
-   
+
 </script>
 
 </html>

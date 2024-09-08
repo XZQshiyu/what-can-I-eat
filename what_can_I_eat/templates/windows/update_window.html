@@ -158,7 +158,7 @@
     <!--导航 end-->
     <div class="container">
     <h1 class="mt-4">更新窗口信息</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
             <label for="window_name" class="form-control">窗口名：</label>
@@ -169,6 +169,10 @@
             <input type="text" class="form-control" id="window_description" name="window_description", value="{{ window.3 }}"
             required><br><br>
         </div> 
+        <div class="mb-3">
+            <label for="window_location" class="form-control">窗口图片：</label>
+            <input type="file" class="form-control" id="window_image" name="window_image" accept="image/*"><br><br>
+        </div>
             <button type="submit" class="btn btn-primary">提交更新</button>
         </form>
     </div>

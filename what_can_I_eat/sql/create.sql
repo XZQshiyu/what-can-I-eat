@@ -42,6 +42,7 @@ create table food_window
     window_name varchar(30) not null,
     canteen_id varchar(30) not null,
     window_description varchar(100) not null,
+    window_image varchar(255),
     foreign key (canteen_id) references canteen(canteen_id) ON DELETE CASCADE
 );
 
