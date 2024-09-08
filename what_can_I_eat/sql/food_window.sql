@@ -78,7 +78,7 @@ CREATE PROCEDURE get_windows_by_canteen (
     IN p_canteen_id VARCHAR(30)
 )
 BEGIN
-    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description, fw.canteen_id
+    SELECT fw.window_id, fw.window_name, ca.canteen_name, fw.window_description
     FROM food_window fw
     JOIN canteen ca ON fw.canteen_id = ca.canteen_id
     WHERE fw.canteen_id = p_canteen_id;
