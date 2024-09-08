@@ -191,10 +191,10 @@ def add_window(request,canteen_id):
     if request.method == 'POST':
         data = request.POST.dict()   
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM food_window WHERE canteen_id = %s', canteen_id)
+            cursor.execute('SELECT * FROM food_window')
             window_id_list = cursor.fetchall()
         window_id = 0
-        print(window_id_list)
+        # print(window_id_list)
         if window_id_list:
             window_id = int(window_id_list[-1][0]) + 1
         else:

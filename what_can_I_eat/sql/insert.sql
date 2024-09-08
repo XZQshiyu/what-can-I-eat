@@ -161,13 +161,13 @@ insert into food_window (window_id, window_name, canteen_id, window_description)
 insert into food_window (window_id, window_name, canteen_id, window_description) values ('87','盖浇面','17','行');
 
 -- 高a一楼
-insert into food_window (window_id, window_name, canteen_id, window_description) values ('171','1','18','行');
+insert into food_window (window_id, window_name, canteen_id, window_description) values ('88','1','18','行');
 -- 高a二楼
-insert into food_window (window_id, window_name, canteen_id, window_description) values ('181','1','19','行');
+insert into food_window (window_id, window_name, canteen_id, window_description) values ('89','1','19','行');
 -- 高b一楼
-insert into food_window (window_id, window_name, canteen_id, window_description) values ('191','1','20','行');
+insert into food_window (window_id, window_name, canteen_id, window_description) values ('90','1','20','行');
 -- 高b二楼
-insert into food_window (window_id, window_name, canteen_id, window_description) values ('201','1','21','行');
+insert into food_window (window_id, window_name, canteen_id, window_description) values ('91','1','21','行');
 
 
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('1', '1', '瓦香鸡', '1', '感觉不如羊肉面', '20240830', 17, 2);
