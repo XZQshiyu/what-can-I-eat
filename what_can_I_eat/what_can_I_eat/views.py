@@ -125,6 +125,9 @@ def delete_campus(request, campus_id):
 def canteens(request):
     return render(request,"canteens.html")
 
+def tiezi(request):
+    return render(request,"tiezi.html")
+
 
 
 # windows test
@@ -137,7 +140,7 @@ def view_windows(request, canteen_id):
             # 获取一个食堂的所有窗口
             cursor.callproc('get_windows_by_canteen', [canteen_id])
             windows_list = cursor.fetchall()
-    return render(request, 'windows/view_window.html', {'windows': windows_list})
+    return render(request, 'windows/view_window.html', {'windows': windows_list, 'canteen_id': canteen_id})
 
 
 # review test
@@ -163,36 +166,46 @@ def delete_window_route(request,window_id):
     return render(request, 'windows/delete_window.html',{"canteen_id": canteen_id})
      
 # 更新窗口
-def update_window(request,window_id):
+def update_window(request, window_id):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM food_window WHERE window_id = %s', [window_id])
+        window = cursor.fetchone()
+    if not window:
+        return HttpResponse("窗口不存在")
+
     if request.method == 'POST':
         data = request.POST.dict()
         window_name = data.get("window_name")
         window_description = data.get("window_description")  #图片
+        canteen_id = window[2]
+        print(window_name, window_description, canteen_id)
+        print(window_id)
         with connection.cursor() as cursor:
-            cursor.callproc('update_window', [window_id, window_name, window_description])
+            cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description])
             connection.commit()
-        # return HttpResponse("窗口更新成功")
-    return render(request, 'windows/update_window.html')
+        return redirect(reverse('view_windows', kwargs={'canteen_id': canteen_id}))
+    return render(request, 'windows/update_window.html', {'window_id': window_id, 'window': window})
 
 # 添加窗口
 def add_window(request,canteen_id):
     if request.method == 'POST':
         data = request.POST.dict()   
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM window WHERE canteen_id = %s', canteen_id)
-            window_id_list = cursor.fetchone()
+            cursor.execute('SELECT * FROM food_window WHERE canteen_id = %s', canteen_id)
+            window_id_list = cursor.fetchall()
         window_id = 0
+        print(window_id_list)
         if window_id_list:
-            window_id = window_id_list[-1][0] + 1
+            window_id = int(window_id_list[-1][0]) + 1
         else:
             window_id = 0
         window_name = data.get("window_name")     
         window_description = data.get("window_description")  #图片
         with connection.cursor() as cursor:
-            cursor.callproc('add_window', [window_id,window_name, canteen_id, window_description])
+            cursor.callproc('add_window', [window_id, window_name, canteen_id, window_description])
             connection.commit()
-        # return HttpResponse("窗口添加成功")
-    return render(request, 'windows/add_window.html')
+        return redirect(reverse('view_windows', args=[canteen_id]))
+    return render(request, 'windows/add_window.html', {'canteen_id': canteen_id})
 #?餐厅id要输入还是用来匹配的？
 
 
@@ -335,7 +348,7 @@ def AddUser(request):
                 errors['database'] = 'err' # 这个database我不知道要不要改
                 return render(request, "users/AddUser.html", {"errors": errors})
             else:
-                return redirect(reverse("banksystem:client")) # 这个我不知道怎么改
+                return redirect(reverse("users/user_management.html")) # 这个我不知道怎么改
     return render(request, "users/AddUser.html")
 
 # 更新用户信息
@@ -359,7 +372,7 @@ def UpdateUser(request, user_id): # 这个user_id应该是点击对应的用户�
         if errors:
             return render(request, "users/UpdateUser.html", {"errors": errors})
         else:
-            return redirect(reverse("banksystem:client"))
+            return redirect(reverse("users/user_management.html"))   
         
     return render(request, "users/UpdateUser.html")
 
