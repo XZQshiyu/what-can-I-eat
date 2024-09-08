@@ -257,17 +257,48 @@
         }
     }
 
+   
     function showCommentInput(commentButton) {
-        console.log('Comment button clicked');
-        let parentTd = commentButton.parentNode.parentNode; // 获取包含评论图标和输入框的 `<td>` 元素
-        let inputBox = parentTd.querySelector('.comment-input');
-        console.log('Input box:', inputBox);
-        if (inputBox) {
-            inputBox.style.display = inputBox.style.display === 'none'? 'block' : 'none';
-        } else {
-            console.error('Input box not found');
+            console.log('Comment button clicked');
+            let parentTd = commentButton.parentNode.parentNode;
+            let inputBox = parentTd.querySelector('.comment-input');
+            console.log('Input box:', inputBox);
+
+            if (inputBox) {
+                inputBox.style.display = inputBox.style.display === 'none'? 'block' : 'none';
+
+                // 检查提交按钮是否存在
+                let submitButton = parentTd.querySelector('button');
+
+                if (inputBox.style.display === 'block') {
+                    if (!submitButton) {
+                        // 如果输入框显示且提交按钮不存在，则添加提交按钮
+                        submitButton = document.createElement('button');
+                        submitButton.textContent = '提交';
+                        submitButton.addEventListener('click', function () {
+                            let commentValue = inputBox.value;
+                            console.log('提交的评论：', commentValue);
+                            // 可添加将评论发送到服务器等操作
+                            inputBox.value = '';
+                            inputBox.style.display = 'none';
+                            if (submitButton) {
+                                submitButton.remove();
+                            }
+                        });
+                        inputBox.parentNode.insertBefore(submitButton, inputBox.nextSibling);
+                    }
+                } else {
+                    // 如果输入框隐藏且提交按钮存在，则移除提交按钮
+                    if (submitButton) {
+                        submitButton.remove();
+                    }
+                }
+            } else {
+                console.error('Input box not found');
+            }
         }
-    }
+
+   
 </script>
 
 </html>
