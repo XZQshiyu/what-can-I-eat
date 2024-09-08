@@ -125,6 +125,9 @@ def delete_campus(request, campus_id):
 def canteens(request):
     return render(request,"canteens.html")
 
+def tiezi(request):
+    return render(request,"tiezi.html")
+
 
 
 # windows test

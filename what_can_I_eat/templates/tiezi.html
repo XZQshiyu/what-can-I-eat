@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .post {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 500px;
+            /* 调整宽度使 div 更宽 */
+            height: 300px;
+            /* 调整高度使 div 更扁 */
+        }
+
+        .user-info {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .user-id {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .text-content {
+            margin-top: 10px;
+        }
+
+        .star-rating {
+            margin-top: 10px;
+            color: gold;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            /* 让两张图片横向排列且间隔开 */
+            margin-top: 50px;
+
+        }
+
+        .image {
+            height: 180px;
+            width: 180px;
+            border-radius: 10px;
+
+        }
+
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0px;
+        }
+
+        .button {
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+            border: none;
+            
+        }
+
+        .button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .image1 {
+            height: 20px;
+            width: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="post">
+        <div class="user-info">
+            <div class="user-avatar"> </div>
+            <div class="user-id">{{ user.0 }}</div>
+
+            <div class="text-content">
+                <p>{{comment.5}}</p>
+                <span v-if="comment[7] === 1" class="star-rating">★☆☆☆☆</span>
+                <span v-if="comment[7]  === 2" class="star-rating">★★☆☆☆</span>
+                <span v-if="comment[7] === 3" class="star-rating">★★★☆☆</span>
+                <span v-if="comment[7]  === 4" class="star-rating">★★★★☆</span>
+                <span v-if="comment[7]  === 5" class="star-rating">★★★★★</span>
+            </div>
+
+            {% load static %}
+            <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
+            <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
+
+            <div class="post_time">{{ user.5 }}</div>
+
+            <div class="button-row">
+                <button class="button">
+                    {% load static %}
+                    <img src="{% static 'icons/赞.svg' %}" alt="赞" width="50px" height="50px" onclick="toggleLike(this)"
+                        class="image1">
+                    <span>{{ comment.6 }}</span>
+                </button>
+                <button class="button">
+                    {% load static %}
+                    <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
+                        onclick="showCommentInput(this)" class="image1">
+                </button>
+                <button class="button">
+                    {% load static %}
+                    <img src="{% static 'icons/收藏 (1).svg' %}" alt="收藏" width="50px" height="50px" class="image1">
+                </button>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+    var backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 200) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    document.getElementById('backToTop').onclick = function () {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    };
+
+    function toggleLike(likeButton) {
+        let likesCountElement = likeButton.nextElementSibling;
+        let currentLikes = parseInt(likesCountElement.textContent);
+        if (likeButton.classList.contains('liked')) {
+            likeButton.classList.remove('liked');
+            likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
+            likeButton.style.transform = 'scale(1)';
+        } else {
+            likeButton.classList.add('liked');
+            likesCountElement.textContent = currentLikes + 1;
+            likeButton.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                likeButton.style.transform = 'scale(1)';
+            }, 200);
+        }
+    }
+
+
+
+
+</script>
+
+</html>
