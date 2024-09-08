@@ -87,6 +87,9 @@ def Meiguang(request):
 def Qinyuanchun(request):
     return render(request,"Qinyuanchun.html")
 
+def user1(request):
+    return render(request,"user1.html")
+
 
 #提交表单
 def add_review(request, window_id):
@@ -136,6 +139,7 @@ def view_windows(request, canteen_id):
             windows_list = cursor.fetchall()
     return render(request, 'windows/view_window.html', {'windows': windows_list})
 
+
 # review test
 def food_review(request, window_id):
     review_list = []
@@ -148,12 +152,13 @@ def food_review(request, window_id):
 
 # 删除窗口
 def delete_window_route(request,window_id):
-     if request.method == 'GET':
+    if request.method == 'GET':
         with connection.cursor() as cursor:
             # 调用存储过程进行删除操作
             cursor.callproc('delete_window', [window_id])
             connection.commit()
-        return HttpResponse("窗口删除成功")
+        # return HttpResponse("窗口删除成功")
+    return render(request, 'windows/view_window.html')
      
 # 更新窗口
 def update_window(request, window_id):
@@ -172,7 +177,7 @@ def update_window(request, window_id):
         with connection.cursor() as cursor:
             cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description])
             connection.commit()
-        return redirect(reverse('what_can_I_eat:view_windows', args=[canteen_id]))
+        # return HttpResponse("窗口更新成功")
     return render(request, 'windows/update_window.html')
 
 # 添加窗口
@@ -180,7 +185,7 @@ def add_window(request,canteen_id):
     if request.method == 'POST':
         data = request.POST.dict()   
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM window WHERE canteen_id = %s', canteen_id)
+            cursor.execute('SELECT * FROM food_window WHERE canteen_id = %s', canteen_id)
             window_id_list = cursor.fetchone()
         window_id = 0
         if window_id_list:
@@ -190,11 +195,12 @@ def add_window(request,canteen_id):
         window_name = data.get("window_name")     
         window_description = data.get("window_description")  #图片
         with connection.cursor() as cursor:
-            cursor.callproc('add_window', [window_id,window_name, canteen_id, window_description])
+            cursor.callproc('add_window', [window_id, window_name, canteen_id, window_description])
             connection.commit()
-        return HttpResponse("窗口添加成功")
+        return redirect(reverse('what_can_I_eat:view_windows', args=[canteen_id]))
     return render(request, 'windows/add_window.html')
 #?餐厅id要输入还是用来匹配的？
+
 
 # 储存点赞数
 def add_like(request,comment_id):
@@ -335,7 +341,7 @@ def AddUser(request):
                 errors['database'] = 'err' # 这个database我不知道要不要改
                 return render(request, "users/AddUser.html", {"errors": errors})
             else:
-                return redirect(reverse("banksystem:client")) # 这个我不知道怎么改
+                return redirect(reverse("users/user_management.html")) # 这个我不知道怎么改
     return render(request, "users/AddUser.html")
 
 # 更新用户信息
@@ -359,7 +365,7 @@ def UpdateUser(request, user_id): # 这个user_id应该是点击对应的用户�
         if errors:
             return render(request, "users/UpdateUser.html", {"errors": errors})
         else:
-            return redirect(reverse("banksystem:client"))
+            return redirect(reverse("users/user_management.html"))   
         
     return render(request, "users/UpdateUser.html")
 
