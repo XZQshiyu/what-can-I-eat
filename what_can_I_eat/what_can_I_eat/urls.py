@@ -31,31 +31,19 @@ urlpatterns = [
     path("update_campus", views.update_campus, name="update_campus"),
     path("delete_campus", views.delete_campus, name="delete_campus"),
 
-    # windows test
-    path("view_window/<str:canteen_id>", views.view_windows, name="view_windows"),
-
+    # canteen list
     path("comment/",views.comment, name = "comment"),
     path("contact/",views.contact),
     path("myself/",views.myself),
     path("offCampusFood/",views.offCampusFood),
     path("campusFood/",views.campusFood),
-   
     path("review/",views.review),
     path("home/",views.home),
-
-
     path("XiYuan/",views.XiYuan),
-  
-    
-
     path("Jinjuyuan/",views.Jinjuyuan),
     path("Zhengyanglou/",views.Zhengyanglou),
-
     path("Taoliyuan/",views.Taoliyuan),
     path("Yecanbu/",views.Yecanbu),
-    # path("food_review/",views.food_review),
-
-    
     path("Donfeng/",views.Donfeng),
     path("Donxue/",views.Donxue),
     path("Donyuan/",views.Donyuan),
@@ -63,14 +51,16 @@ urlpatterns = [
     path("Xingzuo/",views.Xingzuo),
     path("Woke/",views.Woke),
     path("Qinyuanchun/",views.Qinyuanchun),
-
     path("canteens/",views.canteens),
 
+    # commetn and review
     path("food_review/<str:window_id>", views.food_review, name="food_review"),
     path("add_dish_comment/", views.add_dish_comment, name="add_dish_comment"),
 
+    # windows test
+    path("view_window/<str:canteen_id>", views.view_windows, name="view_windows"),    
     path("update_window/<str:window_id>", views.update_window, name="update_window"),
-    path("add_window/", views.add_window, name="add_window"),
+    path("add_window/<str:canteen_id>", views.add_window, name="add_window"),
     path("delete_window/<str:window_id>", views.delete_window_route, name="delete_window"),
 
     path("user_management/", views.user_management, name="user_management"),
