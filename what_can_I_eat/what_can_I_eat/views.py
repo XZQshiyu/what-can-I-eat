@@ -154,7 +154,7 @@ def food_review(request, window_id):
             cursor.callproc('get_all_comments_from_window', [window_id])
             review_list = cursor.fetchall()
             print(review_list)
-    return render(request, 'food_review.html', {'comments': review_list})
+    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
 # 删除窗口
 def delete_window_route(request,window_id):
@@ -249,10 +249,8 @@ def add_dish_comment(request, window_id):
         data = request.POST.dict()
 
         with connection.cursor() as cursor:
-            
             cursor.execute('SELECT * FROM dish_comment')
             comment_id_list = cursor.fetchall()
-
         comment_id = 0
         if comment_id_list:
             comment_id = int(comment_id_list[-1][0]) + 1
@@ -268,7 +266,7 @@ def add_dish_comment(request, window_id):
         publish_time = datetime.datetime.now()
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [dish_name ,window_id ,user_id, review_text, publish_time, like_number ,rating])
+            cursor.callproc('add_comment', [dish_name ,comment_id ,user_id, review_text, publish_time, like_number ,rating])
 
         return redirect(reverse('food_review', args=[window_id]))
     else:
