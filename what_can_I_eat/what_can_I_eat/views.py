@@ -243,7 +243,7 @@ def add_like(request,comment_id):
 
 #dish_comment   smx
 #发布dish_comment
-def add_dish_comment(request,window_id):
+def add_dish_comment(request, window_id):
     #后端没有鲁棒性支持，所以先没有error
     if request.method == 'POST':
         data = request.POST.dict()   
