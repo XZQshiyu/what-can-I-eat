@@ -193,7 +193,7 @@ def update_window(request, window_id):
         with connection.cursor() as cursor:
             cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description, image_url])
             connection.commit()
-        return redirect(reverse('view_windows', kwargs={'canteen_id': canteen_id}))
+        return redirect(reverse('view_windows', args={'canteen_id': canteen_id}))
     return render(request, 'windows/update_window.html', {'window_id': window_id, 'window': window})
 
 # 添加窗口
@@ -246,40 +246,33 @@ def add_like(request,comment_id):
 def add_dish_comment(request, window_id):
     #后端没有鲁棒性支持，所以先没有error
     if request.method == 'POST':
-        data = request.POST.dict()   
-       
+        data = request.POST.dict()
+
         with connection.cursor() as cursor:
-             cursor.execute('SELECT * FROM dish_comment')
-             comment_id_list = cursor.fetchall()
+            
+            cursor.execute('SELECT * FROM dish_comment')
+            comment_id_list = cursor.fetchall()
 
         comment_id = 0
         if comment_id_list:
-          comment_id = int(comment_id_list[-1][0]) + 1
+            comment_id = int(comment_id_list[-1][0]) + 1
         else:
-          comment_id = 0
-        #获取表单数据
-        dish_name = data.get("dish_name")     
-        image_file = request.FILES.get('image_files')
-        image_url = None
-        if image_file:
-             # 生成图片文件名
-            image_name =  f"images/{dish_name.replace(' ', '_').lower()}.jpg"
-             # 保存图片文件
-            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
-            # 获取文件路径
-            image_url = f"/media/{image_path}"
+            comment_id = 0
+
+        # 获取表单数据
+        user_id = data.get("id")
+        dish_name = data.get("dish_name")
         review_text = request.POST.get('review_text')
         rating = request.POST.get('star-rating')
         like_number = 0
         publish_time = datetime.datetime.now()
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [dish_name, image_url, review_text, rating, publish_time ,user_id])
+            cursor.callproc('add_comment', [dish_name ,window_id ,user_id, review_text, publish_time, like_number ,rating])
 
-        return redirect(reverse('food_review', args=[window_id]))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
+        return redirect(reverse('food_review', args=[window_id]))
     else:
-        return render(request, "add_dish_comment.html",{'window_id': window_id}) #前端再做这个页面
-
+        return render(request, "add_dish_comment.html", {'window_id': window_id})
 
 
 #通过comment_id搜索commment
