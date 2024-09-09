@@ -56,7 +56,7 @@
 
       .paper-box input[type="text"] {
             width: 80%;
-            height: 100px;
+            height: 20px;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -100,7 +100,13 @@
             font-weight: bold;
         }
 
-        input[type="text"],
+        input[type="id"]{
+            height:20px;
+        }
+
+        input[type="text"]{
+            height:20px;
+        }
         textarea,
         select {
             padding: 8px;
@@ -116,10 +122,11 @@
             border: none;
             padding: 0;
             margin-right: 10px;
+            display: flex;
         }
 
         input[type="submit"] {
-            padding: 10px 20px;
+            padding: 0px 20px;
             border: none;
             border-radius: 4px;
             background-color: #077c83;
@@ -133,7 +140,7 @@
             flex-direction: row-reverse;
             /* Reverse the order of the stars */
             justify-content: flex-end;
-            font-size: 24px;
+            font-size: 40px;
             /* 确保字体大小一致 */
             position: relative;
         }
@@ -170,6 +177,10 @@
             color: gold;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+         /* 新增样式 */
+         #imageInputs {
+            display: flex;
+        }
     </style>
     
     <script>
@@ -199,12 +210,14 @@
 
         // 在页面加载时默认选择东校区，并更新食堂选项
         window.onload = function () {
-           
+            // 添加两个文件上传输入框
             createFileInput();
+          
 
             var fileInputs = document.querySelectorAll('input[type="file"]');
             fileInputs.forEach(input => input.addEventListener('change', handleFileChange));
         };
+
         function goBack() {
             window.history.back();
         }
@@ -231,13 +244,15 @@
     <div class="paper-box">
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <label>菜品名称：</label><br>
-            <input type="text" name="dish_name"><br><br>
+            <label>用户id:</label>
+            <input type="id" name="id"><br>
+            <label>菜品名称：</label>
+            <input type="text" name="dish_name"><br>
             <label>上传图片：</label><br>
             <div id="imageInputs"></div><br>
-            <label>点评：</label><br>
+            <label>点评：</label>
             <textarea name="review_text" rows="4" cols="50"></textarea><br>
-            <label>打星：</label><br>
+            <label>打星：</label>
             <div class="star-rating" name="rating">
                 <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
                 <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
@@ -245,7 +260,6 @@
                 <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
                 <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
             </div>
-            <br>
             <input type="submit" value="上传" style="background-color:#077c83; color: white; margin-top: 20px;">
         </form>
     </div>

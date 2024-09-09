@@ -147,18 +147,19 @@ insert into food_window (window_id, window_name, canteen_id, window_description,
 insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('75','麻辣香锅、麻辣烫','16','行', '/media/images/桃李1.jpg');
 insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('76','西里巷铁板饭','16','行', '/media/images/桃李2.jpg');
 insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('77','集味鲜卤菜','16','行', '/media/images/桃李3.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('78','缘味先石锅菜拌饭','16','行', '/media/images/桃李4.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('79','自选菜','16','行', '/media/images/桃李5.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('80','碗有引力','16','行', '/media/images/桃李6.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('78','缘味先石锅菜拌饭','16','行', '/media/images/桃李5.jpg');
+insert into food_window (window_id,window_name, canteen_id, window_description, window_image)  values ('120','套餐饭','16','行', '/media/images/桃李6.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('79','自选菜','16','行', '/media/images/自选.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('80','碗有引力','16','行', '/media/images/桃李12.jpg');
 
 -- 夜餐部
 insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('81','杂粮煎饼','17','行', '/media/images/夜餐1.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('82','阜阳卷馍','17','行', '/media/images/夜餐2.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('82','阜阳卷馍','17','行', '/media/images/夜餐1.jpg');
 insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('83','自选菜','17','行', '/media/images/夜餐3.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('84','滋士客','17','行', '/media/images/夜餐4.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('85','慧樹串串','17','行', '/media/images/夜餐5.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('86','水饺、汤圆','17','行', '/media/images/夜餐6.jpg');
-insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('87','盖浇面','17','行', '/media/images/夜餐7.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('84','滋士客','17','行', '/media/images/夜餐5.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('85','慧樹串串','17','行', '/media/images/夜餐6.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('86','水饺、汤圆','17','行', '/media/images/夜餐7.jpg');
+insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('87','盖浇面','17','行', '/media/images/夜餐8.jpg');
 
 -- 高a一楼
 insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('88','1','18','行', '/media/images/自选.jpg');

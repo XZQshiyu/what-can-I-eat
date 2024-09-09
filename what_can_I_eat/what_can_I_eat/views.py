@@ -5,6 +5,7 @@ from django.db import connection
 from django.urls import reverse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+import datetime
 
 def signin(request):
     if request.method == 'POST':
@@ -242,26 +243,45 @@ def add_like(request,comment_id):
 
 #dish_comment   smx
 #发布dish_comment
-def add_dish_comment(request):
+def add_dish_comment(request,window_id):
     #后端没有鲁棒性支持，所以先没有error
     if request.method == 'POST':
-        import datetime
+        data = request.POST.dict()   
+       
+        with connection.cursor() as cursor:
+             cursor.execute('SELECT * FROM dish_comment')
+             comment_id_list = cursor.fetchall()
+
+        comment_id = 0
+        if comment_id_list:
+          comment_id = int(comment_id_list[-1][0]) + 1
+        else:
+          comment_id = 0
         #获取表单数据
-        dish_name = request.POST.get('dish_name')
-        file = request.POST.get('file')
-        context = request.POST.get('context')
-        rating = request.POST.get('rating')
+        dish_name = data.get("dish_name")     
+        image_file = request.FILES.get('image_files')
+        image_url = None
+        if image_file:
+             # 生成图片文件名
+            image_name =  f"images/{dish_name.replace(' ', '_').lower()}.jpg"
+             # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
+        review_text = request.POST.get('review_text')
+        rating = request.POST.get('star-rating')
         like_number = 0
         publish_time = datetime.datetime.now()
-     
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [dish_name, file, context, rating, publish_time])
+            cursor.callproc('add_comment', [dish_name, image_url, review_text, rating, publish_time ,user_id])
 
-        return redirect(reverse('what_can_I_eat:comment'))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
+        return redirect(reverse('food_review', args=[window_id]))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
     else:
-        return render(request, "add_dish_comment.html") #前端再做这个页面
-        
+        return render(request, "add_dish_comment.html",{'window_id': window_id}) #前端再做这个页面
+
+
+
 #通过comment_id搜索commment
 def view_comment_by_id(request, comment_id):
     with connection.cursor() as cursor:
