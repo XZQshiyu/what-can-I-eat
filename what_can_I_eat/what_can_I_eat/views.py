@@ -3,7 +3,9 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.db import connection
 from django.urls import reverse
-
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+import datetime
 
 def signin(request):
     if request.method == 'POST':
@@ -151,17 +153,20 @@ def food_review(request, window_id):
             # 获取一个窗口的所有评论
             cursor.callproc('get_all_comments_from_window', [window_id])
             review_list = cursor.fetchall()
+            print(review_list)
     return render(request, 'food_review.html', {'comments': review_list})
 
 # 删除窗口
 def delete_window_route(request,window_id):
     if request.method == 'GET':
         with connection.cursor() as cursor:
+            cursor.execute('SELECT canteen_id FROM food_window WHERE window_id = %s', [window_id])
+            canteen_id = cursor.fetchone()
             # 调用存储过程进行删除操作
             cursor.callproc('delete_window', [window_id])
             connection.commit()
-        # return HttpResponse("窗口删除成功")
-    return render(request, 'windows/view_window.html')
+        #return HttpResponse("窗口删除成功")
+    return render(request, 'windows/delete_window.html',{"canteen_id": canteen_id})
      
 # 更新窗口
 def update_window(request, window_id):
@@ -178,8 +183,15 @@ def update_window(request, window_id):
         canteen_id = window[2]
         print(window_name, window_description, canteen_id)
         print(window_id)
+        image_file = request.FILES.get('window_image')
+        image_url = None
+        if image_file:
+            image_name = f"images/{window_name.replace(' ', '_').lower()}.jpg"
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            image_url = f"/media/{image_path}"
+        
         with connection.cursor() as cursor:
-            cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description])
+            cursor.callproc('update_window', [window_id, window_name, canteen_id, window_description, image_url])
             connection.commit()
         return redirect(reverse('view_windows', kwargs={'canteen_id': canteen_id}))
     return render(request, 'windows/update_window.html', {'window_id': window_id, 'window': window})
@@ -189,18 +201,29 @@ def add_window(request,canteen_id):
     if request.method == 'POST':
         data = request.POST.dict()   
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM food_window WHERE canteen_id = %s', canteen_id)
+            cursor.execute('SELECT * FROM food_window')
             window_id_list = cursor.fetchall()
         window_id = 0
-        print(window_id_list)
+        # print(window_id_list)
         if window_id_list:
             window_id = int(window_id_list[-1][0]) + 1
         else:
             window_id = 0
         window_name = data.get("window_name")     
-        window_description = data.get("window_description")  #图片
+        window_description = data.get("window_description")  #描述
+        # 读取图像文件
+        image_file = request.FILES.get('window_image')
+        print(image_file)
+        image_url = None
+        if image_file:
+            # 生成图片文件名
+            image_name =  f"images/{window_name.replace(' ', '_').lower()}.jpg"
+            # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
         with connection.cursor() as cursor:
-            cursor.callproc('add_window', [window_id, window_name, canteen_id, window_description])
+            cursor.callproc('add_window', [window_id, window_name, canteen_id, window_description, image_url])
             connection.commit()
         return redirect(reverse('view_windows', args=[canteen_id]))
     return render(request, 'windows/add_window.html', {'canteen_id': canteen_id})
@@ -223,23 +246,60 @@ def add_like(request,comment_id):
 def add_dish_comment(request):
     #后端没有鲁棒性支持，所以先没有error
     if request.method == 'POST':
-        import datetime
+        data = request.POST.dict()   
         #获取表单数据
         dish_name = request.POST.get('dish_name')
-        file = request.POST.get('file')
-        context = request.POST.get('context')
-        rating = request.POST.get('rating')
+        image_files = request.POST.get('image_files')
+        review_text = request.POST.get('review_text')
+        rating = request.POST.get('star-rating')
         like_number = 0
         publish_time = datetime.datetime.now()
-     
+        user_id = request.user.id if request.user.is_authenticated else None
+
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [dish_name, file, context, rating, publish_time])
+            cursor.callproc('add_comment', [dish_name, image_files, review_text, rating, publish_time,user_id])
 
-        return redirect(reverse('what_can_I_eat:comment'))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
+        return redirect(reverse('food_review'))  #在这里我给urls.py里给comment加了一个name,如果你们觉得需要重定向到其他地方就修改
     else:
         return render(request, "add_dish_comment.html") #前端再做这个页面
-        
+
+
+# def add_dish_comment(request,window_id):
+#     if request.method == 'POST':
+#         data = request.POST.dict()   
+#         with connection.cursor() as cursor:
+#             cursor.execute('SELECT * FROM dish_comment')
+#             comment_id_list = cursor.fetchall()
+
+#         comment_id = 0
+#         if comment_id_list:
+#             comment_id = int(comment_id_list[-1][0]) + 1
+#         else:
+#             comment_id = 0
+#         dish_name = data.get("dish_name")     
+      
+#         # 读取图像文件
+#         image_file = request.FILES.get('image_files')
+#         print(image_file)
+#         image_url = None
+#         if image_file:
+#             # 生成图片文件名
+#             image_name =  f"images/{window_name.replace(' ', '_').lower()}.jpg"
+#             # 保存图片文件
+#             image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+#             # 获取文件路径
+#             image_url = f"/media/{image_path}"
+
+#         review_text = data.get("review_text")  #描述
+#         rating = int(data.get("star-rating", 0))
+#         with connection.cursor() as cursor:
+#             cursor.callproc('add_dish_comment', [window_id, dish_name, review_text, rating,image_url])
+#             connection.commit()
+#         return redirect(reverse('food_review', args=[window_id]))
+#     return render(request, 'add_dish_comment.html', {'window_id': window_id})
+# #?餐厅id要输入还是用来匹配的？
+
 #通过comment_id搜索commment
 def view_comment_by_id(request, comment_id):
     with connection.cursor() as cursor:

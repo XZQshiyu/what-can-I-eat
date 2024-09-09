@@ -177,6 +177,9 @@
         function confirmDelete(windowId) {
             return confirm("请确认是否删除该窗口？");
         }
+        function goBack() {
+            window.history.back();
+        }
     </script>
 </head>
 
@@ -194,6 +197,7 @@
                 <li><a href="/comment">我要点评</a></li>
                 <li><a href="/myself">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
+                <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
             </ul>
         </div>
     </div>
@@ -226,7 +230,9 @@
                 <!-- 动态填充内容 -->
                 <tr>
                     <td>{{ window.1 }}</td>
-                    <td>{{ window.2 }}</td>
+                    <td>
+                        <img src="{{ window.4 }}" alt="窗口图片" style="width: 100px;" class="img-thumbnail">
+                    </td>
                     <td>{{ window.3 }}</td>
                     <td>
                         <!-- 在每一行的操作列，生成一个绿色按钮。点击后跳转到指定窗口的评论页面，动态生成url -->
@@ -235,7 +241,7 @@
                         <a href="{% url 'update_window' window.0 %}" class="btn btn-primary">修改窗口</a>
                         <!-- 生成一个“删除窗口”的红色按钮，点击后弹出确认框，用户确认后将跳转到删除操作的URL。 -->
                         <!--<a href="#" onclick="if(confirmDelete()){window.location.href='/delete_window?window_id={{ window.0 }}';}" class="btn btn-danger">删除窗口</a>-->
-                        <a href="{% url 'delete_window' window.0 %}" class="btn btn-danger">删除窗口</a>
+                        <a href="{% url 'delete_window' window.0%}" class="btn btn-danger">删除窗口</a>
                     </td>
                 </tr>
                 <!-- 终止循环 -->

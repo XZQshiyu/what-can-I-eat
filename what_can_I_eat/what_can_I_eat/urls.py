@@ -69,4 +69,4 @@ urlpatterns = [
     path("DeleteUser/<str:user_id>", views.DeleteUser, name="DeleteUser"),
     path("user1/", views.user1, name="user1"),
     path("tiezi/",views.tiezi),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

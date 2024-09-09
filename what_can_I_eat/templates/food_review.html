@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>菜品评价</title>
     <style>
+      
         /* 导航栏样式 */
         .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
+        
         .wrap {
             max-width: 1200px;
             margin: 0 auto;
@@ -20,11 +22,13 @@
             align-items: center;
         }
 
+     
         .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
+       
         .navi-text a {
             text-decoration: none;
             color: #fff;
@@ -32,9 +36,11 @@
             transition: color 0.3s ease;
         }
 
+        
         .navi-text a:hover {
             color: #ffc107;
         }
+
 
 
         .am {
@@ -80,6 +86,8 @@
 
 
 
+
+
        
 
 
@@ -101,6 +109,8 @@
             margin: 0 auto; /* 添加这一行 */
         }
 
+       
+
         .user-info {
 
             margin-left: 10px;
@@ -109,6 +119,7 @@
             gap: 10px;
         }
 
+        
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -117,17 +128,20 @@
             box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
         }
 
+       
         .user-id {
             font-weight: bold;
             color: #333;
             font-size: 18px;
         }
 
+       
         .text-content {
             margin-top: 10px;
             position: relative;
         }
 
+       
         .star-rating {
             margin-top: 10px;
             color: gold;
@@ -135,6 +149,7 @@
             font-size:28px ;
         }
 
+        
         .image-container {
             display: flex;
             justify-content: space-between;
@@ -144,6 +159,7 @@
 
         }
 
+       
         .image {
             height: 180px;
             width: 180px;
@@ -152,6 +168,7 @@
         }
 
 
+       
         .button-row {
             display: flex;
             justify-content: space-between;
@@ -159,6 +176,7 @@
             position: relative;
         }
 
+      
         .button {
             cursor: pointer;
             border-radius: 20px;
@@ -167,10 +185,12 @@
 
         }
 
+       
         .button:hover {
             background-color: #d0d0d0;
         }
 
+       
         .image1 {
             height: 20px;
             width: 20px;
@@ -210,6 +230,12 @@
         }
         
     </style>
+    <script>
+        // JavaScript function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
 </head>
 
 <body>
@@ -222,6 +248,7 @@
                 <li><a href="/offCampusFood">校外美食</a></li>
                 <li><a href="/comment">我要评价</a></li>
                 <li><a href="/contact">联系我们</a></li>
+                <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
             </ul>
         </div>
     </div>
@@ -330,5 +357,4 @@
     }
 
 </script>
-
 </html>
