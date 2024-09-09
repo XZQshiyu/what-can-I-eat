@@ -261,8 +261,11 @@ def add_dish_comment(request, window_id):
         user_id = data.get("id")
         dish_name = data.get("dish_name")
         review_text = request.POST.get('review_text')
-        rating = request.POST.get('star-rating')
+        rating = request.POST.get('rating')
         print(rating)
+        print(user_id)
+        print(dish_name)
+        print(review_text)
         like_number = 0
         publish_time = datetime.datetime.now()
 
