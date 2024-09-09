@@ -1,8 +1,8 @@
 use what_can_I_eat;
 -- 创建存储过程
-drop procedure if exists add_comment;
+drop procedure if exists add_dish_comment;
 delimiter //
-CREATE PROCEDURE add_comment (
+CREATE PROCEDURE add_dish_comment (
     IN p_comment_id varchar(18),
     IN p_window_id varchar(18),
     IN p_dish_name varchar(18),
@@ -19,9 +19,9 @@ END //
 delimiter ;
 
 -- 查询存储过程
-drop procedure if exists get_comment_by_id;
+drop procedure if exists get_dish_comment_by_id;
 delimiter //
-CREATE PROCEDURE get_comment_by_id (
+CREATE PROCEDURE get_dish_comment_by_id (
     IN p_comment_id VARCHAR(18)
 )
 BEGIN
@@ -32,9 +32,9 @@ END //
 delimiter ;
 
 -- 修改的存储过程
-drop procedure if exists update_comment;
+drop procedure if exists update_dish_comment;
 delimiter //
-CREATE PROCEDURE update_comment (
+CREATE PROCEDURE update_dish_comment (
     IN p_comment_id varchar(18),
     IN p_context varchar(255),
     IN p_rating integer
@@ -45,9 +45,9 @@ END //
 delimiter ;
 
 -- 删除的存储过程
-DROP PROCEDURE IF EXISTS delete_comment;
+DROP PROCEDURE IF EXISTS delete_dish_comment;
 DELIMITER //
-CREATE PROCEDURE delete_comment (
+CREATE PROCEDURE delete_dish_comment (
     IN p_comment_id VARCHAR(18)
 )
 BEGIN
@@ -56,9 +56,9 @@ END //
 DELIMITER ;
 
 -- 查询某个用户的所有评论（仿评课社区）
-DROP PROCEDURE IF EXISTS search_comment_by_user;
+DROP PROCEDURE IF EXISTS search_dish_comment_by_user;
 DELIMITER //
-CREATE PROCEDURE search_comment_by_user(
+CREATE PROCEDURE search_dish_comment_by_user(
     IN p_user_id varchar(18)
 )
 BEGIN
@@ -69,7 +69,7 @@ END //
 DELIMITER ;
 
 -- 获取所有评论
-DROP PROCEDURE IF EXISTS get_all_comments_from_window;
+DROP PROCEDURE IF EXISTS get_all_dish_comments_from_window;
 DELIMITER //
 CREATE PROCEDURE get_all_comments_from_window (
     IN p_window_id varchar(18)

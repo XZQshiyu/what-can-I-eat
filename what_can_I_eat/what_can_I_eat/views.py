@@ -262,12 +262,13 @@ def add_dish_comment(request, window_id):
         dish_name = data.get("dish_name")
         review_text = request.POST.get('review_text')
         rating = request.POST.get('star-rating')
+        print(rating)
         like_number = 0
         publish_time = datetime.datetime.now()
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_comment', [dish_name ,comment_id ,user_id, review_text, publish_time, like_number ,rating])
-
+            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, publish_time, like_number ,rating])
+            connection.commit()
         return redirect(reverse('food_review', args=[window_id]))
     else:
         return render(request, "add_dish_comment.html", {'window_id': window_id})
@@ -276,7 +277,7 @@ def add_dish_comment(request, window_id):
 #通过comment_id搜索commment
 def view_comment_by_id(request, comment_id):
     with connection.cursor() as cursor:
-        cursor.callproc('get_comment_by_id', [comment_id])
+        cursor.callproc('get_dish_comment_by_id', [comment_id])
         comment = cursor.fetchone()
         if not comment:
             return HttpResponse("评论不存在")
@@ -296,7 +297,7 @@ def update_comment(request, comment_id):
         if not comment:
             return HttpResponse("请输入新评论！")
         with connection.cursor() as cursor:
-            cursor.callproc('update_comment',[comment, comment])
+            cursor.callproc('update_dish_comment',[comment, comment])
             connection.commit()
         return HttpResponse("评论修改成功！")   #觉得修改完评论后应该回到评论页面的话，修改这里做重定向
     
@@ -309,7 +310,7 @@ def delete_comment(request, comment_id):
         comment = cursor.fetchone()
         if not comment:
             return HttpResponse("评论不存在")
-        cursor.callproc('delete_comment',comment_id)
+        cursor.callproc('delete_dish_comment',comment_id)
         return HttpResponse("评论已删除")
     
 #根据用户搜索评论
@@ -319,7 +320,7 @@ def view_comments_by_user(request, user_id):
         user = cursor.fetchone()
         if not user:
             return HttpResponse("用户不存在")
-        cursor.callproc("search_comment_by_user", [user_id])
+        cursor.callproc("search_dish_comment_by_user", [user_id])
         user_comments = cursor.fetchall()
     return render(request, "view_comments_by_user", {"user_comments": user_comments})
 
