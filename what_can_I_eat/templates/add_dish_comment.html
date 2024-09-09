@@ -100,6 +100,10 @@
             font-weight: bold;
         }
 
+        input[type="id"]{
+            height:20px;
+        }
+
         input[type="text"]{
             height:20px;
         }
@@ -208,7 +212,7 @@
         window.onload = function () {
             // 添加两个文件上传输入框
             createFileInput();
-            createFileInput();
+          
 
             var fileInputs = document.querySelectorAll('input[type="file"]');
             fileInputs.forEach(input => input.addEventListener('change', handleFileChange));
@@ -240,6 +244,8 @@
     <div class="paper-box">
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            <label>用户id:</label>
+            <input type="id" name="id"><br>
             <label>菜品名称：</label>
             <input type="text" name="dish_name"><br>
             <label>上传图片：</label><br>
