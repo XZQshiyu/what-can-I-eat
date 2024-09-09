@@ -309,7 +309,7 @@
     </div>
     {% endfor %}
 
-    <a href="/add_dish_comment" class="am">
+    <a href="{% url 'add_dish_comment'  window_id %}" class="am">
         {% load static %}
         <img src="{% static 'icons/创作.svg' %}" alt="创作">
     </a>

@@ -7,13 +7,13 @@
     <title>用户个人资料</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-         /* 导航栏样式 */
-      .navi {
+        /* 导航栏样式 */
+        .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
-      .wrap {
+        .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -21,24 +21,24 @@
             align-items: center;
         }
 
-      .navi-text li {
+        .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
-      .navi-text a {
+        .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
             transition: color 0.3s ease;
         }
 
-      .navi-text a:hover {
+        .navi-text a:hover {
             color: #ffc107;
         }
 
         /* 表单样式 */
-      .paper-box {
+        .paper-box {
             max-width: 600px;
             margin: 30px auto;
             padding: 20px;
@@ -46,14 +46,14 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-      .paper-box label {
+        .paper-box label {
             font-size: 18px;
             color: #343a40;
             display: block;
             margin-bottom: 10px;
         }
 
-      .paper-box input[type="text"] {
+        .paper-box input[type="text"] {
             width: 80%;
             height: 100px;
             padding: 10px;
@@ -63,7 +63,7 @@
             margin-bottom: 20px;
         }
 
-      .paper-box input[type="submit"] {
+        .paper-box input[type="submit"] {
             background-color: #077c83;
             border: none;
             padding: 12px 24px;
@@ -74,7 +74,7 @@
             transition: background-color 0.3s ease;
         }
 
-      .paper-box input[type="submit"]:hover {
+        .paper-box input[type="submit"]:hover {
             background-color: #05686d;
         }
 
@@ -86,9 +86,10 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            font-family: 'Roboto', sans-serif;
         }
 
-       .profile-container {
+        .profile-container {
             background-color: white;
             max-width: 600px;
             margin: 50px auto;
@@ -97,7 +98,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-       .profile-picture {
+        .profile-picture {
             width: 180px;
             height: 180px;
             border-radius: 50%;
@@ -107,24 +108,24 @@
             margin-bottom: 20px;
         }
 
-       .user-info {
+        .user-info {
             display: flex;
             flex-direction: column;
             align-items: left;
         }
 
-       .user-info p {
+        .user-info p {
             margin: 5px 0;
             font-size: 12px;
             color: #333;
-           
+
         }
 
-       .works-list {
+        .works-list {
             margin-top: 30px;
         }
 
-       .works-list h3 {
+        .works-list h3 {
             font-size: 22px;
             color: #007bff;
             margin: 0;
@@ -135,7 +136,12 @@
             color: #444;
         }
 
-    
+        .am {
+            z-index: 9999999999;
+            position: fixed;
+            top: 20px;
+            right: 50px;
+        }
 
         a:hover {
             /* 改变颜色 */
@@ -171,97 +177,151 @@
             opacity: 1;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 30px;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #ffad79;
-            color: white;
-            font-weight: bold;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-       .comment-item {
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
-
-       .comment-item:last-child {
-            border-bottom: none;
-        }
-
-       .item-image {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            margin-right: 15px;
-        }
-
-       .rating {
-            font-weight: bold;
-            margin-right: 20px;
-        }
-
-       .like-container {
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
-        }
-
-       .like-container img {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-       .comment-action img {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-        }
-
-        table th,
-        table td {
-            width: 15%;
-        }
-
-        /* 隐藏的评论输入框样式 */
-       .comment-input {
-            display: none;
-            width: 300px;
+        .post {
+            border: 1px solid hsl(0, 0%, 87%);
+            background-color: rgb(255, 196, 188);
             padding: 10px;
-            border: 1px solid #ddd;
-            margin-top: 10px;
+            width: 700px;
+            /* 调整宽度使 div 更宽 */
+            height: 450px;
+            /* 调整高度使 div 更扁 */
+            position: relative;
+            margin: 0 auto; /* 添加这一行 */
         }
+
+       
+
+        .user-info {
+
+            margin-left: 10px;
+            margin-top: 10px;
+            align-items: center;
+            gap: 10px;
+        }
+
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+       
+        .user-id {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+
+       
+        .text-content {
+            margin-top: 10px;
+            position: relative;
+        }
+
+       
+        .star-rating {
+            margin-top: 10px;
+            color: gold;
+            position: relative;
+            font-size:28px ;
+        }
+
+        
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            /* 让两张图片横向排列且间隔开 */
+            margin-top: 50px;
+            position: relative;
+
+        }
+
+       
+        .image {
+            height: 180px;
+            width: 180px;
+            border-radius: 10px;
+
+        }
+
+
+       
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0px;
+            position: relative;
+        }
+
+      
+        .button {
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+            border: none;
+
+        }
+
+       
+        .button:hover {
+            background-color: #d0d0d0;
+        }
+
+       
+        .image1 {
+            height: 20px;
+            width: 20px;
+        }
+
+        .mini-info {
+            display: flex;
+            gap: 10px;
+        }
+
+        .comment-options {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px 0;
+            display: none;
+        }
+
+        .comment-options a {
+            display: block;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .comment-options a:hover {
+            background-color: #f0f0f0;
+        }
+        .dishname{
+            font-weight: bold;
+        }
+        .text{
+            font-weight: bold;
+        }
+        
     </style>
     <script>
         // JavaScript function to go back to the previous page
         function goBack() {
             window.history.back();
         }
-      </script>
+    </script>
 </head>
 
 <body>
 
-     <!--导航 start-->
-     <div class="navi">
+    <!--导航 start-->
+    <div class="navi">
         <div class="wrap">
             <ul class="navi-text">
                 <li><a href="/home">Home</a></li>
@@ -275,114 +335,117 @@
         </div>
     </div>
     <!--导航 end-->
-   
+
     <div class="profile-container">
         <img class="profile-picture" src="user_avatar.jpg" alt="用户头像">
         <div class="user-info">
-            
+
             <p>用户名：{{ user.2 }}</p>
             <p>用户 ID: {{ user.1 }}</p>
             <p>简介: {{ user.3 }}</p>
             <p>作品：</p>
         </div>
 
-        <div class="container">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                      
-                        <th>菜品名称</th>
-                        <th>菜品图片</th>
-                        <th>菜品评分</th>
-                        <th>菜品评价</th>
-                        <th>   </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for comment in comments %}
-                    <tr class="comment-item">
-                        <td>{{ comment.3 }}</td>
-                        <td>{{ comment.2 }}</td>
-                        <td><img class="item-image" src="{{ comment.0 }}" alt="菜品图片"></td>
-                        <td class="rating">{{ comment.7 }}</td>
-                        <td>{{ comment.4 }}</td>
-                        <td>
-                            <div class="like-container">
-                                {% load static %}
-                                <img src="{% static 'icons/赞.svg' %}" alt="赞" width="50px" height="50px"
-                                    onclick="toggleLike(this)">
-                                <span>{{ comment.6 }}</span>
-                            </div>
-                            <div class="comment-action">
-                                {% load static %}
-                                <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
-                                    onclick="showCommentInput(this)">
-                            </div>
-                            <div class="comment-action">
-                                {% load static %}
-                                <img src="{% static 'icons/收藏 (1).svg' %}" alt="收藏" width="50px" height="50px">
-                            </div>
-                            <!-- 隐藏的评论输入框 -->
-                            <input class="comment-input" type="text">
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        {% for comment in comments %}
+
+        <div class="post">
+            <div class="user-info">
+                <div class="mini-info">
+                    <div class="user-avatar"> </div><br>
+                    <div class="user-id">{{ comment.3 }}</div>
+                </div>
+                <br>
+                <div class="dishname">菜品：{{ comment.2}}</div>
+                <div class="text-content">
+                    <div class="text">点评：</div>
+                    <p>{{ comment.4 }}</p>
+                    {% if comment.7 == 1 %}
+                    <span class="star-rating">★☆☆☆☆</span>
+                    {% elif comment.7 == 2 %}
+                    <span class="star-rating">★★☆☆☆</span>
+                    {% elif comment.7 == 3 %}
+                    <span class="star-rating">★★★☆☆</span>
+                    {% elif comment.7 == 4 %}
+                    <span class="star-rating">★★★★☆</span>
+                    {% elif comment.7 == 5 %}
+                    <span class="star-rating">★★★★★</span>
+                    {% endif %}
+
+                </div>
+
+                {% load static %}
+                <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
+                <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
+
+                <div class="post_time">{{ comment.5 }}</div>
+
+                <div class="button-row">
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
+                            onclick="toggleLike(this)" class="image1">
+                        <span>{{ comment.6 }}</span>
+                    </button>
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
+                            onclick="showCommentOptions(this)" class="image1">
+
+                    </button>
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
+                    </button>
+                </div>
+            </div>
         </div>
+        {% endfor %}
 
        
         <!-- 回到顶部按钮 -->
         <button id="backToTop">^</button>
-    </div>
+        <!-- 回到顶部按钮 -->
+</body>
+<script>
+    var backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 200) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
 
-    <script>
-        var backToTopButton = document.getElementById('backToTop');
-        window.addEventListener('scroll', function () {
-            if (window.scrollY > 200) {
-                backToTopButton.style.display = 'block';
+    document.getElementById('backToTop').onclick = function () {
+        // 以较快的速度滚动到页面顶部
+        let scrollStep = -200; // 每次滚动的像素值，可根据需要调整
+        let scrollInterval = setInterval(() => {
+            if (window.scrollY !== 0) {
+                window.scrollBy(0, scrollStep);
             } else {
-                backToTopButton.style.display = 'none';
+                clearInterval(scrollInterval);
             }
-        });
+        }, 10);
+    };
 
-        document.getElementById('backToTop').onclick = function () {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        };
-
-        function toggleLike(likeButton) {
-            let likesCountElement = likeButton.nextElementSibling;
-            let currentLikes = parseInt(likesCountElement.textContent);
-            if (likeButton.classList.contains('liked')) {
-                likeButton.classList.remove('liked');
-                likesCountElement.textContent = currentLikes > 0? currentLikes - 1 : 0;
+    function toggleLike(likeButton) {
+        let likesCountElement = likeButton.nextElementSibling;
+        let currentLikes = parseInt(likesCountElement.textContent);
+        if (likeButton.classList.contains('liked')) {
+            likeButton.classList.remove('liked');
+            likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
+            likeButton.style.transform = 'scale(1)';
+        } else {
+            likeButton.classList.add('liked');
+            likesCountElement.textContent = currentLikes + 1;
+            likeButton.style.transform = 'scale(1.2)';
+            setTimeout(() => {
                 likeButton.style.transform = 'scale(1)';
-            } else {
-                likeButton.classList.add('liked');
-                likesCountElement.textContent = currentLikes + 1;
-                likeButton.style.transform = 'scale(1.2)';
-                setTimeout(() => {
-                    likeButton.style.transform = 'scale(1)';
-                }, 200);
-            }
+            }, 200);
         }
+    }
 
-        function showCommentInput(commentButton) {
-            console.log('Comment button clicked');
-            let parentTd = commentButton.parentNode.parentNode; // 获取包含评论图标和输入框的 `<td>` 元素
-            let inputBox = parentTd.querySelector('.comment-input');
-            console.log('Input box:', inputBox);
-            if (inputBox) {
-                inputBox.style.display = inputBox.style.display === 'none'? 'block' : 'none';
-            } else {
-                console.error('Input box not found');
-            }
-        }
-    </script>
-
+</script>
 </body>
 
 </html>
