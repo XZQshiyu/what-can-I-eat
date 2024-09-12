@@ -83,7 +83,7 @@ create table dish_comment
 
 create table post_comment
 (
-    comment_id varchar(18) primary key,
+    post_comment_id varchar(18) primary key,
     post_id varchar(18) not null,
     user_id varchar(18) not null,
     context varchar(255) not null,

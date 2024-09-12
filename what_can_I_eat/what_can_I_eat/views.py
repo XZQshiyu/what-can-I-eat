@@ -146,7 +146,7 @@ def view_windows(request, canteen_id):
 
 
 # review test
-def food_review(request, window_id,comment_id):
+def food_review(request, window_id):
     review_list = []
     reply_list=[]
     if request.method == 'GET':
@@ -155,11 +155,10 @@ def food_review(request, window_id,comment_id):
             cursor.callproc('get_all_comments_from_window', [window_id])
             review_list = cursor.fetchall()
             print(review_list)
-        with connection.cursor() as cursor:
-            cursor.callproc('get_replies_from_comment', [comment_id])
-            reply_list = cursor.fetchall()
-            print(reply_list)
-    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id, 'replies': reply_list})
+            cursor.execute('SELECT comment_id FROM dish_comment WHERE window_id = %s', [window_id])
+            comment_id = cursor.fetchone()
+       
+    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
 
 

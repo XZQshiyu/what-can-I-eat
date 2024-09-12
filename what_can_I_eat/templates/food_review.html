@@ -7,13 +7,13 @@
     <title>菜品评价</title>
     <style>
         /* 导航栏样式 */
-      .navi {
+        .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
 
-      .wrap {
+        .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -22,13 +22,13 @@
         }
 
 
-      .navi-text li {
+        .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
 
-      .navi-text a {
+        .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
@@ -36,13 +36,13 @@
         }
 
 
-      .navi-text a:hover {
+        .navi-text a:hover {
             color: #ffc107;
         }
 
 
 
-      .am {
+        .am {
             z-index: 9999999999;
             position: fixed;
             top: 20px;
@@ -96,7 +96,7 @@
 
         }
 
-      .post {
+        .post {
             border: 1px solid hsl(0, 0%, 87%);
             background-color: rgb(255, 196, 188);
             padding: 10px;
@@ -111,7 +111,7 @@
 
 
 
-      .user-info {
+        .user-info {
 
             margin-left: 10px;
             margin-top: 10px;
@@ -120,7 +120,7 @@
         }
 
 
-      .user-avatar {
+        .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -129,20 +129,20 @@
         }
 
 
-      .user-id {
+        .user-id {
             font-weight: bold;
             color: #333;
             font-size: 18px;
         }
 
 
-      .text-content {
+        .text-content {
             margin-top: 10px;
             position: relative;
         }
 
 
-      .star-rating {
+        .star-rating {
             margin-top: 10px;
             color: gold;
             position: relative;
@@ -150,7 +150,7 @@
         }
 
 
-      .image-container {
+        .image-container {
             display: flex;
             justify-content: space-between;
             /* 让两张图片横向排列且间隔开 */
@@ -160,7 +160,7 @@
         }
 
 
-      .image {
+        .image {
             height: 180px;
             width: 180px;
             border-radius: 10px;
@@ -169,7 +169,7 @@
 
 
 
-      .button-row {
+        .button-row {
             display: flex;
             justify-content: space-between;
             margin-top: 0px;
@@ -177,7 +177,7 @@
         }
 
 
-      .button {
+        .button {
             cursor: pointer;
             border-radius: 20px;
             transition: background-color 0.3s;
@@ -186,22 +186,22 @@
         }
 
 
-      .button:hover {
+        .button:hover {
             background-color: #d0d0d0;
         }
 
 
-      .image1 {
+        .image1 {
             height: 20px;
             width: 20px;
         }
 
-      .mini-info {
+        .mini-info {
             display: flex;
             gap: 10px;
         }
 
-      .comment-options {
+        .comment-options {
             position: absolute;
             top: 0;
             left: 100%;
@@ -212,39 +212,32 @@
             display: none;
         }
 
-      .comment-options a {
+        .comment-options a {
             display: block;
             padding: 5px 10px;
             text-decoration: none;
             color: #333;
         }
 
-      .comment-options a:hover {
+        .comment-options a:hover {
             background-color: #f0f0f0;
         }
 
-      .dishname {
+        .dishname {
             font-weight: bold;
         }
 
-      .text {
+        .text {
             font-weight: bold;
         }
 
-      .reply {
+        .replies-container.reply {
             background-color: #f0f0f0;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-      .more-link {
-            display: block;
-            text-align: center;
-            text-decoration: none;
-            color: #007bff;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
             margin-top: 5px;
         }
-
     </style>
     <script>
         // JavaScript function to go back to the previous page
@@ -321,7 +314,7 @@
                         onclick="showCommentOptions(this)" class="image1">
 
                 </button>
-                <button class="button">
+                <button class="button" onclick="addFavorite(this)" data-comment-id= comment.0 data-user-id= "1">
                     {% load static %}
                     <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
                 </button>
