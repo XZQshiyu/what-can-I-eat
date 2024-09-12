@@ -7,13 +7,13 @@
     <title>菜品评价</title>
     <style>
         /* 导航栏样式 */
-       .navi {
+      .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
 
-       .wrap {
+      .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -22,13 +22,13 @@
         }
 
 
-       .navi-text li {
+      .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
 
-       .navi-text a {
+      .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
@@ -36,13 +36,13 @@
         }
 
 
-       .navi-text a:hover {
+      .navi-text a:hover {
             color: #ffc107;
         }
 
 
 
-       .am {
+      .am {
             z-index: 9999999999;
             position: fixed;
             top: 20px;
@@ -96,7 +96,7 @@
 
         }
 
-       .post {
+      .post {
             border: 1px solid hsl(0, 0%, 87%);
             background-color: rgb(255, 196, 188);
             padding: 10px;
@@ -111,7 +111,7 @@
 
 
 
-       .user-info {
+      .user-info {
 
             margin-left: 10px;
             margin-top: 10px;
@@ -120,7 +120,7 @@
         }
 
 
-       .user-avatar {
+      .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -129,20 +129,20 @@
         }
 
 
-       .user-id {
+      .user-id {
             font-weight: bold;
             color: #333;
             font-size: 18px;
         }
 
 
-       .text-content {
+      .text-content {
             margin-top: 10px;
             position: relative;
         }
 
 
-       .star-rating {
+      .star-rating {
             margin-top: 10px;
             color: gold;
             position: relative;
@@ -150,7 +150,7 @@
         }
 
 
-       .image-container {
+      .image-container {
             display: flex;
             justify-content: space-between;
             /* 让两张图片横向排列且间隔开 */
@@ -160,7 +160,7 @@
         }
 
 
-       .image {
+      .image {
             height: 180px;
             width: 180px;
             border-radius: 10px;
@@ -169,7 +169,7 @@
 
 
 
-       .button-row {
+      .button-row {
             display: flex;
             justify-content: space-between;
             margin-top: 0px;
@@ -177,7 +177,7 @@
         }
 
 
-       .button {
+      .button {
             cursor: pointer;
             border-radius: 20px;
             transition: background-color 0.3s;
@@ -186,22 +186,22 @@
         }
 
 
-       .button:hover {
+      .button:hover {
             background-color: #d0d0d0;
         }
 
 
-       .image1 {
+      .image1 {
             height: 20px;
             width: 20px;
         }
 
-       .mini-info {
+      .mini-info {
             display: flex;
             gap: 10px;
         }
 
-       .comment-options {
+      .comment-options {
             position: absolute;
             top: 0;
             left: 100%;
@@ -212,29 +212,37 @@
             display: none;
         }
 
-       .comment-options a {
+      .comment-options a {
             display: block;
             padding: 5px 10px;
             text-decoration: none;
             color: #333;
         }
 
-       .comment-options a:hover {
+      .comment-options a:hover {
             background-color: #f0f0f0;
         }
 
-       .dishname {
+      .dishname {
             font-weight: bold;
         }
 
-       .text {
+      .text {
             font-weight: bold;
         }
 
-       .reply {
+      .reply {
             background-color: #f0f0f0;
             padding: 10px;
             margin-top: 10px;
+        }
+
+      .more-link {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+            margin-top: 5px;
         }
 
     </style>
@@ -262,8 +270,9 @@
     </div>
     <!-- 导航栏 end -->
     <h2 class="mt-4">菜品评价</h2>
+    
     {% for comment in comments %}
-
+   
     <div class="post">
         <div class="user-info">
             <div class="mini-info">
@@ -317,14 +326,16 @@
                 </button>
             </div>
 
+            {% for reply in replies %}
             <div class="reply">
-                <p>用户1:说的好！</p>
-                <p>用户2:臣附议！</p>
-                <p>用户3:我有意见！</p>
+                <div class="reply-text">{{ reply.0 }} : {{ reply.4 }}</div>
+                <div class="time">{{ reply.5 }}</div>
             </div>
 
+            <a href="#" class="more-link">更多</a>
         </div>
     </div>
+    {% endfor %}
     {% endfor %}
 
     <a href="{% url 'add_dish_comment' window_id %}" class="am">

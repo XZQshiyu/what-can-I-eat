@@ -146,15 +146,23 @@ def view_windows(request, canteen_id):
 
 
 # review test
-def food_review(request, window_id):
+def food_review(request, window_id,comment_id):
     review_list = []
+    reply_list=[]
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
             cursor.callproc('get_all_comments_from_window', [window_id])
             review_list = cursor.fetchall()
             print(review_list)
-    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
+        with connection.cursor() as cursor:
+            cursor.callproc('get_replies_from_comment', [comment_id])
+            reply_list = cursor.fetchall()
+            print(reply_list)
+    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id, 'replies': reply_list})
+
+
+
 
 # 删除窗口
 def delete_window_route(request,window_id):
