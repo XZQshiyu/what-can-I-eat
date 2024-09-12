@@ -50,44 +50,6 @@ def campusFood(request):
 def review(request):
     return render(request,"review.html")
 
-def XiYuan(request):
-    return render(request,"XiYuan.html")
-
-def Xiyuan1(request):
-    return render(request,"Xiyuan1.html")
-    
-def Taoliyuan(request):
-    return render(request,"Taoliyuan.html")
-
-def Yecanbu(request):
-    return render(request,"Yecanbu.html")
-
-def Jinjuyuan(request):
-    return render(request,"Jinjuyuan.html")
-
-def Zhengyanglou(request):
-    return render(request,"Zhengyanglou.html")
-
-def Donyuan(request):
-    return render(request,"Donyuan.html")
-
-def Donxue(request):
-    return render(request,"Donxue.html")
-
-def Donfeng(request):
-    return render(request,"Donfeng.html")
-
-def Xingzuo(request):
-    return render(request,"Xingzuo.html")
-
-def Woke(request):
-    return render(request,"Woke.html")
-
-def Meiguang(request):
-    return render(request,"Meiguang.html")
-
-def Qinyuanchun(request):
-    return render(request,"Qinyuanchun.html")
 
 def user1(request):
     return render(request,"user1.html")
@@ -146,21 +108,32 @@ def view_windows(request, canteen_id):
 
 
 # review test
-def food_review(request, window_id,comment_id):
-    review_list = []
-    reply_list=[]
+def food_review(request, window_id):
+    review_list = []  
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
             cursor.callproc('get_all_comments_from_window', [window_id])
             review_list = cursor.fetchall()
             print(review_list)
+
+    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
+
+def reply(request,comment_id):
+    
+    reply_list=[]
+    comment = []
+    if request.method == 'GET':
+      
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM dish_comment WHERE comment_id = %s', comment_id)
+            comment = cursor.fetchone()
+            print(comment)
         with connection.cursor() as cursor:
             cursor.callproc('get_replies_from_comment', [comment_id])
             reply_list = cursor.fetchall()
             print(reply_list)
-    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id, 'replies': reply_list})
-
+    return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
 
 
 
