@@ -106,3 +106,12 @@ create table dish_reply
     foreign key (user_id) references user(user_id) ON DELETE CASCADE,
     foreign key (parent_reply_id) references dish_reply(reply_id) ON DELETE CASCADE
 );
+
+create table fav
+(
+    fav_id varchar(18) primary key,
+    user_id varchar(18) not null,
+    comment_id varchar(18) not null,
+    foreign key (user_id) references user(user_id) ON DELETE CASCADE,
+    foreign key (comment_id) references dish_comment(comment_id) ON DELETE CASCADE
+)
