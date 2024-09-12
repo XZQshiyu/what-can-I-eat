@@ -54,7 +54,7 @@ urlpatterns = [
     path("canteens/",views.canteens),
 
     # commetn and review
-    path("food_review/<str:window_id>/<str:comment_id>", views.food_review, name="food_review"),
+    path("food_review/<str:window_id>", views.food_review, name="food_review"),
     path("add_dish_comment/<str:window_id>", views.add_dish_comment, name="add_dish_comment"),
 
     # windows test

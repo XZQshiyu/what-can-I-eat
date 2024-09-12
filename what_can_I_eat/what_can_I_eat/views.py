@@ -421,12 +421,18 @@ def UpdateUser(request, user_id): # 这个user_id应该是点击对应的用户�
 
 # 删除用户信息
 def DeleteUser(request, user_id):
-     if request.method == 'GET':
+    if request.method == 'GET':
         with connection.cursor() as cursor:
-            # 调用存储过程进行删除操作
-            cursor.callproc('DeleteUser', [user_id])
-            connection.commit()
-        return HttpResponse("用户删除成功")
+            cursor.execute('SELECT * FROM user WHERE user_id = %s', [user_id])
+            user_record = cursor.fetchone()
+            if user_record:
+                # 调用存储过程进行删除操作
+                cursor.callproc('DeleteUser', [user_id])
+                connection.commit()
+            else:
+                # 用户未找到
+                user_id = None
+    return render(request, 'users/DeleteUser.html')
 
 # 通过id和name查询用户
 def search_user(request):
