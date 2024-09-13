@@ -67,10 +67,14 @@ END //
 DELIMITER ;
 
 -- 获取所有回复
-DROP PROCEDURE IF EXISTS get_all_replies;
+DROP PROCEDURE IF EXISTS get_replies_from_comment;
 DELIMITER //
-CREATE PROCEDURE get_all_replies ()
+CREATE PROCEDURE get_replies_from_comment (
+   IN p_dish_comment_id VARCHAR(18)
+)
 BEGIN
-    SELECT * FROM dish_reply;
+   SELECT * FROM dish_reply
+   WHERE dish_comment_id = p_dish_comment_id;
 END //
 DELIMITER ;
+

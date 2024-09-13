@@ -39,22 +39,12 @@ urlpatterns = [
     path("campusFood/",views.campusFood),
     path("review/",views.review),
     path("home/",views.home),
-    path("XiYuan/",views.XiYuan),
-    path("Jinjuyuan/",views.Jinjuyuan),
-    path("Zhengyanglou/",views.Zhengyanglou),
-    path("Taoliyuan/",views.Taoliyuan),
-    path("Yecanbu/",views.Yecanbu),
-    path("Donfeng/",views.Donfeng),
-    path("Donxue/",views.Donxue),
-    path("Donyuan/",views.Donyuan),
-    path("Meiguang/",views.Meiguang),
-    path("Xingzuo/",views.Xingzuo),
-    path("Woke/",views.Woke),
-    path("Qinyuanchun/",views.Qinyuanchun),
+   
     path("canteens/",views.canteens),
 
     # commetn and review
     path("food_review/<str:window_id>", views.food_review, name="food_review"),
+    path("reply/<str:comment_id>",views.reply,name="reply"),
     path("add_dish_comment/<str:window_id>", views.add_dish_comment, name="add_dish_comment"),
 
     # windows test

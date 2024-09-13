@@ -179,3 +179,9 @@ insert into dish_comment (comment_id, window_id, dish_name, user_id, context, pu
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('00000', '1', '牛肉面', '6', '还凑合', '20240831', 7, 4);
 
 
+# reply
+insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('1', '1', '2', null, '你说得对', '20240830', 3);
+insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('2', '1', '3', '1', '我说得对', '20240830', 4);
+insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('3', '1', '4', '1', '他说得对', '20240830', 5);
+insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('4', '1', '5', '1', '我说得对', '20240830', 6);
+
