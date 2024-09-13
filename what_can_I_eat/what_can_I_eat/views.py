@@ -37,8 +37,19 @@ def home(request):
 def contact(request):
     return render(request,"contact.html")
 
-def myself(request):
-    return render(request,"myself.html")
+def myself(request, user_id):
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+            user = cursor.fetchone()
+        if not user:
+            return HttpResponse("用户不存在")
+
+        with connection.cursor() as cursor:
+            cursor.callproc('search_dish_comment_by_user', [user_id])
+            comments = cursor.fetchall()
+        return render(request, "myself.html", {"user": user, "comments": comments})
+    return render(request,"myself.html", {"user_id": user_id})
 
 def offCampusFood(request):
     return render(request,"offCampusFood.html")
@@ -433,14 +444,14 @@ def search_user(request):
     return render(request, "users/search_user.html", {"results": results})
 
 
-def show_my_comment(request,user_id):
+def show_my_comment(request, user_id):
     comment_list=[]
-    with connection.cursor() as cursor:
-        cursor.callproc('search_dish_comment_by_user', [user_id])
-        comment_list = cursor.fetchall()
-        print(comment_list)
-        print("sdfghjkl")
-    print(2121132323)    
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.callproc('search_dish_comment_by_user', [user_id])
+            comment_list = cursor.fetchall()
+            print(comment_list)
+            print("sdfghjkl")
     return render(request, "show_my_comment.html", {"comments": comment_list})
 
 # def food_review(request, window_id):
@@ -453,11 +464,22 @@ def show_my_comment(request,user_id):
 #             print(review_list)
 #     return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
-def show_get_reply(request):
+def show_get_reply(request, user_id):
+    reply_list = []
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+            user = cursor.fetchone()
+        if not user:
+            return HttpResponse("用户不存在")
+        with connection.cursor() as cursor:
+            cursor.callproc('search_reply_by_user', [user_id])
+            reply_list = cursor.fetchall()
+            print(reply_list)
+        
     return render(request,"show_get_reply.html")
 
-def show_my_comment(request):
-    return render(request,"show_my_comment.html")
+
 
 def show_bookmark(request):
     return render(request,"show_bookmark.html")
