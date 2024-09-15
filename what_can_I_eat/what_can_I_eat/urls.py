@@ -62,4 +62,5 @@ urlpatterns = [
     path("show_my_comment/<str:user_id>",views.show_my_comment, name="show_my_comment"),
     path("show_get_reply/<str:user_id>",views.show_get_reply, name="show_get_reply"),
     path("show_bookmark/<str:user_id>",views.show_bookmark, name="show_bookmark"),
+    path("submit_reply/<str:comment_id>",views.submit_reply, name="submit_reply"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

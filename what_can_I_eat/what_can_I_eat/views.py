@@ -146,6 +146,37 @@ def reply(request,comment_id):
             print(reply_list)
     return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
 
+#提交回复
+def submit_reply(request,comment_id):
+    if request.method == 'POST':
+       
+        data = request.POST.dict()
+        
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM dish_reply')
+            reply_id_list = cursor.fetchall()
+        reply_id = 0
+
+        if reply_id_list:
+            reply_id = int(reply_id_list[-1][0]) + 1
+
+        else:
+            reply_id = 0
+
+        #获取表单数据
+        user_id = 1
+        parent_id = 1
+        reply_text = data.get("reply_text")
+        publish_time = datetime.datetime.now()
+        like_number = 0
+        with connection.cursor() as cursor:
+            cursor.callproc('add_reply', [reply_id , comment_id, user_id , parent_id, reply_text, publish_time, like_number])
+            connection.commit()
+        return redirect(reverse('reply', args=[comment_id]))
+    return render(request, 'reply.html', {'comment_id': comment_id})
+
+
+
 
 
 # 删除窗口
