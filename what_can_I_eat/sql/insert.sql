@@ -1,9 +1,9 @@
-insert into user (user_id, user_name, introduction, head_portrait) values ('1', 'xch', 'hi', '123');
-insert into user (user_id, user_name, introduction, head_portrait) values ('2', 'xch2', 'hi2', '1232');
-insert into user (user_id, user_name, introduction, head_portrait) values ('3', 'xch3', 'hi3', '1233');
-insert into user (user_id, user_name, introduction, head_portrait) values ('4', 'xch4', 'hi4', '1234');
-insert into user (user_id, user_name, introduction, head_portrait) values ('5', 'xch5', 'hi5', '1235');
-insert into user (user_id, user_name, introduction, head_portrait) values ('6', 'xch6', 'hi6', '1236');
+insert into user (user_id, user_name, introduction, head_portrait) values ('1', '鼠鼠', '这是一封离别信', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('2', '李宇哲', 'hi2', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('3', '辛昌昊', 'hi3', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('4', '郑亦航', 'hi4', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('5', '黄佳媛', 'hi5', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('6', '单敏轩', 'hi6', '/media/images/鼠鼠.jpg');
 
 
 
