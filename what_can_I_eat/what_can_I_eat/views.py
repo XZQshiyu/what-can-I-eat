@@ -253,6 +253,7 @@ def add_dish_comment(request, window_id):
         user_id = data.get("id")
         dish_name = data.get("dish_name")
         review_text = request.POST.get('review_text')
+        picture_url = request.POST.get('picture_url')
         rating = request.POST.get('rating')
         print(rating)
         print(user_id)
@@ -262,11 +263,11 @@ def add_dish_comment(request, window_id):
         publish_time = datetime.datetime.now()
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, publish_time, like_number ,rating])
+            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, picture_url, publish_time, like_number ,rating])
             connection.commit()
         return redirect(reverse('food_review', args=[window_id]))
     else:
-        return render(request, "add_dish_comment.html", {'window_id': window_id})
+        return render(request, "comment.html", {'window_id': window_id})
 
 
 #通过comment_id搜索commment

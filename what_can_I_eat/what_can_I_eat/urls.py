@@ -42,7 +42,7 @@ urlpatterns = [
    
     path("canteens/",views.canteens),
 
-    # commetn and review
+    # comment and review
     path("food_review/<str:window_id>", views.food_review, name="food_review"),
     path("reply/<str:comment_id>",views.reply,name="reply"),
     path("add_dish_comment/<str:window_id>", views.add_dish_comment, name="add_dish_comment"),
