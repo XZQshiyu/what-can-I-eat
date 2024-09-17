@@ -1,3 +1,10 @@
+{% extends "test.html" %}
+{% block title %}
+首页
+{% endblock %}
+
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,46 +13,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>菜品评价</title>
     <style>
-        /* 导航栏样式 */
-        .navi {
-            background-color: #343a40;
-            padding: 10px 0;
-        }
-
-
-        .wrap {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-
-        .navi-text li {
-            display: inline-block;
-            margin-right: 20px;
-        }
-
-
-        .navi-text a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 16px;
-            transition: color 0.3s ease;
-        }
-
-
-        .navi-text a:hover {
-            color: #ffc107;
-        }
-
-
-
+    
         .am {
             z-index: 9999999999;
             position: fixed;
-            top: 20px;
+            top: 150px;
             right: 50px;
         }
 
@@ -83,13 +55,6 @@
             opacity: 1;
         }
 
-
-
-
-
-
-
-
         body {
             background-color: #f7f4f4;
             font-family: 'Roboto', sans-serif;
@@ -107,9 +72,9 @@
             position: relative;
             margin: 0 auto;
             /* 添加这一行 */
+           
+         
         }
-
-
 
         .user-info {
 
@@ -150,16 +115,7 @@
         }
 
 
-        .image-container {
-            display: flex;
-            justify-content: space-between;
-            /* 让两张图片横向排列且间隔开 */
-            margin-top: 50px;
-            position: relative;
-
-        }
-
-
+        
         .image {
             height: 180px;
             width: 180px;
@@ -172,7 +128,7 @@
         .button-row {
             display: flex;
             justify-content: space-between;
-            margin-top: 0px;
+            margin-top: 5px;
             position: relative;
         }
 
@@ -206,28 +162,7 @@
             gap: 10px;
         }
 
-        .comment-options {
-            position: absolute;
-            top: 0;
-            left: 100%;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 5px 0;
-            display: none;
-        }
-
-        .comment-options a {
-            display: block;
-            padding: 5px 10px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        .comment-options a:hover {
-            background-color: #f0f0f0;
-        }
-
+        
         .dishname {
             font-weight: bold;
         }
@@ -236,27 +171,6 @@
             font-weight: bold;
         }
 
-        .replies-container.reply {
-            background-color: #f0f0f0;
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 5px;
-        }
-
-        .reply-area {
-            border: 1px solid #ccc;
-            background-color: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 5px;
-            z-index: 10001;
-            position: absolute;
-            width: 700px;
-            top: 460px;
-            left: 0;
-          
-        }
     </style>
     <script>
         // JavaScript function to go back to the previous page
@@ -276,21 +190,7 @@
 </head>
 
 <body>
-    <!-- 导航栏 start -->
-    <div class="navi">
-        <div class="wrap">
-            <ul class="navi-text">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/campusFood">校内美食</a></li>
-                <li><a href="/offCampusFood">校外美食</a></li>
-                <li><a href="/comment">我要评价</a></li>
-                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
-                <li><a href="/contact">联系我们</a></li>
-                <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
-            </ul>
-        </div>
-    </div>
-    <!-- 导航栏 end -->
+   
     <h2 class="mt-4">菜品评价</h2>
     {% for comment in comments %}
 
@@ -305,6 +205,7 @@
             <div class="text-content">
                 <div class="text">点评：</div>
                 <p>{{ comment.4 }}</p>
+                <span>评分：</span>
                 {% if comment.8 == 1 %}
                 <span class="star-rating">★☆☆☆☆</span>
                 {% elif comment.8 == 2 %}
@@ -328,7 +229,7 @@
                     {% load static %}
                     <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
                         onclick="toggleLike(this)" class="image1">
-                    <span>{{ comment.6 }}</span>
+                    <span>{{ comment.7 }}</span>
                 </button>
 
                 <button class="button comment-button">
@@ -346,16 +247,11 @@
                     <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
                 </a>
             </div>
+            <div> {{ comment.6}} </div>
         </div>
-
-        <div class="reply-area reply-area-class">
-            <form action="{% url 'submit_reply' comment.0 %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <input type="text" name="reply_text" placeholder="输入回复内容"><br><br>
-                <input type="submit" value="提交回复">
-            </form>
-        </div>
-    </div>
+       
+          
+        
     {% endfor %}
 
     <a href="{% url 'add_dish_comment' window_id %}" class="am">
@@ -429,3 +325,4 @@
 </script>
 
 </html>
+{% endblock %}

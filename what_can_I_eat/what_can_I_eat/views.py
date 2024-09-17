@@ -546,3 +546,44 @@ def base(request):
 
 def test(request): 
     return render(request,"test.html")
+
+def submit_comment(request,user_id):
+    if request.method == 'POST':
+        data = request.POST.dict()
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM dish_comment')
+            comment_id_list = cursor.fetchall()
+        comment_id = 0
+        if comment_id_list:
+            comment_id = int(comment_id_list[-1][0]) + 1
+        else:
+            comment_id = 0
+
+        #获取表单数据
+        user_id = 1
+         # 读取图像文件
+        image_file = request.FILES.get('food_image')
+        print(image_file)
+        image_url = None
+        if image_file:
+            # 生成图片文件名
+            image_name =  f"foodimages/{comment_id}.jpg"
+            # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
+        dish_name = data.get("dish_name")
+        review_text = request.POST.get('review_text')
+        rating = request.POST.get('rating')
+        canteens_id = 1
+        print(rating)
+        print(user_id)
+        print(dish_name)
+        print(review_text)
+        like_number = 0
+        publish_time = datetime.datetime.now()
+        with connection.cursor() as cursor:
+            cursor.callproc('add_dish_comment', [comment_id, window_id, dish_name, user_id, review_text, image_files, publish_time, like_number, rating])
+            connection.commit()
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'submit_comment.html', {'user_id': user_id})
