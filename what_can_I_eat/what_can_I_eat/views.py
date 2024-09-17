@@ -191,19 +191,22 @@ def update_window(request, window_id):
 # 添加窗口
 def add_window(request,canteen_id):
     if request.method == 'POST':
-        data = request.POST.dict()   
+        data = request.POST.dict()
+        # 创建数据库游标，执行游标查询   
         with connection.cursor() as cursor:
+            # 执行sql查询，从表中获取所有的记录
             cursor.execute('SELECT * FROM food_window')
             window_id_list = cursor.fetchall()
-        window_id = 0
         # print(window_id_list)
+        # window_id初始化到表单的最后
         if window_id_list:
             window_id = int(window_id_list[-1][0]) + 1
         else:
             window_id = 0
+        # 从字典data中获取表单中的window_name    
         window_name = data.get("window_name")     
         window_description = data.get("window_description")  #描述
-        # 读取图像文件
+        # 从request.file中获取用户上传的文件，没上传则为NONE
         image_file = request.FILES.get('window_image')
         print(image_file)
         image_url = None
@@ -248,12 +251,21 @@ def add_dish_comment(request, window_id):
             comment_id = int(comment_id_list[-1][0]) + 1
         else:
             comment_id = 0
-
+        # 需要保证真的有这个picture
+        image_file = request.FILES.get('picture')
+        print(image_file)
+        image_url = None
+        if image_file:
+            # 生成图片文件名,路径指定
+            image_name =  f"images/comments/{dish_name.replace(' ', '_').lower()}.jpg"
+            # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
         # 获取表单数据
         user_id = data.get("id")
         dish_name = data.get("dish_name")
         review_text = request.POST.get('review_text')
-        picture_url = request.POST.get('picture_url')
         rating = request.POST.get('rating')
         print(rating)
         print(user_id)
@@ -267,7 +279,8 @@ def add_dish_comment(request, window_id):
             connection.commit()
         return redirect(reverse('food_review', args=[window_id]))
     else:
-        return render(request, "comment.html", {'window_id': window_id})
+        # 由于新建了一个文件夹，所以需要对应的路径
+        return render(request, "dish_comment/add_dish_comment.html", {'window_id': window_id})
 
 
 #通过comment_id搜索commment
