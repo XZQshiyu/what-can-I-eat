@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>contact</title>
+    <title>campusFood</title>
     <style>
         /* 导航栏样式 */
-      .navi {
+        .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
-      .wrap {
+        .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -20,61 +20,72 @@
             align-items: center;
         }
 
-      .navi-text li {
+        .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
-      .navi-text a {
+        .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
             transition: color 0.3s ease;
         }
 
-      .navi-text a:hover {
+        .navi-text a:hover {
             color: #ffc107;
         }
 
-        /* 表单样式 */
-      .paper-box {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        /* 主体内容样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
         }
 
-      .paper-box label {
-            font-size: 18px;
-            color: #343a40;
-            display: block;
-            margin-bottom: 10px;
+        #campusFood {
+            margin-top: 30px;
         }
 
-      .paper-box input[type="text"] {
-            width: 80%;
-            height: 100px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 16px;
+        #eastCampus table,
+        #westCampus table,
+        #otherCampuses table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        #eastCampus table tr td,
+        #westCampus table tr td,
+        #otherCampuses table tr td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #eastCampus table tr td:first-child,
+        #westCampus table tr td:first-child,
+        #otherCampuses table tr td:first-child {
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+
+        #eastCampus table tr td a,
+        #westCampus table tr td a,
+        #otherCampuses table tr td a {
+            color: #333;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        #eastCampus table tr td a:hover,
+        #westCampus table tr td a:hover,
+        #otherCampuses table tr td a:hover {
+            color: #007bff;
+        }
+
+        #otherCampuses div {
             margin-bottom: 20px;
-        }
-
-      .paper-box input[type="submit"] {
-            background-color: #077c83;
-            border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            color: #fff;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-      .paper-box input[type="submit"]:hover {
-            background-color: #05686d;
         }
     </style>
     <script>
@@ -82,7 +93,7 @@
         function goBack() {
             window.history.back();
         }
-      </script>
+    </script>
 </head>
 
 <body>
@@ -94,7 +105,7 @@
                 <li><a href="/campusFood">校内美食</a></li>
                 <li><a href="/offCampusFood">校外美食</a></li>
                 <li><a href="/comment">我要点评</a></li>
-                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
+                <li><a href="/myself">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
                 <li><a href="/user_management">用户列表</a></li>
                 <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
@@ -102,13 +113,11 @@
         </div>
     </div>
     <!--导航 end-->
-    <div class="paper-box">
-        <form action="">
-            <label>我的意见：</label>
-            <input type="text" name="dish_name" placeholder="支持发送到邮箱####"><br><br>
-            <input type="submit" value="上传" style="background-color:#077c83; color: white; margin-top: 20px;">
-        </form>
-    </div>
+
+    <p> 窗口删除成功</p>
+
+    <a href="/user_management"> 返回 </a>
+
 </body>
 
 </html>

@@ -269,17 +269,6 @@ def add_window(request,canteen_id):
 #?餐厅id要输入还是用来匹配的？
 
 
-# 储存点赞数
-def add_like(request,comment_id):
-    if request.method == 'POST':
-        with connection.cursor() as cursor:
-            cursor.callproc('add_like', [comment_id])
-            connection.commit()
-        return HttpResponse("点赞成功")
-    return render(request, 'food_review.html')
-
-
-
 #dish_comment   smx
 #发布dish_comment
 def add_dish_comment(request, window_id):
@@ -466,12 +455,18 @@ def UpdateUser(request, user_id): # 这个user_id应该是点击对应的用户�
 
 # 删除用户信息
 def DeleteUser(request, user_id):
-     if request.method == 'GET':
+    if request.method == 'GET':
         with connection.cursor() as cursor:
-            # 调用存储过程进行删除操作
-            cursor.callproc('DeleteUser', [user_id])
-            connection.commit()
-        return HttpResponse("用户删除成功")
+            cursor.execute('SELECT * FROM user WHERE user_id = %s', [user_id])
+            user_record = cursor.fetchone()
+            if user_record:
+                # 调用存储过程进行删除操作
+                cursor.callproc('DeleteUser', [user_id])
+                connection.commit()
+            else:
+                # 用户未找到
+                user_id = None
+    return render(request, 'users/DeleteUser.html')
 
 # 通过id和name查询用户
 def search_user(request):
@@ -562,6 +557,60 @@ def show_bookmark(request, user_id):
             cursor.callproc('search_fav_by_user', [user_id])
             fav_list = cursor.fetchall()    
     return render(request,"show_bookmark.html")
+
+
+# def add_like_number(request,window_id,comment_id):
+#     print(111)
+#     with connection.cursor() as cursor:
+#         cursor.callproc('add_like_number', [comment_id])
+#         connection.commit()
+#     return redirect(reverse('food_review', args=[window_id]))
+
+def add_like_number(request, window_id, comment_id):
+    print("Entering add_like_number function")
+    print(f"Parameters: window_id={window_id}, comment_id={comment_id}")
+
+    with connection.cursor() as cursor:
+        try:
+            print("Calling stored procedure")
+            cursor.callproc('add_like_number', [comment_id])
+            connection.commit()
+            print("Stored procedure called and transaction committed")
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'add_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+
+def cancel_like_number(request, window_id, comment_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.callproc('cancel_like_number', [comment_id])
+            connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'cancel_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+
+
+def add_favorite(request, user_id, comment_id, window_id):
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM fav')
+            favorite_id_list = cursor.fetchall()
+        favorite_id = 0
+        if favorite_id_list:
+            favorite_id = int(favorite_id_list[-1][0]) + 1
+        else:
+            favorite_id = 0
+        try:
+            cursor.callproc('add_fav', [favorite_id, comment_id, user_id])
+            connection.commit()
+            print("Stored procedure called and transaction committed")
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
 
 def base(request):
     return render(request,"base.html")

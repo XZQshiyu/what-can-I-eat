@@ -182,7 +182,16 @@
             border-radius: 20px;
             transition: background-color 0.3s;
             border: none;
+            background-color: #f0f0f0;
+            /* 默认背景色 */
+            padding: 10px;
+        }
 
+        .button.highlighted {
+            background-color: #ffeb3b;
+            /* 被点击时的高亮背景色 */
+            border: 2px solid #ffc107;
+            /* 高亮时的边框颜色 */
         }
 
 
@@ -255,7 +264,7 @@
             width: 700px;
             top: 460px;
             left: 0;
-          
+
         }
     </style>
     <script>
@@ -264,7 +273,7 @@
             window.history.back();
         }
     </script>
-     <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             // 隐藏所有回复区域的初始状态
             const replyAreas = document.querySelectorAll('.reply-area-class');
@@ -286,6 +295,7 @@
                 <li><a href="/comment">我要评价</a></li>
                 <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
+                <li><a href="/user_management">用户列表</a></li>
                 <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
             </ul>
         </div>
@@ -321,13 +331,13 @@
 
             {% load static %}
             <img src="{{ comment.5 }}" alt="评论图片" class="image">
-           
+
 
             <div class="button-row">
                 <button class="button">
                     {% load static %}
                     <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                        onclick="toggleLike(this)" class="image1">
+                        onclick="toggleLike(this, '{{ comment.0 }}')" class="image1">
                     <span>{{ comment.6 }}</span>
                 </button>
 
@@ -336,8 +346,8 @@
                     <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
                         data-comment-id="{{ comment.0 }}" class="image1">
                 </button>
-
-                <button class="button">
+                <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id=comment.0
+                    data-user-id="1">
                     {% load static %}
                     <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
                 </button>
@@ -388,42 +398,73 @@
         }, 10);
     };
 
+    function addFavorite(buttonElement) {
+        // 切换按钮的高亮状态
+        buttonElement.classList.toggle('highlighted');
 
-    document.addEventListener('DOMContentLoaded', function () {
-        const commentButtons = document.querySelectorAll('.comment-button');
-        commentButtons.forEach(button => {
-            button.addEventListener('click', function () {
-                console.log('Comment button clicked.');
-                const post = this.closest('.post');
-                const replyArea = post.querySelector('.reply-area-class');
-                console.log('Before display change:', replyArea.style.display);
-                // 判断当前状态并进行切换
-                replyArea.style.display = replyArea.style.display === 'none' ? 'block' : 'none';
-                console.log('After display change:', replyArea.style.display);
-            });
-        });
-    });
+        // 获取按钮的 ID（或者其他唯一标识符）
+        const buttonId = buttonElement.getAttribute('data-id');
 
-    function toggleLike(likeButton) {
+        // 更新本地存储
+        if (buttonElement.classList.contains('highlighted')) {
+            localStorage.setItem(`favorite-${buttonId}`, 'true');
+        } else {
+            localStorage.removeItem(`favorite-${buttonId}`);
+        }
+
+        //这里设置定时器重定向，如果需要保留这部分功能
+        let targetLink = "{% url 'add_favorite' 1 1 1 %}";
+        setTimeout(() => {
+            window.location.href = targetLink;
+        }, 200);
+    }
+ 
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     // 获取所有需要恢复状态的按钮
+    //     const buttons = document.querySelectorAll('.favorite-button');
+
+    //     buttons.forEach(button => {
+    //         // 获取按钮的 ID
+    //         const buttonId = button.getAttribute('data-id');
+
+    //         // 检查本地存储中的状态
+    //         if (localStorage.getItem(`favorite-${buttonId}`) === 'true') {
+    //             buttonElement.classList.toggle('highlighted');
+    //         }
+    //     });
+    // });
+
+    function toggleLike(likeButton, comment_id) {
+        console.log('comment_id:', comment_id);
         let likesCountElement = likeButton.nextElementSibling;
         let currentLikes = parseInt(likesCountElement.textContent);
+        // 如果已经点赞，就取消点赞
         if (likeButton.classList.contains('liked')) {
             likeButton.classList.remove('liked');
             likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
             likeButton.style.transform = 'scale(1)';
+
+            let targetLink = "{% url 'cancel_like_number' window_id comment_id %}";
+            setTimeout(() => {
+                window.location.href = argetLink;
+            }, 200);
+            // 如果没有点赞，就点赞
         } else {
+            // 然后前端出现动画
             likeButton.classList.add('liked');
             likesCountElement.textContent = currentLikes + 1;
             likeButton.style.transform = 'scale(1.2)';
             setTimeout(() => {
                 likeButton.style.transform = 'scale(1)';
             }, 200);
+            // 先更改数据库
+            let targetLink = "{% url 'add_like_number' window_id comment_id %}";
+            setTimeout(() => {
+                window.location.href = argetLink;
+            }, 200);
         }
-        let targetLink = "/food_review";
-        setTimeout(() => {
-            window.location.href = targetLink;
-        }, 200);
     }
+
 
 
 </script>
