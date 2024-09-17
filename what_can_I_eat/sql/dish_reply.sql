@@ -6,14 +6,13 @@ CREATE PROCEDURE add_reply (
     IN p_reply_id varchar(18),
     IN p_dish_comment_id varchar(18),
     IN p_user_id varchar(18),
-    IN p_parent_reply_id varchar(18),
     IN p_context varchar(255),
     IN p_publish_time date,
     IN p_like_number integer
 )
 BEGIN
-    INSERT INTO dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number)
-    VALUES (p_reply_id, p_dish_comment_id, p_user_id, p_parent_reply_id, p_context, p_publish_time, p_like_number);
+    INSERT INTO dish_reply (reply_id, dish_comment_id, user_id, context, publish_time, like_number)
+    VALUES (p_reply_id, p_dish_comment_id, p_user_id, p_context, p_publish_time, p_like_number);
 END //
 delimiter ;
 

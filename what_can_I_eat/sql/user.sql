@@ -72,3 +72,15 @@ BEGIN
 END //
 DELIMITER ;
 
+-- 根据id查找用户
+DROP PROCEDURE IF EXISTS search_user_by_id;
+DELIMITER //
+CREATE PROCEDURE search_user_by_id(
+    IN p_user_id varchar(30)
+)
+BEGIN
+    SELECT *
+    FROM user
+    where user_id = p_user_id;
+END //
+DELIMITER ;
