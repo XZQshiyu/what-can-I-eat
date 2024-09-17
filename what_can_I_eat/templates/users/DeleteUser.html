@@ -1,10 +1,3 @@
-{% extends "test.html" %}
-{% block title %}
-首页
-{% endblock %}
-
-
-{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +6,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>campusFood</title>
     <style>
-       
+        /* 导航栏样式 */
+        .navi {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+
+        .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navi-text li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .navi-text a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navi-text a:hover {
+            color: #ffc107;
+        }
 
         /* 主体内容样式 */
         body {
@@ -72,17 +93,31 @@
         function goBack() {
             window.history.back();
         }
-      </script>
+    </script>
 </head>
 
 <body>
-   
+    <!--导航 start-->
+    <div class="navi">
+        <div class="wrap">
+            <ul class="navi-text">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/campusFood">校内美食</a></li>
+                <li><a href="/offCampusFood">校外美食</a></li>
+                <li><a href="/comment">我要点评</a></li>
+                <li><a href="/myself">我的主页</a></li>
+                <li><a href="/contact">联系我们</a></li>
+                <li><a href="/user_management">用户列表</a></li>
+                <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
+            </ul>
+        </div>
+    </div>
+    <!--导航 end-->
 
     <p> 窗口删除成功</p>
 
-    <a href="{% url 'view_windows' canteen_id.0%}"> 返回 </a>
+    <a href="/user_management"> 返回 </a>
 
 </body>
 
 </html>
-{% endblock %}

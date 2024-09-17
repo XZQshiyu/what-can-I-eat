@@ -1,3 +1,10 @@
+{% extends "test.html" %}
+{% block title %}
+首页
+{% endblock %}
+
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 
@@ -294,6 +301,7 @@
                 <li><a href="/comment">我要点评</a></li>
                 <li><a href="/myself">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
+                <li><a href="/user_management">用户列表</a></li>
                 <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li>
                 <!-- 返回按钮 -->
             </ul>
@@ -433,3 +441,4 @@
 </script>
 
 </html>
+{% endblock %}

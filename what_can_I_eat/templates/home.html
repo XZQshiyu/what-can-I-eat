@@ -4,12 +4,106 @@
 
 {% block content %}
 <style>
-  /* 增加行之间的间距 */
-  .row-deck {
-    margin-bottom: 5.0rem;
+ .row-deck {
+    margin-bottom: 2.0rem;
     /* 调整间距 */
   }
+
+ .card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s ease-in-out;
+  }
+
+ .card:hover {
+    transform: translateY(-5px);
+  }
+
+ .card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+ .card-text {
+    font-size: 16px;
+    color: #555;
+  }
+
+ .btn-ghost-primary {
+    background-color: transparent;
+    border: 2px solid #5bbdff;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+ .btn-ghost-success {
+    background-color: transparent;
+    border: 2px solid #508c52;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+ .btn-ghost-warning {
+    background-color: transparent;
+    border: 2px solid #ff985c;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+ .btn-ghost-danger {
+    background-color: transparent;
+    border: 2px solid #ff6666;
+    color: #000000;
+    padding: 10px 20px;
+    border-radius: 5px;
+  }
+
+  /* 添加与按钮颜色相同的边框 */
+ .btn-ghost-primary {
+    border-color: #5bbdff;
+  }
+
+ .btn-ghost-success {
+    border-color: #508c52;
+  }
+
+ .btn-ghost-warning {
+    border-color: #ff985c;
+  }
+
+ .btn-ghost-danger {
+    border-color: #ff6666;
+  }
+
+ .bg-danger {
+    background-color: #5bbdff;
+    border-top: 5px solid #5bbdff;
+    /* 添加与按钮颜色相同的上边框 */
+  }
+
+ .bg-success {
+    background-color: #508c52;
+    border-top: 5px solid #508c52;
+    /* 添加与按钮颜色相同的上边框 */
+  }
+
+ .bg-warning {
+    background-color: #ff985c;
+    border-top: 5px solid #ff985c;
+    /* 添加与按钮颜色相同的上边框 */
+  }
+
+ .bg-info {
+    background-color: #ff6666;
+    border-top: 5px solid #ff6666;
+    /* 添加与按钮颜色相同的上边框 */
+  }
 </style>
+
 <div class="container">
   <div class="row row-deck">
     <!-- 校内美食模块-->
@@ -20,7 +114,9 @@
           <h3 class="card-title">校内美食探索模块</h3>
           <p class="card-text">浏览校内各个食堂的美味佳肴，了解菜品特色。</p>
           <p class="card-text">查看同学们对校内美食的评价和推荐。</p>
-          <a href="/campusFood" class="btn btn-ghost-primary">前往校内美食</a>
+          <a href="/campusFood">
+          <button class="btn btn-ghost-primary" href="">前往校内美食</button>
+        </a>
         </div>
       </div>
     </div>
@@ -32,7 +128,9 @@
           <h3 class="card-title">校外美食发现模块</h3>
           <p class="card-text">探索周边的餐厅和小吃摊，发现新的口味。</p>
           <p class="card-text">分享校外美食的体验和心得。</p>
-          <a href="/offCampusFood" class="btn btn-ghost-success">前往校外美食</a>
+          <a href="/offCampusFood">
+          <button class="btn btn-ghost-success">前往校外美食</button>
+        </a>
         </div>
       </div>
     </div>
@@ -46,7 +144,9 @@
           <h3 class="card-title">美食评价模块</h3>
           <p class="card-text">对品尝过的校内校外美食进行评价和打分。</p>
           <p class="card-text">为其他美食爱好者提供参考。</p>
-          <a href="/comment" class="btn btn-ghost-warning">前往评价</a>
+          <a href="/comment">
+          <button class="btn btn-ghost-warning">前往评价</button>
+        </a>
         </div>
       </div>
     </div>
@@ -58,7 +158,9 @@
           <h3 class="card-title">个人中心模块</h3>
           <p class="card-text">查看自己的评价历史和收藏的美食。</p>
           <p class="card-text">管理个人信息。</p>
-          <a href="{% url 'myself' '1' %}" class="btn btn-ghost-danger">前往我的主页</a>
+          <a href="{% url 'myself' '1'%}">
+          <button class="btn btn-ghost-danger">前往我的主页</button>
+        </a>
         </div>
       </div>
     </div>
