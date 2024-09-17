@@ -4,16 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>菜品评价</title>
+    <title>评论详情</title>
     <style>
         /* 导航栏样式 */
-        .navi {
+       .navi {
             background-color: #343a40;
             padding: 10px 0;
         }
 
-
-        .wrap {
+       .wrap {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -21,28 +20,23 @@
             align-items: center;
         }
 
-
-        .navi-text li {
+       .navi-text li {
             display: inline-block;
             margin-right: 20px;
         }
 
-
-        .navi-text a {
+       .navi-text a {
             text-decoration: none;
             color: #fff;
             font-size: 16px;
             transition: color 0.3s ease;
         }
 
-
-        .navi-text a:hover {
+       .navi-text a:hover {
             color: #ffc107;
         }
 
-
-
-        .am {
+       .am {
             z-index: 9999999999;
             position: fixed;
             top: 20px;
@@ -83,44 +77,34 @@
             opacity: 1;
         }
 
-
-
-
-
-
-
-
         body {
             background-color: #f7f4f4;
             font-family: 'Roboto', sans-serif;
 
         }
 
-        .post {
+       .post {
             border: 1px solid hsl(0, 0%, 87%);
             background-color: rgb(255, 196, 188);
-            padding: 10px;
+            padding: 20px;
             width: 700px;
             /* 调整宽度使 div 更宽 */
             height: 450px;
             /* 调整高度使 div 更扁 */
             position: relative;
-            margin: 0 auto;
+            margin: 20px auto;
             /* 添加这一行 */
         }
 
-
-
-        .user-info {
-
+       .user-info {
             margin-left: 10px;
             margin-top: 10px;
             align-items: center;
             gap: 10px;
+            padding: 10px 0;
         }
 
-
-        .user-avatar {
+       .user-avatar {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -128,86 +112,74 @@
             box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
         }
 
-
-        .user-id {
+       .user-id {
             font-weight: bold;
-            color: #333;
+            color: #343434;
             font-size: 18px;
         }
 
-
-        .text-content {
+       .text-content {
             margin-top: 10px;
             position: relative;
+            padding: 10px 0;
         }
 
-
-        .star-rating {
+       .star-rating {
             margin-top: 10px;
-            color: gold;
+            color: #ffd700;
             position: relative;
-            font-size: 28px;
+            font-size: 32px;
         }
 
-
-        .image-container {
+       .image-container {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 20px;
             /* 让两张图片横向排列且间隔开 */
             margin-top: 50px;
             position: relative;
 
         }
 
-
-        .image {
-            height: 180px;
-            width: 180px;
+       .image {
+            height: 150px;
+            width: 150px;
             border-radius: 10px;
 
         }
 
-
-
-        .button-row {
+       .button-row {
             display: flex;
             justify-content: space-between;
             margin-top: 0px;
             position: relative;
+            padding: 10px 0;
         }
 
-
-        .button {
+       .button {
             cursor: pointer;
             border-radius: 20px;
             transition: background-color 0.3s;
             border: none;
-            background-color: #f0f0f0; /* 默认背景色 */
-            padding: 10px;
+            background-color: #f8f9fa;
+            color: #333;
         }
 
-        .button.highlighted {
-            background-color: #ffeb3b; /* 被点击时的高亮背景色 */
-            border: 2px solid #ffc107; /* 高亮时的边框颜色 */
+       .button:hover {
+            background-color: #e9ecef;
         }
 
-
-        .button:hover {
-            background-color: #d0d0d0;
-        }
-
-
-        .image1 {
+       .image1 {
             height: 20px;
             width: 20px;
         }
 
-        .mini-info {
+       .mini-info {
             display: flex;
             gap: 10px;
         }
 
-        .comment-options {
+       .comment-options {
             position: absolute;
             top: 0;
             left: 100%;
@@ -218,32 +190,47 @@
             display: none;
         }
 
-        .comment-options a {
+       .comment-options a {
             display: block;
             padding: 5px 10px;
             text-decoration: none;
             color: #333;
         }
 
-        .comment-options a:hover {
+       .comment-options a:hover {
             background-color: #f0f0f0;
         }
 
-        .dishname {
+       .dishname {
             font-weight: bold;
         }
 
-        .text {
+       .text {
             font-weight: bold;
         }
 
-        .replies-container.reply {
-            background-color: #f0f0f0;
-            padding: 5px 10px;
+       .replies-container {
             border: 1px solid #ccc;
+            padding: 10px;
             border-radius: 5px;
-            margin-top: 5px;
         }
+
+       .replies-container div {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+       .replies-container div:last-child {
+            border-bottom: none;
+        }
+
+       .rpl-text {
+            color: #333;
+        }
+
     </style>
     <script>
         // JavaScript function to go back to the previous page
@@ -269,8 +256,8 @@
         </div>
     </div>
     <!-- 导航栏 end -->
-    <h2 class="mt-4">菜品评价</h2>
-    {% for comment in comments %}
+    <h2 class="mt-4">评价详情</h2>
+    {% if comment %}
     <div class="post">
         <div class="user-info">
             <div class="mini-info">
@@ -315,23 +302,22 @@
                         onclick="showCommentOptions(this)" class="image1">
 
                 </button>
-                <button class="button" onclick="addFavorite(this)" data-comment-id=comment.0 data-user-id="1">
+                <button class="button">
                     {% load static %}
                     <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
                 </button>
-                <a href="{% url 'reply' comment.0 %}">
-                    <button id="showRepliesButton" class="reply">查看回复</button>
-                </a>
+
             </div>
         </div>
-        <div class="replies-container"></div>
+        {% for reply in replies %}
+        <div class="replies-container">
+            <div class="replier">{{ reply.3 }} </div><br>
+            <div class="rpl-text">{{ reply.4 }}</div><br>
+            <div class="rpl-time">{{ reply.5 }} </div><br>
+        </div>
     </div>
     {% endfor %}
-
-    <a href="{% url 'add_dish_comment' window_id %}" class="am">
-        {% load static %}
-        <img src="{% static 'icons/创作.svg' %}" alt="创作">
-    </a>
+    {% endif %}
     <!-- 回到顶部按钮 -->
     <button id="backToTop">^</button>
     <!-- 回到顶部按钮 -->
@@ -358,86 +344,23 @@
         }, 10);
     };
 
-    function addFavorite(buttonElement) {
-        buttonElement.classList.toggle('highlighted');
-
-        let targetLink = "{% url 'add_favorite' 1 1 1 %}";
-        setTimeout(() => {
-            window.location.href = targetLink;
-        }, 200);
-    }
-
-
-
-    function toggleLike(buttonElement, likeButton) {
+    function toggleLike(likeButton) {
         let likesCountElement = likeButton.nextElementSibling;
         let currentLikes = parseInt(likesCountElement.textContent);
-        // 如果已经点赞，就取消点赞
         if (likeButton.classList.contains('liked')) {
             likeButton.classList.remove('liked');
             likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
             likeButton.style.transform = 'scale(1)';
-
-            let targetLink = "{% url 'cancel_like_number' window_id 'commentId' %}";
-
-            setTimeout(() => {
-                window.location.href = argetLink;
-            }, 200);
-        // 如果没有点赞，就点赞
         } else {
-            // 然后前端出现动画
             likeButton.classList.add('liked');
             likesCountElement.textContent = currentLikes + 1;
             likeButton.style.transform = 'scale(1.2)';
             setTimeout(() => {
                 likeButton.style.transform = 'scale(1)';
             }, 200);
-            // 先更改数据库
-            let targetLink = "{% url 'add_like_number' window_id 'commentId' %}";
-
-            setTimeout(() => {
-                window.location.href = argetLink;
-            }, 200);
         }
     }
 
-
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     var showRepliesButton = document.getElementById('showRepliesButton');
-    //     var repliesContainer = document.querySelector('.replies-container');
-
-    //     if (showRepliesButton) {
-    //         showRepliesButton.addEventListener('click', function () {
-    //             // 假设你有一个回复数据数组repliesData
-    //             var repliesData = [
-    //                 { text: '这是回复 1', time: '2024-09-11' },
-    //                 { text: '这是回复 2', time: '2024-09-10' },
-    //                 { text: '这是回复 3', time: '2024-09-09' }
-    //             ];
-
-    //             repliesContainer.innerHTML = '';
-
-    //             repliesData.forEach(function (reply) {
-    //                 var replyDiv = document.createElement('div');
-    //                 replyDiv.classList.add('reply');
-    //                 replyDiv.innerHTML = '<div class="reply-text">' + reply.text + '</div><div class="time">' + reply.time + '</div>';
-    //                 // 添加样式类
-    //                 replyDiv.classList.add('reply-item');
-    //                 repliesContainer.appendChild(replyDiv);
-    //             });
-
-    //             var moreLink = document.createElement('a');
-    //             moreLink.href = "#";
-    //             moreLink.classList.add('more-link');
-    //             moreLink.textContent = '更多';
-    //             repliesContainer.appendChild(moreLink);
-    //         });
-    //     } else {
-    //         console.log("没有找到 id 为 showRepliesButton 的元素");
-    //     }
-
-    // });
-
 </script>
 
-</html>t
+</html>

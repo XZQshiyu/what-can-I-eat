@@ -39,22 +39,12 @@ urlpatterns = [
     path("campusFood/",views.campusFood),
     path("review/",views.review),
     path("home/",views.home),
-    path("XiYuan/",views.XiYuan),
-    path("Jinjuyuan/",views.Jinjuyuan),
-    path("Zhengyanglou/",views.Zhengyanglou),
-    path("Taoliyuan/",views.Taoliyuan),
-    path("Yecanbu/",views.Yecanbu),
-    path("Donfeng/",views.Donfeng),
-    path("Donxue/",views.Donxue),
-    path("Donyuan/",views.Donyuan),
-    path("Meiguang/",views.Meiguang),
-    path("Xingzuo/",views.Xingzuo),
-    path("Woke/",views.Woke),
-    path("Qinyuanchun/",views.Qinyuanchun),
+   
     path("canteens/",views.canteens),
 
     # commetn and review
     path("food_review/<str:window_id>", views.food_review, name="food_review"),
+    path("reply/<str:comment_id>",views.reply,name="reply"),
     path("add_dish_comment/<str:window_id>", views.add_dish_comment, name="add_dish_comment"),
 
     # windows test
@@ -72,4 +62,9 @@ urlpatterns = [
     path("show_my_comment/",views.show_my_comment),
     path("show_get_reply/",views.show_get_reply),
     path("show_bookmark/",views.show_bookmark),
+    # 点赞接口
+    path("add_like_number/<str:window_id>/<str:comment_id>/",views.add_like_number,name="add_like_number"),
+    path("cancel_like_number/<str:window_id>/<str:comment_id>/",views.cancel_like_number,name="cancel_like_number"),
+    # 收藏接口
+    path("add_favorite/<str:user_id>/<str:comment_id>/<str:window_id>",views.add_favorite,name="add_favorite"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

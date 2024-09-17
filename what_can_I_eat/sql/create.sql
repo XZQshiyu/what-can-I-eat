@@ -98,13 +98,11 @@ create table dish_reply
     reply_id varchar(18) primary key,
     dish_comment_id varchar(18) not null,
     user_id varchar(18) not null,
-    parent_reply_id varchar(18),
     context varchar(255) not null,
     publish_time date,
     like_number integer not null,
     foreign key (dish_comment_id) references dish_comment(comment_id) ON DELETE CASCADE,
     foreign key (user_id) references user(user_id) ON DELETE CASCADE,
-    foreign key (parent_reply_id) references dish_reply(reply_id) ON DELETE CASCADE
 );
 
 create table fav

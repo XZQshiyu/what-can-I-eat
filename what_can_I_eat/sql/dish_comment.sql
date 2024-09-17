@@ -80,3 +80,29 @@ BEGIN
     WHERE window_id = p_window_id;
 END //
 DELIMITER ;
+
+-- 点赞数量+1
+DROP PROCEDURE IF EXISTS add_like_number;
+DELIMITER //
+CREATE PROCEDURE add_like_number (
+    IN p_comment_id varchar(18)
+)
+BEGIN
+    UPDATE dish_comment
+    SET like_number = like_number + 1
+    WHERE comment_id = p_comment_id;
+END //
+DELIMITER ;
+
+-- 点赞数量-1
+DROP PROCEDURE IF EXISTS cancel_like_number;
+DELIMITER //
+CREATE PROCEDURE cancel_like_number (
+    IN p_comment_id varchar(18)
+)
+BEGIN
+    UPDATE dish_comment
+    SET like_number = like_number - 1
+    WHERE comment_id = p_comment_id;
+END //
+DELIMITER ;

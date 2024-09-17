@@ -50,44 +50,6 @@ def campusFood(request):
 def review(request):
     return render(request,"review.html")
 
-def XiYuan(request):
-    return render(request,"XiYuan.html")
-
-def Xiyuan1(request):
-    return render(request,"Xiyuan1.html")
-    
-def Taoliyuan(request):
-    return render(request,"Taoliyuan.html")
-
-def Yecanbu(request):
-    return render(request,"Yecanbu.html")
-
-def Jinjuyuan(request):
-    return render(request,"Jinjuyuan.html")
-
-def Zhengyanglou(request):
-    return render(request,"Zhengyanglou.html")
-
-def Donyuan(request):
-    return render(request,"Donyuan.html")
-
-def Donxue(request):
-    return render(request,"Donxue.html")
-
-def Donfeng(request):
-    return render(request,"Donfeng.html")
-
-def Xingzuo(request):
-    return render(request,"Xingzuo.html")
-
-def Woke(request):
-    return render(request,"Woke.html")
-
-def Meiguang(request):
-    return render(request,"Meiguang.html")
-
-def Qinyuanchun(request):
-    return render(request,"Qinyuanchun.html")
 
 def user1(request):
     return render(request,"user1.html")
@@ -147,19 +109,31 @@ def view_windows(request, canteen_id):
 
 # review test
 def food_review(request, window_id):
-    review_list = []
-    reply_list=[]
+    review_list = []  
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
             cursor.callproc('get_all_comments_from_window', [window_id])
             review_list = cursor.fetchall()
             print(review_list)
-            cursor.execute('SELECT comment_id FROM dish_comment WHERE window_id = %s', [window_id])
-            comment_id = cursor.fetchone()
-       
+
     return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
+def reply(request,comment_id):
+    
+    reply_list=[]
+    comment = []
+    if request.method == 'GET':
+      
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM dish_comment WHERE comment_id = %s', comment_id)
+            comment = cursor.fetchone()
+            print(comment)
+        with connection.cursor() as cursor:
+            cursor.callproc('get_replies_from_comment', [comment_id])
+            reply_list = cursor.fetchall()
+            print(reply_list)
+    return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
 
 
 
@@ -235,17 +209,6 @@ def add_window(request,canteen_id):
         return redirect(reverse('view_windows', args=[canteen_id]))
     return render(request, 'windows/add_window.html', {'canteen_id': canteen_id})
 #?餐厅id要输入还是用来匹配的？
-
-
-# 储存点赞数
-def add_like(request,comment_id):
-    if request.method == 'POST':
-        with connection.cursor() as cursor:
-            cursor.callproc('add_like', [comment_id])
-            connection.commit()
-        return HttpResponse("点赞成功")
-    return render(request, 'food_review.html')
-
 
 
 #dish_comment   smx
@@ -474,3 +437,56 @@ def show_my_comment(request):
 
 def show_bookmark(request):
     return render(request,"show_bookmark.html")
+
+
+# def add_like_number(request,window_id,comment_id):
+#     print(111)
+#     with connection.cursor() as cursor:
+#         cursor.callproc('add_like_number', [comment_id])
+#         connection.commit()
+#     return redirect(reverse('food_review', args=[window_id]))
+
+def add_like_number(request, window_id, comment_id):
+    print("Entering add_like_number function")
+    print(f"Parameters: window_id={window_id}, comment_id={comment_id}")
+
+    with connection.cursor() as cursor:
+        try:
+            print("Calling stored procedure")
+            cursor.callproc('add_like_number', [comment_id])
+            connection.commit()
+            print("Stored procedure called and transaction committed")
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'add_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+
+def cancel_like_number(request, window_id, comment_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.callproc('cancel_like_number', [comment_id])
+            connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'cancel_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+
+
+def add_favorite(request, user_id, comment_id, window_id):
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM favorite')
+            favorite_id_list = cursor.fetchall()
+        favorite_id = 0
+        if favorite_id_list:
+            favorite_id = int(favorite_id_list[-1][0]) + 1
+        else:
+            favorite_id = 0
+        try:
+            cursor.callproc('add_favorite', [favorite_id, comment_id, user_id])
+            connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
