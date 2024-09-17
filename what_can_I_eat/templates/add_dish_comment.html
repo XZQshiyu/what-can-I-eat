@@ -208,19 +208,7 @@
             }
         }
 
-        // 在页面加载时默认选择东校区，并更新食堂选项
-        window.onload = function () {
-            // 添加两个文件上传输入框
-            createFileInput();
-          
-
-            var fileInputs = document.querySelectorAll('input[type="file"]');
-            fileInputs.forEach(input => input.addEventListener('change', handleFileChange));
-        };
-
-        function goBack() {
-            window.history.back();
-        }
+       
     </script>
 </head>
 
@@ -249,6 +237,8 @@
             <input type="id" name="id"><br>
             <label>菜品名称：</label>
             <input type="text" name="dish_name"><br>
+            <label>上传图片：</label><br>
+            <input type="file"  id="food_image" name="food_image" accept="image/*"><br><br>
             <label>点评：</label>
             <textarea name="review_text" rows="4" cols="50"></textarea><br>
             <label>打星：</label>

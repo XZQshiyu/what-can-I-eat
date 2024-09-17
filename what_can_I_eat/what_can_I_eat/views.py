@@ -162,6 +162,37 @@ def reply(request,comment_id):
             print(reply_list)
     return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
 
+#提交回复
+def submit_reply(request,comment_id):
+    if request.method == 'POST':
+       
+        data = request.POST.dict()
+        
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM dish_reply')
+            reply_id_list = cursor.fetchall()
+        reply_id = 0
+
+        if reply_id_list:
+            reply_id = int(reply_id_list[-1][0]) + 1
+
+        else:
+            reply_id = 0
+
+        #获取表单数据
+        user_id = 1
+        parent_id = 1
+        reply_text = data.get("reply_text")
+        publish_time = datetime.datetime.now()
+        like_number = 0
+        with connection.cursor() as cursor:
+            cursor.callproc('add_reply', [reply_id , comment_id, user_id , parent_id, reply_text, publish_time, like_number])
+            connection.commit()
+        return redirect(reverse('reply', args=[comment_id]))
+    return render(request, 'reply.html', {'comment_id': comment_id})
+
+
+
 
 
 # 删除窗口
@@ -257,8 +288,21 @@ def add_dish_comment(request, window_id):
         # 获取表单数据
         user_id = data.get("id")
         dish_name = data.get("dish_name")
+
+      
+        # 读取图像文件
+        image_file = request.FILES.get('food_image')
+        print(image_file)
+        image_url = None
+        if image_file:
+            # 生成图片文件名
+            image_name =  f"foodimages/{comment_id}.jpg"
+            # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
+
         review_text = request.POST.get('review_text')
-        picture_url = request.POST.get('picture_url')
         rating = request.POST.get('rating')
         print(rating)
         print(user_id)
@@ -268,11 +312,11 @@ def add_dish_comment(request, window_id):
         publish_time = datetime.datetime.now()
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, picture_url, publish_time, like_number ,rating])
+            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, image_url, publish_time, like_number ,rating])
             connection.commit()
         return redirect(reverse('food_review', args=[window_id]))
     else:
-        return render(request, "comment.html", {'window_id': window_id})
+        return render(request, "add_dish_comment.html", {'window_id': window_id})
 
 
 #通过comment_id搜索commment
@@ -530,7 +574,7 @@ def cancel_like_number(request, window_id, comment_id):
 
 def add_favorite(request, user_id, comment_id, window_id):
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM favorite')
+            cursor.execute('SELECT * FROM fav')
             favorite_id_list = cursor.fetchall()
         favorite_id = 0
         if favorite_id_list:
@@ -538,8 +582,9 @@ def add_favorite(request, user_id, comment_id, window_id):
         else:
             favorite_id = 0
         try:
-            cursor.callproc('add_favorite', [favorite_id, comment_id, user_id])
+            cursor.callproc('add_fav', [favorite_id, comment_id, user_id])
             connection.commit()
+            print("Stored procedure called and transaction committed")
         except Exception as e:
             print(f"Error: {e}")
             connection.rollback()

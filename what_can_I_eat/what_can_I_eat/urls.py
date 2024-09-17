@@ -61,9 +61,9 @@ urlpatterns = [
     path("DeleteUser/<str:user_id>", views.DeleteUser, name="DeleteUser"),
     path("user1/", views.user1, name="user1"),
     path("tiezi/",views.tiezi),
-    path("show_my_comment/",views.show_my_comment),
-    path("show_get_reply/",views.show_get_reply),
-    path("show_bookmark/",views.show_bookmark),
+    # path("show_my_comment/",views.show_my_comment),
+    # path("show_get_reply/",views.show_get_reply),
+    # path("show_bookmark/",views.show_bookmark),
     # 点赞接口
     path("add_like_number/<str:window_id>/<str:comment_id>/",views.add_like_number,name="add_like_number"),
     path("cancel_like_number/<str:window_id>/<str:comment_id>/",views.cancel_like_number,name="cancel_like_number"),
@@ -72,4 +72,5 @@ urlpatterns = [
     
     path("show_get_reply/<str:user_id>",views.show_get_reply, name="show_get_reply"),
     path("show_bookmark/<str:user_id>",views.show_bookmark, name="show_bookmark"),
+    path("submit_reply/<str:comment_id>",views.submit_reply, name="submit_reply"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
