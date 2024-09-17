@@ -18,7 +18,15 @@ def signin(request):
         print(password)
         if user_id and password:
             if user_id == "ustc" and password == "639":
-                return render(request, "home.html")
+                user_id_no = '1'
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id_no)
+                    user = cursor.fetchone()
+                    user_id = user[0]
+                    user_name = user[1]
+                    user_picture = user[3]
+                    user_introduction = user[2]
+                return render(request, "home.html", {"user_id": user_id, "user_name": user_name, "user_picture": user_picture, "user_introduction": user_introduction})
             else:
                 messages.error(request, "Invalid username or passowrd")
         else:
@@ -32,7 +40,15 @@ def comment(request):
     return render(request,"comment.html")
 
 def home(request):
-    return render(request,"home.html")
+    user_id_no = '1'
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id_no)
+        user = cursor.fetchone()
+        user_id = user[0]
+        user_name = user[1]
+        user_picture = user[3]
+        user_introduction = user[2]
+    return render(request,"home.html",{"user_id": user_id, "user_name": user_name, "user_picture": user_picture, "user_introduction": user_introduction})
 
 def contact(request):
     return render(request,"contact.html")
@@ -469,17 +485,6 @@ def search_user(request):
             results = cursor.fetchall()
     return render(request, "users/search_user.html", {"results": results})
 
-
-def show_my_comment(request, user_id):
-    comment_list=[]
-    if request.method == 'GET':
-        with connection.cursor() as cursor:
-            cursor.callproc('search_dish_comment_by_user', [user_id])
-            comment_list = cursor.fetchall()
-            print(comment_list)
-            print("sdfghjkl")
-    return render(request, "show_my_comment.html", {"comments": comment_list})
-
 # def food_review(request, window_id):
 #     review_list = []
 #     if request.method == 'GET':
@@ -491,7 +496,7 @@ def show_my_comment(request, user_id):
 #     return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
 def show_get_reply(request, user_id):
-    reply_list = []
+    result = []
     if request.method == 'GET':
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
@@ -499,13 +504,45 @@ def show_get_reply(request, user_id):
         if not user:
             return HttpResponse("用户不存在")
         with connection.cursor() as cursor:
-            cursor.callproc('search_reply_by_user', [user_id])
-            reply_list = cursor.fetchall()
-            print(reply_list)
-        
-    return render(request,"show_get_reply.html")
+            cursor.callproc('search_dish_comment_by_user', [user_id])
+            comment_list = cursor.fetchall()
+            print(comment_list)
+        for comment in comment_list:
+            with connection.cursor() as cursor:
+                cursor.callproc('get_replies_from_comment', [comment[0]])
+                reply_list = cursor.fetchall()
+                print(reply_list)
+                user_id = comment[3]
+                print("user_id: ", user_id)
+                comment_content = comment[4]
+                comment_picture = comment[5]
+                print("comment_content: ", comment_content)
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+                    user = cursor.fetchone()
+                user_name = user[1]
+                print("user_name: ", user_name)
+                # user_picture = user[3]
+                # print("user_picture: ", user_picture)
+                for item in reply_list:
+                    print("item: ", item)
+                    reply_user_id = item[2]
+                    with connection.cursor() as cursor:
+                        cursor.execute("SELECT * FROM user WHERE user_id = %s", reply_user_id)
+                        reply_user = cursor.fetchone()
+                        reply_user_name = reply_user[1]
+                        reply_user_picture = reply_user[3]
+                    result.append([user_name, comment_picture, comment_content, reply_user_name, reply_user_picture, *item])
+                print(result)
+    return render(request,"show_get_reply.html", {"reply_list": result, "user": user})
 
 
 
 def show_bookmark(request):
     return render(request,"show_bookmark.html")
+
+def base(request):
+    return render(request,"base.html")
+
+def test(request): 
+    return render(request,"test.html")

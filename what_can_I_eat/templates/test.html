@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}我在科大吃什么{% endblock %}
+
+{% block content %}
+<style>
+  /* 增加行之间的间距 */
+  .row-deck {
+    margin-bottom: 5.0rem;
+    /* 调整间距 */
+  }
+</style>
+<div class="container">
+  <div class="row row-deck">
+    <!-- 校内美食模块-->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-status-top bg-danger"></div>
+        <div class="card-body">
+          <h3 class="card-title">校内美食探索模块</h3>
+          <p class="card-text">浏览校内各个食堂的美味佳肴，了解菜品特色。</p>
+          <p class="card-text">查看同学们对校内美食的评价和推荐。</p>
+          <a href="/campusFood" class="btn btn-ghost-primary">前往校内美食</a>
+        </div>
+      </div>
+    </div>
+    <!-- 校外美食模块-->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-status-top bg-success"></div>
+        <div class="card-body">
+          <h3 class="card-title">校外美食发现模块</h3>
+          <p class="card-text">探索周边的餐厅和小吃摊，发现新的口味。</p>
+          <p class="card-text">分享校外美食的体验和心得。</p>
+          <a href="/offCampusFood" class="btn btn-ghost-success">前往校外美食</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row row-deck">
+    <!-- 我要评价模块-->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-status-top bg-warning"></div>
+        <div class="card-body">
+          <h3 class="card-title">美食评价模块</h3>
+          <p class="card-text">对品尝过的校内校外美食进行评价和打分。</p>
+          <p class="card-text">为其他美食爱好者提供参考。</p>
+          <a href="/comment" class="btn btn-ghost-warning">前往评价</a>
+        </div>
+      </div>
+    </div>
+    <!-- 我的主页模块-->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-status-top bg-info"></div>
+        <div class="card-body">
+          <h3 class="card-title">个人中心模块</h3>
+          <p class="card-text">查看自己的评价历史和收藏的美食。</p>
+          <p class="card-text">管理个人信息。</p>
+          <a href="{% url 'myself' '1' %}" class="btn btn-ghost-danger">前往我的主页</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // 回到顶部按钮的功能
+  window.onscroll = function () {
+    scrollFunction();
+  };
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("backToTop").style.display = "block";
+    } else {
+      document.getElementById("backToTop").style.display = "none";
+    }
+  }
+
+  document.getElementById("backToTop").addEventListener("click", function () {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+</script>
+
+{% endblock %}

@@ -21,6 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path("test/", views.base),
+    path("test_1", views.test),
     path("admin/", admin.site.urls),
     path("", views.signin),
     path("index/", views.index),
@@ -59,7 +61,6 @@ urlpatterns = [
     path("DeleteUser/<str:user_id>", views.DeleteUser, name="DeleteUser"),
     path("user1/", views.user1, name="user1"),
     path("tiezi/",views.tiezi),
-    path("show_my_comment/<str:user_id>",views.show_my_comment, name="show_my_comment"),
     path("show_get_reply/<str:user_id>",views.show_get_reply, name="show_get_reply"),
     path("show_bookmark/<str:user_id>",views.show_bookmark, name="show_bookmark"),
     path("submit_reply/<str:comment_id>",views.submit_reply, name="submit_reply"),
