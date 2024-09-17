@@ -54,6 +54,7 @@ def contact(request):
     return render(request,"contact.html")
 
 def myself(request, user_id):
+    result = []
     if request.method == 'GET':
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
@@ -64,7 +65,38 @@ def myself(request, user_id):
         with connection.cursor() as cursor:
             cursor.callproc('search_dish_comment_by_user', [user_id])
             comments = cursor.fetchall()
-        return render(request, "myself.html", {"user": user, "comments": comments})
+        with connection.cursor() as cursor:
+            cursor.callproc('search_dish_comment_by_user', [user_id])
+            comment_list = cursor.fetchall()
+            print(comment_list)
+        for comment in comment_list:
+            with connection.cursor() as cursor:
+                cursor.callproc('get_replies_from_comment', [comment[0]])
+                reply_list = cursor.fetchall()
+                print(reply_list)
+                user_id = comment[3]
+                print("user_id: ", user_id)
+                comment_content = comment[4]
+                comment_picture = comment[5]
+                print("comment_content: ", comment_content)
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+                    user = cursor.fetchone()
+                user_name = user[1]
+                print("user_name: ", user_name)
+                # user_picture = user[3]
+                # print("user_picture: ", user_picture)
+                for item in reply_list:
+                    print("item: ", item)
+                    reply_user_id = item[2]
+                    with connection.cursor() as cursor:
+                        cursor.execute("SELECT * FROM user WHERE user_id = %s", reply_user_id)
+                        reply_user = cursor.fetchone()
+                        reply_user_name = reply_user[1]
+                        reply_user_picture = reply_user[3]
+                    result.append([user_name, comment_picture, comment_content, reply_user_name, reply_user_picture, *item])
+                print(result)
+        return render(request, "myself.html", {"user": user, "comments": comments, "reply_list": result})
     return render(request,"myself.html", {"user_id": user_id})
 
 def offCampusFood(request):
