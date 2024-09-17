@@ -296,7 +296,7 @@ def add_dish_comment(request, window_id):
         image_url = None
         if image_file:
             # 生成图片文件名
-            image_name =  f"foodimages/{comment_id}.jpg"
+            image_name =  f"images/comments/{comment_id}.jpg"
             # 保存图片文件
             image_path = default_storage.save(image_name, ContentFile(image_file.read()))
             # 获取文件路径
