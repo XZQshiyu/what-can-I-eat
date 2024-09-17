@@ -42,12 +42,12 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS search_fav_by_user;
 DELIMITER //
 CREATE PROCEDURE search_fav_by_user(
-    IN p_fav_id varchar(18)
+    IN p_user_id varchar(18)
 )
 BEGIN
     SELECT *
     FROM fav
-    WHERE fav_id = p_fav_id;
+    WHERE user_id = p_user_id;
 END //
 DELIMITER ;
 

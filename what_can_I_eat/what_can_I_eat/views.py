@@ -496,24 +496,31 @@ def search_user(request):
 #     return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
 def show_get_reply(request, user_id):
+    # 初始化空列表，存储查询到的回复信息，后续会将这个列表回传给模版渲染
     result = []
+    # 什么是get请求（？）
     if request.method == 'GET':
         with connection.cursor() as cursor:
+            # %s是参数化查询的占位符，防止sql注入（？）
             cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
             user = cursor.fetchone()
         if not user:
             return HttpResponse("用户不存在")
+        # 使用游标，调用存储过程
         with connection.cursor() as cursor:
+            # 先通过用户id查询所有的评论
             cursor.callproc('search_dish_comment_by_user', [user_id])
             comment_list = cursor.fetchall()
             print(comment_list)
+            # 再遍历所有的评论，并且在每个评论下用评论id查询所有的回复
         for comment in comment_list:
             with connection.cursor() as cursor:
+                # 因为comment是一个线性表，所以可以使用comment[0]
                 cursor.callproc('get_replies_from_comment', [comment[0]])
                 reply_list = cursor.fetchall()
-                print(reply_list)
-                user_id = comment[3]
-                print("user_id: ", user_id)
+                # print(reply_list)
+                # user_id = comment[3]
+                # print("user_id: ", user_id)
                 comment_content = comment[4]
                 comment_picture = comment[5]
                 print("comment_content: ", comment_content)
@@ -527,18 +534,33 @@ def show_get_reply(request, user_id):
                 for item in reply_list:
                     print("item: ", item)
                     reply_user_id = item[2]
+                    # 获取user_id
                     with connection.cursor() as cursor:
                         cursor.execute("SELECT * FROM user WHERE user_id = %s", reply_user_id)
                         reply_user = cursor.fetchone()
                         reply_user_name = reply_user[1]
                         reply_user_picture = reply_user[3]
+                    # 让reply以序列形式呈现
                     result.append([user_name, comment_picture, comment_content, reply_user_name, reply_user_picture, *item])
                 print(result)
     return render(request,"show_get_reply.html", {"reply_list": result, "user": user})
 
 
 
-def show_bookmark(request):
+def show_bookmark(request, user_id):
+    result = []
+    # 获取用户的信息，制成表单user，用来和输入的user_id匹配
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+            user = cursor.fetchone()
+        if not user:
+            return HttpResponse("用户不存在")
+        
+        # 获得所有的收藏，为之后基于收藏获取评论做准备
+        with connection.cursor() as cursor:
+            cursor.callproc('search_fav_by_user', [user_id])
+            fav_list = cursor.fetchall()    
     return render(request,"show_bookmark.html")
 
 def base(request):
