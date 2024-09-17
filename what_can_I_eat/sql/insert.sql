@@ -1,9 +1,9 @@
-insert into user (user_id, user_name, introduction, head_portrait) values ('1', 'xch', 'hi', '123');
-insert into user (user_id, user_name, introduction, head_portrait) values ('2', 'xch2', 'hi2', '1232');
-insert into user (user_id, user_name, introduction, head_portrait) values ('3', 'xch3', 'hi3', '1233');
-insert into user (user_id, user_name, introduction, head_portrait) values ('4', 'xch4', 'hi4', '1234');
-insert into user (user_id, user_name, introduction, head_portrait) values ('5', 'xch5', 'hi5', '1235');
-insert into user (user_id, user_name, introduction, head_portrait) values ('6', 'xch6', 'hi6', '1236');
+insert into user (user_id, user_name, introduction, head_portrait) values ('1', '鼠鼠', '这是一封离别信', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('2', '李宇哲', 'hi2', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('3', '辛昌昊', 'hi3', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('4', '郑亦航', 'hi4', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('5', '黄佳媛', 'hi5', '/media/images/鼠鼠.jpg');
+insert into user (user_id, user_name, introduction, head_portrait) values ('6', '单敏轩', 'hi6', '/media/images/鼠鼠.jpg');
 
 
 
@@ -170,20 +170,20 @@ insert into food_window (window_id, window_name, canteen_id, window_description,
 -- 高b二楼
 insert into food_window (window_id, window_name, canteen_id, window_description, window_image) values ('91','1','21','行', '/media/images/自选.jpg');
 
-
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('1', '1', '瓦香鸡', '1', '感觉不如羊肉面', '20240830', 17, 2);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('2', '1', '牛肉面', '2', '牛肉面好好吃', '20240831', 8, 3);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('3', '1', '泸溪河', '3', '牛肉面是我叠', '20240831', 6, 1);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('4', '1', '牛肉面', '4', '太香了', '20240831', 7, 2);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('5', '1', '热带风味冰红茶', '5', '呃呃了', '20240830', 20, 5);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating) values ('6', '1', '牛肉面', '6', '还凑合', '20240831', 7, 4);
+-- 东苑餐厅
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('1', '1', '瓦香鸡', '1', '感觉不如羊肉面', '/media/images/comments/谁家小猫.png', '20240830', 18, 4);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('2', '1', '牛肉面', '2', '牛肉面好好吃', '/media/images/comments/额额.png', '20240831', 8, 3);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('3', '1', '泸溪河', '3', '牛肉面是我叠', '113', '20240831', 6, 1);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('4', '1', '牛肉面', '4', '太香了', '114', '20240831', 7, 2);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('5', '1', '热带风味冰红茶', '5', '呃呃了', '115', '20240830', 20, 5);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('00000', '1', '牛肉面', '6', '还凑合', '116', '20240831', 7, 4);
 
 
 -- reply
-insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('1', '1', '2', null, '你说得对', '20240830', 3);
-insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('2', '1', '3', '1', '我说得对', '20240830', 4);
-insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('3', '1', '4', '1', '他说得对', '20240830', 5);
-insert into dish_reply (reply_id, dish_comment_id, user_id, parent_reply_id, context, publish_time, like_number) values ('4', '1', '5', '1', '我说得对', '20240830', 6);
+insert into dish_reply (reply_id, dish_comment_id, user_id, context, publish_time, like_number) values ('1', '1', '2', '你说得对', '20240830', 3);
+insert into dish_reply (reply_id, dish_comment_id, user_id, context, publish_time, like_number) values ('2', '1', '3', '我说得对', '20240830', 4);
+insert into dish_reply (reply_id, dish_comment_id, user_id, context, publish_time, like_number) values ('3', '1', '4', '他说得对', '20240830', 5);
+insert into dish_reply (reply_id, dish_comment_id, user_id, context, publish_time, like_number) values ('4', '1', '5', '我说得对', '20240830', 6);
 
 
 insert into fav (fav_id, user_id, comment_id) values ('1', '1', '1');

@@ -8,13 +8,14 @@ CREATE PROCEDURE add_dish_comment (
     IN p_dish_name varchar(18),
     IN p_user_id varchar(18),
     IN p_context varchar(255),
+    IN p_picture VARCHAR(255),
     IN p_publish_time date,
     IN p_like_number integer,
     IN p_rating integer
 )
 BEGIN
-    INSERT INTO dish_comment (comment_id, window_id, dish_name, user_id, context, publish_time, like_number, rating)
-    VALUES (p_comment_id, p_window_id, p_dish_name, p_user_id, p_context, p_publish_time, p_like_number, p_rating);
+    INSERT INTO dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating)
+    VALUES (p_comment_id, p_window_id, p_dish_name, p_user_id, p_context, p_picture, p_publish_time, p_like_number, p_rating);
 END //
 delimiter ;
 
@@ -37,10 +38,11 @@ delimiter //
 CREATE PROCEDURE update_dish_comment (
     IN p_comment_id varchar(18),
     IN p_context varchar(255),
-    IN p_rating integer
+    IN p_rating integer,
+    IN p_picture VARCHAR(255)
 )
 BEGIN
-    UPDATE dish_comment SET context = p_context, rating = p_rating WHERE comment_id = p_comment_id;
+    UPDATE dish_comment SET context = p_context, rating = p_rating, picture = p_picture WHERE comment_id = p_comment_id;
 END //
 delimiter ;
 

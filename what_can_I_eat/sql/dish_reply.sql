@@ -76,4 +76,3 @@ BEGIN
    WHERE dish_comment_id = p_dish_comment_id;
 END //
 DELIMITER ;
-

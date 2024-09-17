@@ -74,6 +74,7 @@ create table dish_comment
     dish_name varchar(18) not  null,
     user_id varchar(18) not null,
     context varchar(255) not null,
+    picture VARCHAR(255) not null,
     publish_time date,
     like_number integer not null,
     rating integer not null,
@@ -87,6 +88,7 @@ create table post_comment
     post_id varchar(18) not null,
     user_id varchar(18) not null,
     context varchar(255) not null,
+    picture VARCHAR(255) not null,
     publish_time date,
     like_number integer not null,
     foreign key (post_id) references post(post_id) ON DELETE CASCADE,
@@ -102,7 +104,7 @@ create table dish_reply
     publish_time date,
     like_number integer not null,
     foreign key (dish_comment_id) references dish_comment(comment_id) ON DELETE CASCADE,
-    foreign key (user_id) references user(user_id) ON DELETE CASCADE,
+    foreign key (user_id) references user(user_id) ON DELETE CASCADE
 );
 
 create table fav

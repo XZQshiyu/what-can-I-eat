@@ -18,7 +18,15 @@ def signin(request):
         print(password)
         if user_id and password:
             if user_id == "ustc" and password == "639":
-                return render(request, "home.html")
+                user_id_no = '1'
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id_no)
+                    user = cursor.fetchone()
+                    user_id = user[0]
+                    user_name = user[1]
+                    user_picture = user[3]
+                    user_introduction = user[2]
+                return render(request, "home.html", {"user_id": user_id, "user_name": user_name, "user_picture": user_picture, "user_introduction": user_introduction})
             else:
                 messages.error(request, "Invalid username or passowrd")
         else:
@@ -32,13 +40,32 @@ def comment(request):
     return render(request,"comment.html")
 
 def home(request):
-    return render(request,"home.html")
+    user_id_no = '1'
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id_no)
+        user = cursor.fetchone()
+        user_id = user[0]
+        user_name = user[1]
+        user_picture = user[3]
+        user_introduction = user[2]
+    return render(request,"home.html",{"user_id": user_id, "user_name": user_name, "user_picture": user_picture, "user_introduction": user_introduction})
 
 def contact(request):
     return render(request,"contact.html")
 
-def myself(request):
-    return render(request,"myself.html")
+def myself(request, user_id):
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+            user = cursor.fetchone()
+        if not user:
+            return HttpResponse("用户不存在")
+
+        with connection.cursor() as cursor:
+            cursor.callproc('search_dish_comment_by_user', [user_id])
+            comments = cursor.fetchall()
+        return render(request, "myself.html", {"user": user, "comments": comments})
+    return render(request,"myself.html", {"user_id": user_id})
 
 def offCampusFood(request):
     return render(request,"offCampusFood.html")
@@ -231,6 +258,7 @@ def add_dish_comment(request, window_id):
         user_id = data.get("id")
         dish_name = data.get("dish_name")
         review_text = request.POST.get('review_text')
+        picture_url = request.POST.get('picture_url')
         rating = request.POST.get('rating')
         print(rating)
         print(user_id)
@@ -240,11 +268,11 @@ def add_dish_comment(request, window_id):
         publish_time = datetime.datetime.now()
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, publish_time, like_number ,rating])
+            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, picture_url, publish_time, like_number ,rating])
             connection.commit()
         return redirect(reverse('food_review', args=[window_id]))
     else:
-        return render(request, "add_dish_comment.html", {'window_id': window_id})
+        return render(request, "comment.html", {'window_id': window_id})
 
 
 #通过comment_id搜索commment
@@ -408,17 +436,6 @@ def search_user(request):
             results = cursor.fetchall()
     return render(request, "users/search_user.html", {"results": results})
 
-
-def show_my_comment(request,user_id):
-    comment_list=[]
-    with connection.cursor() as cursor:
-        cursor.callproc('search_dish_comment_by_user', [user_id])
-        comment_list = cursor.fetchall()
-        print(comment_list)
-        print("sdfghjkl")
-    print(2121132323)    
-    return render(request, "show_my_comment.html", {"comments": comment_list})
-
 # def food_review(request, window_id):
 #     review_list = []
 #     if request.method == 'GET':
@@ -429,11 +446,48 @@ def show_my_comment(request,user_id):
 #             print(review_list)
 #     return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
-def show_get_reply(request):
-    return render(request,"show_get_reply.html")
+def show_get_reply(request, user_id):
+    result = []
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+            user = cursor.fetchone()
+        if not user:
+            return HttpResponse("用户不存在")
+        with connection.cursor() as cursor:
+            cursor.callproc('search_dish_comment_by_user', [user_id])
+            comment_list = cursor.fetchall()
+            print(comment_list)
+        for comment in comment_list:
+            with connection.cursor() as cursor:
+                cursor.callproc('get_replies_from_comment', [comment[0]])
+                reply_list = cursor.fetchall()
+                print(reply_list)
+                user_id = comment[3]
+                print("user_id: ", user_id)
+                comment_content = comment[4]
+                comment_picture = comment[5]
+                print("comment_content: ", comment_content)
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+                    user = cursor.fetchone()
+                user_name = user[1]
+                print("user_name: ", user_name)
+                # user_picture = user[3]
+                # print("user_picture: ", user_picture)
+                for item in reply_list:
+                    print("item: ", item)
+                    reply_user_id = item[2]
+                    with connection.cursor() as cursor:
+                        cursor.execute("SELECT * FROM user WHERE user_id = %s", reply_user_id)
+                        reply_user = cursor.fetchone()
+                        reply_user_name = reply_user[1]
+                        reply_user_picture = reply_user[3]
+                    result.append([user_name, comment_picture, comment_content, reply_user_name, reply_user_picture, *item])
+                print(result)
+    return render(request,"show_get_reply.html", {"reply_list": result, "user": user})
 
-def show_my_comment(request):
-    return render(request,"show_my_comment.html")
+
 
 def show_bookmark(request):
     return render(request,"show_bookmark.html")
@@ -490,3 +544,9 @@ def add_favorite(request, user_id, comment_id, window_id):
             print(f"Error: {e}")
             connection.rollback()
         return redirect(reverse('food_review', args=[window_id]))
+
+def base(request):
+    return render(request,"base.html")
+
+def test(request): 
+    return render(request,"test.html")

@@ -1,3 +1,10 @@
+{% extends "test.html" %}
+{% block title %}
+    首页
+{% endblock %}
+
+
+{% block content %}
 <!DOCTYPE html>
 <html>
 
@@ -72,18 +79,18 @@
     padding: 5px;
   }
 
-  
-  .icons img {
-        width: 30px;
-        height: 30px;
-        transition: transform 0.3s;
-        /* 添加过渡效果，当变换属性改变时，过渡时间为 0.3 秒 */
-    }
 
-    .icons img:hover {
-        transform: scale(1.2);
-        /* 鼠标悬停时，将图标放大 1.2 倍 */
-    }
+  .icons img {
+    width: 30px;
+    height: 30px;
+    transition: transform 0.3s;
+    /* 添加过渡效果，当变换属性改变时，过渡时间为 0.3 秒 */
+  }
+
+  .icons img:hover {
+    transform: scale(1.2);
+    /* 鼠标悬停时，将图标放大 1.2 倍 */
+  }
 
 
   .icon-text {
@@ -131,39 +138,8 @@
     width: 150px;
     height: 65px;
   }
-  
+
   /*评论区域样式*/
-
-  body {
-    background-color: #f7f4f4;
-    font-family: 'Roboto', sans-serif;
-
-  }
-
-  .post {
-    border: 1px solid hsl(0, 0%, 87%);
-    background-color: rgb(255, 196, 188);
-    padding: 10px;
-    width: 700px;
-    /* 调整宽度使 div 更宽 */
-    height: 450px;
-    /* 调整高度使 div 更扁 */
-    position: relative;
-    margin: 0 auto;
-    /* 添加这一行 */
-  }
-
-
-
-  .user-info {
-
-    margin-left: 10px;
-    margin-top: 10px;
-    align-items: center;
-    gap: 10px;
-  }
-
-
   .user-avatar {
     width: 40px;
     height: 40px;
@@ -171,47 +147,6 @@
     border: 2px solid #fff;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   }
-
-
-  .user-id {
-    font-weight: bold;
-    color: #333;
-    font-size: 18px;
-  }
-
-
-  .text-content {
-    margin-top: 10px;
-    position: relative;
-  }
-
-
-  .star-rating {
-    margin-top: 10px;
-    color: gold;
-    position: relative;
-    font-size: 28px;
-  }
-
-
-  .image-container {
-    display: flex;
-    justify-content: space-between;
-    /* 让两张图片横向排列且间隔开 */
-    margin-top: 50px;
-    position: relative;
-
-  }
-
-
-  .image {
-    height: 180px;
-    width: 180px;
-    border-radius: 10px;
-
-  }
-
-
 
   .button-row {
     display: flex;
@@ -230,50 +165,58 @@
   }
 
 
-  .button:hover {
-    background-color: #d0d0d0;
-  }
-
-
   .image1 {
     height: 20px;
     width: 20px;
   }
 
-  .mini-info {
-    display: flex;
-    gap: 10px;
-  }
-
-  .comment-options {
-    position: absolute;
-    top: 0;
-    left: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 0;
-    display: none;
-  }
-
-  .comment-options a {
-    display: block;
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #333;
-  }
-
-  .comment-options a:hover {
-    background-color: #f0f0f0;
-  }
-
-  .dishname {
-    font-weight: bold;
-  }
-
   .text {
     font-weight: bold;
   }
+
+/* 用户信息区域样式 */
+.user-profile {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-avatar img {
+    width: 50px; /* 设置图片的宽度 */
+    height: 50px; /* 设置图片的高度 */
+    border-radius: 50%; /* 将图片设为圆形 */
+}
+
+.avatar-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.user-details {
+  text-align: left;
+}
+
+.user-details h3 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.user-details p {
+  margin: 10px 0 0;
+  font-size: 16px;
+  color: #555;
+}
 </style>
 
 <script>
@@ -293,7 +236,7 @@
         <li><a href="/campusFood">校内美食</a></li>
         <li><a href="/offCampusFood">校外美食</a></li>
         <li><a href="/comment">我要点评</a></li>
-        <li><a href="/myself">我的主页</a></li>
+        <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
         <li><a href="/contact">联系我们</a></li>
         <li><a href="/user_management">用户列表</a></li>
         <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li>
@@ -302,75 +245,79 @@
     </div>
   </div>
   <!--导航 end-->
+  
+  <div class="user-profile">
+    <div class="profile-card">
+      <div class="user-avatar">
+        <img src="{{ user.3 }}" alt="用户头像" class="avatar-img">
+      </div>
+      <div class="user-details">
+        <h3>用户名: {{ user.1 }}</h3>
+        <p>个人简介: {{ user.2 }}</p>
+      </div>
+    </div>
+  </div>
+
   <div class="menu-container">
     <div class="menu">
       <div class="icons">
 
 
-        <a href="/show_get_reply" class="shownow">
+        <a href="{% url 'show_get_reply' '1' %}" class="shownow">
           <img src="{% static 'icons/评论 (1).svg' %}" alt="评论">
           <span class="icon-text">评论</span>
         </a>
 
 
 
-        <a href="/show_my_comment" >
+        <a href="{% url 'myself' '1' %}">
           <img src="{% static 'icons/我的作品 (1).svg' %}" alt="我的作品">
           <span class="icon-text">我的作品</span>
         </a>
 
 
 
-        <a href="/show_bookmark">
+        <a href="{% url 'show_bookmark' '1' %}">
           <img src="{% static 'icons/收藏.svg' %}" alt="我的收藏">
           <span class="icon-text">我的收藏</span>
         </a>
 
       </div>
-
     </div>
 
   </div>
   </div>
-  <div class="content">
-    {% for comment in comments %}
-    <div class="post">
-      <div class="user-info">
-        <div class="mini-info">
-          <div class="user-avatar"> </div><br>
-          <div class="user-id">{{ comment.3 }}</div>
+  <div class="container">
+    {% for reply in reply_list %}
+    <div class="card d-flex flex-column">
+      <div class="row row-0 flex-fill">
+        <div class="col-md-3">
+          <img src="{{ reply.1 }}" class="w-60 h-auto object-cover" alt="Card side image">
         </div>
-        <br>
-        <div class="dishname">菜品：{{ comment.2}}</div>
-        <div class="text-content">
-          <div class="text">点评：</div>
-          <p>{{ comment.4 }}</p>
-          {% if comment.7 == 1 %}
-          <span class="star-rating">★☆☆☆☆</span>
-          {% elif comment.7 == 2 %}
-          <span class="star-rating">★★☆☆☆</span>
-          {% elif comment.7 == 3 %}
-          <span class="star-rating">★★★☆☆</span>
-          {% elif comment.7 == 4 %}
-          <span class="star-rating">★★★★☆</span>
-          {% elif comment.7 == 5 %}
-          <span class="star-rating">★★★★★</span>
-          {% endif %}
-
-        </div>
-
-        {% load static %}
-        <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
-        <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
-
-        <div class="post_time">{{ comment.5 }}</div>
-
-        <div class="button-row">
+        <div class="col">
+          <div class="card-body">
+            <h3 class="card-title"><a href="#">{{ reply.2 }}</a></h3>
+            <div class="text-muted">{{ reply.9 }}</div>
+            <div class="d-flex align-items-center pt-4 mt-auto">
+              <span class="avatar" style="background-image: url('{{ reply.4 }}')"></span>
+              <div class="ms-3">
+                <a href="#" class="text-body">{{ reply.3 }}</a>
+              </div>
+              <div class="ms-auto">
+                <a href="#" class="icon d-none d-md-inline-block ms-3 text-red">
+                  <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                  <!-- SVG icon code -->
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="text-muted">{{ reply.10 }}</div>
+          <div class="button-row mt-3 d-flex justify-content-between">
           <button class="button">
             {% load static %}
             <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px" onclick="toggleLike(this)"
               class="image1">
-            <span>{{ comment.6 }}</span>
+            <span>{{ reply.6 }}</span>
           </button>
           <button class="button">
             {% load static %}
@@ -435,3 +382,5 @@
 </script>
 
 </html>
+
+{% endblock %}

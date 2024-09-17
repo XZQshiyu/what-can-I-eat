@@ -262,6 +262,7 @@
                 <li><a href="/campusFood">校内美食</a></li>
                 <li><a href="/offCampusFood">校外美食</a></li>
                 <li><a href="/comment">我要评价</a></li>
+                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
                 <li><a href="/user_management">用户列表</a></li>
                 <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
@@ -282,23 +283,23 @@
             <div class="text-content">
                 <div class="text">点评：</div>
                 <p>{{ comment.4 }}</p>
-                {% if comment.7 == 1 %}
+                {% if comment.8 == 1 %}
                 <span class="star-rating">★☆☆☆☆</span>
-                {% elif comment.7 == 2 %}
+                {% elif comment.8 == 2 %}
                 <span class="star-rating">★★☆☆☆</span>
-                {% elif comment.7 == 3 %}
+                {% elif comment.8 == 3 %}
                 <span class="star-rating">★★★☆☆</span>
-                {% elif comment.7 == 4 %}
+                {% elif comment.8 == 4 %}
                 <span class="star-rating">★★★★☆</span>
-                {% elif comment.7 == 5 %}
+                {% elif comment.8 == 5 %}
                 <span class="star-rating">★★★★★</span>
                 {% endif %}
 
             </div>
 
             {% load static %}
-            <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
-            <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
+            <img src="{{ comment.5 }}" alt="评论图片" class="image">
+            <img src="{% static '../media/images/comments/谁家小猫.png' %}" alt="我服了" class="image">
 
             <div class="post_time">{{ comment.5 }}</div>
 
@@ -399,6 +400,10 @@
                 window.location.href = argetLink;
             }, 200);
         }
+        let targetLink = "/food_review";
+        setTimeout(() => {
+            window.location.href = targetLink;
+        }, 200);
     }
 
 

@@ -21,6 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path("test/", views.base),
+    path("test_1", views.test),
     path("admin/", admin.site.urls),
     path("", views.signin),
     path("index/", views.index),
@@ -34,7 +36,7 @@ urlpatterns = [
     # canteen list
     path("comment/",views.comment, name = "comment"),
     path("contact/",views.contact),
-    path("myself/",views.myself),
+    path("myself/<str:user_id>",views.myself, name="myself"),
     path("offCampusFood/",views.offCampusFood),
     path("campusFood/",views.campusFood),
     path("review/",views.review),
@@ -42,7 +44,7 @@ urlpatterns = [
    
     path("canteens/",views.canteens),
 
-    # commetn and review
+    # comment and review
     path("food_review/<str:window_id>", views.food_review, name="food_review"),
     path("reply/<str:comment_id>",views.reply,name="reply"),
     path("add_dish_comment/<str:window_id>", views.add_dish_comment, name="add_dish_comment"),
@@ -67,4 +69,7 @@ urlpatterns = [
     path("cancel_like_number/<str:window_id>/<str:comment_id>/",views.cancel_like_number,name="cancel_like_number"),
     # 收藏接口
     path("add_favorite/<str:user_id>/<str:comment_id>/<str:window_id>",views.add_favorite,name="add_favorite"),
+    
+    path("show_get_reply/<str:user_id>",views.show_get_reply, name="show_get_reply"),
+    path("show_bookmark/<str:user_id>",views.show_bookmark, name="show_bookmark"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

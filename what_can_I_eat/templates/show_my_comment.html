@@ -306,24 +306,24 @@
             <div class="icons">
 
 
-                <a href="/show_get_reply">
+                <a href="{% url 'show_get_reply' '1' %}">
                     <img src="{% static 'icons/评论 (1).svg' %}" alt="评论">
                     <span class="icon-text">评论</span>
-                </a>
-
-
-
-                <a href="/show_my_comment" class="shownow">
+                  </a>
+          
+          
+          
+                  <a href="{% url 'show_my_comment' '1' %}" class="shownow">
                     <img src="{% static 'icons/我的作品 (1).svg' %}" alt="我的作品">
                     <span class="icon-text">我的作品</span>
-                </a>
-
-
-
-                <a href="/show_bookmark">
+                  </a>
+          
+          
+          
+                  <a href="{% url 'show_my_comment' '1' %}">
                     <img src="{% static 'icons/收藏.svg' %}" alt="我的收藏">
                     <span class="icon-text">我的收藏</span>
-                </a>
+                  </a>
 
             </div>
 
