@@ -182,12 +182,26 @@
             border-radius: 20px;
             transition: background-color 0.3s;
             border: none;
+            background-color: #f0f0f0;
+            /* 默认背景色 */
+            padding: 10px;
+        }
 
+        .button.highlighted {
+            background-color: #ffeb3b;
+            /* 被点击时的高亮背景色 */
+            border: 2px solid #ffc107;
+            /* 高亮时的边框颜色 */
         }
 
 
         .button:hover {
             background-color: #d0d0d0;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(95, 177, 183);
+            color: white;
         }
 
 
@@ -238,12 +252,35 @@
             border-radius: 5px;
             margin-top: 5px;
         }
+
+        .reply-area {
+            border: 1px solid #ccc;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 5px;
+            z-index: 10001;
+            position: absolute;
+            width: 700px;
+            top: 460px;
+            left: 0;
+
+        }
     </style>
     <script>
         // JavaScript function to go back to the previous page
         function goBack() {
             window.history.back();
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 隐藏所有回复区域的初始状态
+            const replyAreas = document.querySelectorAll('.reply-area-class');
+            replyAreas.forEach(replyArea => {
+                replyArea.style.display = 'none';
+            });
+        });
     </script>
 </head>
 
@@ -256,7 +293,9 @@
                 <li><a href="/campusFood">校内美食</a></li>
                 <li><a href="/offCampusFood">校外美食</a></li>
                 <li><a href="/comment">我要评价</a></li>
+                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
+                <li><a href="/user_management">用户列表</a></li>
                 <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
             </ul>
         </div>
@@ -265,7 +304,7 @@
     <h2 class="mt-4">菜品评价</h2>
     {% for comment in comments %}
 
-    <div class="post">
+    <div class="post" name="post">
         <div class="user-info">
             <div class="mini-info">
                 <div class="user-avatar"> </div><br>
@@ -298,25 +337,34 @@
                 <button class="button">
                     {% load static %}
                     <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                        onclick="toggleLike(this)" class="image1">
+                        onclick="toggleLike(this, '{{ comment.0 }}')" class="image1">
                     <span>{{ comment.6 }}</span>
                 </button>
-                <button class="button">
+
+                <button class="button comment-button">
                     {% load static %}
                     <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
-                        onclick="showCommentOptions(this)" class="image1">
-
+                        data-comment-id="{{ comment.0 }}" class="image1">
                 </button>
-                <button class="button">
+                <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id=comment.0
+                    data-user-id="1">
                     {% load static %}
                     <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
                 </button>
+
                 <a href="{% url 'reply' comment.0 %}">
-                <button id="showRepliesButton" class="reply">查看回复</button>
-            </a>
+                    <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
+                </a>
             </div>
         </div>
-        <div class="replies-container"></div>
+
+        <div class="reply-area reply-area-class">
+            <form action="{% url 'submit_reply' comment.0 %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="text" name="reply_text" placeholder="输入回复内容"><br><br>
+                <input type="submit" value="提交回复">
+            </form>
+        </div>
     </div>
     {% endfor %}
 
@@ -350,62 +398,74 @@
         }, 10);
     };
 
-    function toggleLike(likeButton) {
+    function addFavorite(buttonElement) {
+        // 切换按钮的高亮状态
+        buttonElement.classList.toggle('highlighted');
+
+        // 获取按钮的 ID（或者其他唯一标识符）
+        const buttonId = buttonElement.getAttribute('data-id');
+
+        // 更新本地存储
+        if (buttonElement.classList.contains('highlighted')) {
+            localStorage.setItem(`favorite-${buttonId}`, 'true');
+        } else {
+            localStorage.removeItem(`favorite-${buttonId}`);
+        }
+
+        //这里设置定时器重定向，如果需要保留这部分功能
+        let targetLink = "{% url 'add_favorite' 1 1 1 %}";
+        setTimeout(() => {
+            window.location.href = targetLink;
+        }, 200);
+    }
+ 
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     // 获取所有需要恢复状态的按钮
+    //     const buttons = document.querySelectorAll('.favorite-button');
+
+    //     buttons.forEach(button => {
+    //         // 获取按钮的 ID
+    //         const buttonId = button.getAttribute('data-id');
+
+    //         // 检查本地存储中的状态
+    //         if (localStorage.getItem(`favorite-${buttonId}`) === 'true') {
+    //             buttonElement.classList.toggle('highlighted');
+    //         }
+    //     });
+    // });
+
+    function toggleLike(likeButton, comment_id) {
+        console.log('comment_id:', comment_id);
         let likesCountElement = likeButton.nextElementSibling;
         let currentLikes = parseInt(likesCountElement.textContent);
+        // 如果已经点赞，就取消点赞
         if (likeButton.classList.contains('liked')) {
             likeButton.classList.remove('liked');
             likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
             likeButton.style.transform = 'scale(1)';
+
+            let targetLink = "{% url 'cancel_like_number' window_id 'comment_id' %}";
+            setTimeout(() => {
+                window.location.href = argetLink;
+            }, 200);
+            // 如果没有点赞，就点赞
         } else {
+            // 然后前端出现动画
             likeButton.classList.add('liked');
             likesCountElement.textContent = currentLikes + 1;
             likeButton.style.transform = 'scale(1.2)';
             setTimeout(() => {
                 likeButton.style.transform = 'scale(1)';
             }, 200);
+            // 先更改数据库
+            let targetLink = "{% url 'add_like_number' window_id 'comment_id' %}";
+            setTimeout(() => {
+                window.location.href = argetLink;
+            }, 200);
         }
-        let targetLink = "/food_review";
-        setTimeout(() => {
-            window.location.href = targetLink;
-        }, 200);
     }
 
-    // document.addEventListener('DOMContentLoaded', function () {
-    //     var showRepliesButton = document.getElementById('showRepliesButton');
-    //     var repliesContainer = document.querySelector('.replies-container');
 
-    //     if (showRepliesButton) {
-    //         showRepliesButton.addEventListener('click', function () {
-    //             // 假设你有一个回复数据数组repliesData
-    //             var repliesData = [
-    //                 { text: '这是回复 1', time: '2024-09-11' },
-    //                 { text: '这是回复 2', time: '2024-09-10' },
-    //                 { text: '这是回复 3', time: '2024-09-09' }
-    //             ];
-
-    //             repliesContainer.innerHTML = '';
-
-    //             repliesData.forEach(function (reply) {
-    //                 var replyDiv = document.createElement('div');
-    //                 replyDiv.classList.add('reply');
-    //                 replyDiv.innerHTML = '<div class="reply-text">' + reply.text + '</div><div class="time">' + reply.time + '</div>';
-    //                 // 添加样式类
-    //                 replyDiv.classList.add('reply-item');
-    //                 repliesContainer.appendChild(replyDiv);
-    //             });
-
-    //             var moreLink = document.createElement('a');
-    //             moreLink.href = "#";
-    //             moreLink.classList.add('more-link');
-    //             moreLink.textContent = '更多';
-    //             repliesContainer.appendChild(moreLink);
-    //         });
-    //     } else {
-    //         console.log("没有找到 id 为 showRepliesButton 的元素");
-    //     }
-
-    // });
 
 </script>
 

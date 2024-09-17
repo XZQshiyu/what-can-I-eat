@@ -21,6 +21,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
+    path("test/", views.base),
+    path("test_1", views.test),
     path("admin/", admin.site.urls),
     path("", views.signin),
     path("index/", views.index),
@@ -59,7 +61,18 @@ urlpatterns = [
     path("DeleteUser/<str:user_id>", views.DeleteUser, name="DeleteUser"),
     path("user1/", views.user1, name="user1"),
     path("tiezi/",views.tiezi),
-    path("show_my_comment/<str:user_id>",views.show_my_comment, name="show_my_comment"),
+    # path("show_my_comment/",views.show_my_comment),
+    # path("show_get_reply/",views.show_get_reply),
+    # path("show_bookmark/",views.show_bookmark),
+    # 点赞接口
+    path("add_like_number/<str:window_id>/<str:comment_id>/",views.add_like_number,name="add_like_number"),
+    path("cancel_like_number/<str:window_id>/<str:comment_id>/",views.cancel_like_number,name="cancel_like_number"),
+    # 收藏接口
+    path("add_favorite/<str:user_id>/<str:comment_id>/<str:window_id>",views.add_favorite,name="add_favorite"),
+    
     path("show_get_reply/<str:user_id>",views.show_get_reply, name="show_get_reply"),
+    path("submit_reply/<str:comment_id>",views.submit_reply, name="submit_reply"),
+
+    # user_fav
     path("show_bookmark/<str:user_id>",views.show_bookmark, name="show_bookmark"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

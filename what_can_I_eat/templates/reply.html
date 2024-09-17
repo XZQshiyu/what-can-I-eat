@@ -89,7 +89,7 @@
             padding: 20px;
             width: 700px;
             /* 调整宽度使 div 更宽 */
-            height: 450px;
+            height: 430px;
             /* 调整高度使 div 更扁 */
             position: relative;
             margin: 20px auto;
@@ -210,10 +210,13 @@
         }
 
         .replies-container {
+
             border: 1px solid #ccc;
-            padding: 10px;
+           margin: 10px;
             border-radius: 5px;
         }
+
+       
 
         .reply-item {
             display: flex;
@@ -264,7 +267,9 @@
                 <li><a href="/campusFood">校内美食</a></li>
                 <li><a href="/offCampusFood">校外美食</a></li>
                 <li><a href="/comment">我要评价</a></li>
+                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
                 <li><a href="/contact">联系我们</a></li>
+                <li><a href="/user_management">用户列表</a></li>
                 <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
             </ul>
         </div>
@@ -301,7 +306,7 @@
             <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
             <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
 
-            <div class="post_time">{{ comment.5 }}</div>
+           
 
             <div class="button-row">
                 <button class="button">
@@ -324,6 +329,7 @@
             </div>
         </div>
         {% for reply in replies %}
+        <div class="parent-div">
         <div class="replies-container">
             <div
                 class="reply-item {% if forloop.counter|divisibleby:2 %}reply-item-even{% else %}reply-item-odd{% endif %}">
@@ -337,6 +343,7 @@
                     <span>{{ reply.6 }}</span>
                 </button>
             </div>
+        </div>
         </div>
         {% endfor %}
         {% endif %}
@@ -381,10 +388,10 @@
                 likeButton.style.transform = 'scale(1)';
             }, 200);
         }
-        let targetLink = "/myself";
+        let targetLink = "/reply";
         setTimeout(() => {
             window.location.href = targetLink;
-        }, 1000);
+        }, 200);
     }
 
 </script>

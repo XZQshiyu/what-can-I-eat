@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>窗口点评</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
+    <style>
+
+          /* 导航栏样式 */
+      .navi {
+            background-color: #343a40;
+            padding: 10px 0;
+        }
+
+      .wrap {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+      .navi-text li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+      .navi-text a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+      .navi-text a:hover {
+            color: #ffc107;
+        }
+
+        /* 表单样式 */
+      .paper-box {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+      .paper-box label {
+            font-size: 18px;
+            color: #343a40;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+      .paper-box input[type="text"] {
+            width: 80%;
+            height: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+      .paper-box input[type="submit"] {
+            background-color: #077c83;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+      .paper-box input[type="submit"]:hover {
+            background-color: #05686d;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+       .paper-box {
+            /* 去掉边框 */
+            height: 500px;
+            border: none;
+            margin-top: 10px;
+            margin-left: 350px;
+            padding: 20px;
+            width: 500px;
+            background-color: #ffffffe0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="id"]{
+            height:20px;
+        }
+
+        input[type="text"]{
+            height:20px;
+        }
+        textarea,
+        select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            /* 调整宽度为大约一半屏幕宽度 */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input[type="file"] {
+            border: none;
+            padding: 0;
+            margin-right: 10px;
+            display: flex;
+        }
+
+        input[type="submit"] {
+            padding: 0px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #077c83;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* 打星样式 */
+       .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            /* Reverse the order of the stars */
+            justify-content: flex-end;
+            font-size: 40px;
+            /* 确保字体大小一致 */
+            position: relative;
+        }
+
+        /* 确保标签的伪元素显示 */
+       .star-rating label::before {
+            content: '\2606';
+            /* 星星符号 */
+            color: #ddd;
+            /* 默认星星颜色 */
+            transition: color 0.2s, text-shadow 0.2s;
+            /* 平滑过渡效果 */
+        }
+
+        /* 悬停时显示金色的星星 */
+       .star-rating label:hover::before,
+       .star-rating label:hover~label::before {
+            color: gold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 当单选按钮被选中时，显示金色的星星 */
+       .star-rating input[type="radio"] {
+            display: none;
+            /* 隐藏实际的单选按钮 */
+        }
+
+       .star-rating input[type="radio"]:checked~label::before {
+            color: gold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+       .star-rating input[type="radio"]:checked~label~label::before {
+            color: gold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+         /* 新增样式 */
+         #imageInputs {
+            display: flex;
+        }
+    </style>
+    
+    <script>
+        function createFileInput() {
+            var imageInputsDiv = document.getElementById('imageInputs');
+            var fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.name = 'image_files';
+            fileInput.multiple = true;
+            imageInputsDiv.appendChild(fileInput);
+        }
+
+        function handleFileChange(event) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var imagePreview = document.createElement('img');
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.width = '50px';
+                    imagePreview.style.height = '50px';
+                    event.target.parentNode.insertBefore(imagePreview, event.target.nextSibling);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+       
+    </script>
+</head>
+
+<body>
+      <!--导航 start-->
+      <!-- 容器包裹整个导航栏 -->
+      <div class="navi">
+        <div class="wrap">
+            <ul class="navi-text">
+                <li><a href="/home">Home</a></li>
+                <li><a href="/campusFood">校内美食</a></li>
+                <li><a href="/offCampusFood">校外美食</a></li>
+                <li><a href="/comment">我要点评</a></li>
+                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
+                <li><a href="/contact">联系我们</a></li>
+                <li><a href="/user_management">用户列表</a></li>
+                <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
+            </ul>
+        </div>
+    </div>
+    <!--导航 end-->
+    
+    <div class="paper-box">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label>用户id:</label>
+            <input type="id" name="id"><br>
+            <label>菜品名称：</label>
+            <input type="text" name="dish_name"><br>
+            <label>上传图片：</label><br>
+            <input type="file"  id="food_image" name="food_image" accept="image/*"><br><br>
+            <label>点评：</label>
+            <textarea name="review_text" rows="4" cols="50"></textarea><br>
+            <label>打星：</label>
+            <div class="star-rating" name="rating">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5"></label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4"></label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3"></label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2"></label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1"></label>
+            </div>
+            <input type="submit" value="上传" style="background-color:#077c83; color: white; margin-top: 20px;">
+        </form>
+    </div>
+</body>
+
+</html>
