@@ -74,6 +74,7 @@ create table dish_comment
     dish_name varchar(18) not  null,
     user_id varchar(18) not null,
     context varchar(255) not null,
+    picture VARCHAR(255) not null,
     publish_time date,
     like_number integer not null,
     rating integer not null,

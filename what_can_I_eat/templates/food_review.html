@@ -304,25 +304,23 @@
             <div class="text-content">
                 <div class="text">点评：</div>
                 <p>{{ comment.4 }}</p>
-                {% if comment.7 == 1 %}
+                {% if comment.8 == 1 %}
                 <span class="star-rating">★☆☆☆☆</span>
-                {% elif comment.7 == 2 %}
+                {% elif comment.8 == 2 %}
                 <span class="star-rating">★★☆☆☆</span>
-                {% elif comment.7 == 3 %}
+                {% elif comment.8 == 3 %}
                 <span class="star-rating">★★★☆☆</span>
-                {% elif comment.7 == 4 %}
+                {% elif comment.8 == 4 %}
                 <span class="star-rating">★★★★☆</span>
-                {% elif comment.7 == 5 %}
+                {% elif comment.8 == 5 %}
                 <span class="star-rating">★★★★★</span>
                 {% endif %}
 
             </div>
 
             {% load static %}
-            <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
-            <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
-
-            <div class="post_time">{{ comment.5 }}</div>
+            <img src="{{ comment.5 }}" alt="评论图片" class="image">
+           
 
             <div class="button-row">
                 <button class="button">

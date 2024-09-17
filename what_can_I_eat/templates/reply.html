@@ -89,7 +89,7 @@
             padding: 20px;
             width: 700px;
             /* 调整宽度使 div 更宽 */
-            height: 450px;
+            height: 430px;
             /* 调整高度使 div 更扁 */
             position: relative;
             margin: 20px auto;
@@ -210,10 +210,13 @@
         }
 
         .replies-container {
+
             border: 1px solid #ccc;
-            padding: 10px;
+           margin: 10px;
             border-radius: 5px;
         }
+
+       
 
         .reply-item {
             display: flex;
@@ -324,6 +327,7 @@
             </div>
         </div>
         {% for reply in replies %}
+        <div class="parent-div">
         <div class="replies-container">
             <div
                 class="reply-item {% if forloop.counter|divisibleby:2 %}reply-item-even{% else %}reply-item-odd{% endif %}">
@@ -337,6 +341,7 @@
                     <span>{{ reply.6 }}</span>
                 </button>
             </div>
+        </div>
         </div>
         {% endfor %}
         {% endif %}

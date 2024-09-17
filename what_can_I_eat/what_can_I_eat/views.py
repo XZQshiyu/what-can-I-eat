@@ -283,6 +283,20 @@ def add_dish_comment(request, window_id):
         # 获取表单数据
         user_id = data.get("id")
         dish_name = data.get("dish_name")
+
+      
+        # 读取图像文件
+        image_file = request.FILES.get('food_image')
+        print(image_file)
+        image_url = None
+        if image_file:
+            # 生成图片文件名
+            image_name =  f"foodimages/{comment_id}.jpg"
+            # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
+
         review_text = request.POST.get('review_text')
         rating = request.POST.get('rating')
         print(rating)
@@ -293,7 +307,7 @@ def add_dish_comment(request, window_id):
         publish_time = datetime.datetime.now()
 
         with connection.cursor() as cursor:
-            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, publish_time, like_number ,rating])
+            cursor.callproc('add_dish_comment', [comment_id ,window_id, dish_name ,user_id, review_text, image_url, publish_time, like_number ,rating])
             connection.commit()
         return redirect(reverse('food_review', args=[window_id]))
     else:
