@@ -598,16 +598,16 @@ def add_like_number(request, window_id, comment_id):
         return redirect(reverse('food_review', args=[window_id]))
     return render(request, 'add_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
 
-def cancel_like_number(request, window_id, comment_id):
-    with connection.cursor() as cursor:
-        try:
-            cursor.callproc('cancel_like_number', [comment_id])
-            connection.commit()
-        except Exception as e:
-            print(f"Error: {e}")
-            connection.rollback()
-        return redirect(reverse('food_review', args=[window_id]))
-    return render(request, 'cancel_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+# def cancel_like_number(request, window_id, comment_id):
+#     with connection.cursor() as cursor:
+#         try:
+#             cursor.callproc('cancel_like_number', [comment_id])
+#             connection.commit()
+#         except Exception as e:
+#             print(f"Error: {e}")
+#             connection.rollback()
+#         return redirect(reverse('food_review', args=[window_id]))
+#     return render(request, 'cancel_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
 
 
 def add_favorite(request, user_id, comment_id, window_id):

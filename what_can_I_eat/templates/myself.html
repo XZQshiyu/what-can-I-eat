@@ -125,8 +125,8 @@
   }
 
   .post {
-    border: 1px solid hsl(0, 0%, 87%);
-    background-color: rgb(255, 196, 188);
+    border: 1px solid hsl(0, 0%, 100%);
+    background-color: rgb(255, 228, 228);
     padding: 10px;
     width: 700px;
     /* 调整宽度使 div 更宽 */
@@ -316,6 +316,11 @@
     color: #555;
     margin: 5px 0;
   }
+  .reply-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
+            background-color: #ffe79e;
+        }
  
 </style>
 
@@ -423,6 +428,11 @@
             {% load static %}
             <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
           </button>
+          
+          <a href="{% url 'reply' comment.0 %}">
+            <button id="showRepliesButton" class="reply-button" color="pink">查看回复</button>
+        </a>
+          
         </div>
       </div>
     </div>

@@ -317,15 +317,21 @@
  /* 卡片样式 */
  .card{
   width: 800px;
-  height: 230px;
-  margin: 0 auto;
+  height: 250px;
+  margin: 10px auto;
+ 
  }
  .col-md-3{
   width: 170px;
   
   float: left;
  }
-
+ .reply-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
+            background-color: #ffe79e;
+        }
+  
 </style>
 <script>
   // JavaScript function to go back to the previous page
@@ -355,9 +361,9 @@
       <div class="icons">
 
 
-        <a href="{% url 'show_get_reply' '1' %}" class="shownow">
+        <a href="{% url 'show_get_reply'  '1' %}" class="shownow">
           <img src="{% static 'icons/评论 (1).svg' %}" alt="评论">
-          <span class="icon-text">评论</span>
+          <span class="icon-text">收到回复</span>
         </a>
 
 
@@ -380,6 +386,7 @@
   </div>
   </div>
   <div class="container">
+    
     {% for reply in reply_list %}
     <div class="card d-flex flex-column">
       <div class="row row-0 flex-fill">
@@ -429,14 +436,15 @@
             <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
           </button>
 
-          <!-- <a href="{% url 'reply' comment.0 %}">
-            <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
-        </a> -->
-        <!-- 这个comment.0参数怎么获取？ -->
+          <a href="{% url 'reply' reply.5 %}">
+            <button id="showRepliesButton" class="reply reply-button">查看回复</button>
+        </a>
+
         </div>
       </div>
     </div>
     {% endfor %}
+
 
   </div>
   <!-- 回到顶部按钮 -->
