@@ -513,9 +513,9 @@ def show_get_reply(request, user_id):
                 # 因为comment是一个线性表，所以可以使用comment[0]
                 cursor.callproc('get_replies_from_comment', [comment[0]])
                 reply_list = cursor.fetchall()
-                # print(reply_list)
-                # user_id = comment[3]
-                # print("user_id: ", user_id)
+                print(reply_list)
+                user_id = comment[3]
+                print("user_id: ", user_id)
                 comment_content = comment[4]
                 comment_picture = comment[5]
                 print("comment_content: ", comment_content)
@@ -528,8 +528,9 @@ def show_get_reply(request, user_id):
                 # print("user_picture: ", user_picture)
                 for item in reply_list:
                     print("item: ", item)
+                    # 从列表中提取出回复者id
                     reply_user_id = item[2]
-                    # 获取user_id
+                    # 获取user_id，进而获取发布者名、头像
                     with connection.cursor() as cursor:
                         cursor.execute("SELECT * FROM user WHERE user_id = %s", reply_user_id)
                         reply_user = cursor.fetchone()
@@ -543,20 +544,35 @@ def show_get_reply(request, user_id):
 
 
 def show_bookmark(request, user_id):
-    result = []
-    # 获取用户的信息，制成表单user，用来和输入的user_id匹配
-    if request.method == 'GET':
-        with connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
-            user = cursor.fetchone()
-        if not user:
-            return HttpResponse("用户不存在")
+#     result = []
+#     # 获取用户的信息，制成表单user，用来和输入的user_id匹配
+#     if request.method == 'GET':
+#         with connection.cursor() as cursor:
+#             cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+#             user = cursor.fetchone()
+#         if not user:
+#             return HttpResponse("用户不存在")
         
-        # 获得所有的收藏，为之后基于收藏获取评论做准备
-        with connection.cursor() as cursor:
-            cursor.callproc('search_fav_by_user', [user_id])
-            fav_list = cursor.fetchall()    
-    return render(request,"show_bookmark.html")
+#         # 获得所有的收藏，为之后基于收藏获取评论做准备
+#         with connection.cursor() as cursor:
+#             cursor.callproc('search_fav_by_user', [user_id])
+#             fav_list = cursor.fetchall()
+
+#         # 通过fav中的评论id获取评论和回复
+#         for fav in fav_list:
+#             # 获取评论，再根据评论获得回复
+#             with connection.cursor() as cursor:
+#                 cursor.callproc('get_dish_comment_by_id', [fav[1]])
+#                 comment_list = cursor.fetchall()
+
+#                 # 所有收藏的评论组成列表
+#                 for comment in comment_list:
+#                     with connection.cursor() as cursor:
+
+
+            
+                
+     return render(request,"show_bookmark.html")
 
 
 # def add_like_number(request,window_id,comment_id):
