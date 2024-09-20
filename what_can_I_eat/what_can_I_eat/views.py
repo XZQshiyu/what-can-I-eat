@@ -176,7 +176,6 @@ def food_review(request, window_id):
             review_list = cursor.fetchall()
             print("show the comment list:")
             print(review_list)
-
     return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
 
 def reply(request,comment_id):
