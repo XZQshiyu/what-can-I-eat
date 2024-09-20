@@ -194,7 +194,7 @@ def reply(request,comment_id):
             print(reply_list)
     return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
 
-#提交回复
+# 提交回复
 def submit_reply(request,comment_id):
     if request.method == 'POST':
        
