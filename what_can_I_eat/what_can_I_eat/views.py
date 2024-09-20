@@ -168,7 +168,8 @@ def view_windows(request, canteen_id):
 
 # review test
 def food_review(request, window_id):
-    review_list = []  
+    review_list = [] 
+    result = [] 
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
@@ -176,7 +177,22 @@ def food_review(request, window_id):
             review_list = cursor.fetchall()
             print("show the comment list:")
             print(review_list)
-    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
+            for comment in review_list:
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", comment[3])
+                    user = cursor.fetchone()
+                    user_name = user[1]
+                    user_picture = user[3]
+                    comment_content = comment[4]
+                    dish_name = comment[2]
+                    comment_picture = comment[5]
+                    rating = comment[8]
+                    like_number = comment[7]
+                    publish_time = comment[6]
+                    comment_id = comment[0]
+                    result.append([comment_id, user_name, user_picture, dish_name, comment_content, comment_picture, rating, like_number, publish_time])
+            
+    return render(request, 'food_review.html', {'comments': result, 'window_id': window_id})
 
 def reply(request,comment_id):
     

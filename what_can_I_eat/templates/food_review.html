@@ -202,35 +202,41 @@
         {% if comments %}
         <ul>
             {% for comment in comments %}
-            <div class="post" name="post">
-                <div class="user-info">
-                    <div class="mini-info">
-                        <div class="user-avatar"> </div><br>
-                        <div class="user-id">{{ comment.3 }}</div>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- 左侧部分: 原评论-->
+                        <div class="col-md-3">
+                            <div class="user-info">
+                                <span class="avatar rounded" style="background-image: url('{{ comment.2 }}');"></span>
+                                <div class="user-id">{{ comment.1 }}</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-md-3">
+                            <h2 class="card-title">菜品: </h2>
+                            <h3 class="card-text">{{ comment.3 }}</h3>
+                            <h2 class="card-title">点评: </h2>
+                            <h3 class="card-text">{{ comment.4 }}</h3>
+                        </div>
+                        <div class="col-md-3">
+                            <img src="{{ comment.5 }}" alt="菜品图片" class="image">
+                        </div>
+                        <div class="col-md-3">
+                            <span>评分：</span>
+                            {% if comment.6 == 1 %}
+                            <span class="star-rating">★☆☆☆☆</span>
+                            {% elif comment.6 == 2 %}
+                            <span class="star-rating">★★☆☆☆</span>
+                            {% elif comment.6 == 3 %}
+                            <span class="star-rating">★★★☆☆</span>
+                            {% elif comment.6 == 4 %}
+                            <span class="star-rating">★★★★☆</span>
+                            {% elif comment.6 == 5 %}
+                            <span class="star-rating">★★★★★</span>
+                            {% endif %}
+                        </div>
                     </div>
-                    <br>
-                    <div class="dishname">菜品：{{ comment.2}}</div>
-                    <div class="text-content">
-                        <div class="text">点评：</div>
-                        <p>{{ comment.4 }}</p>
-                        <span>评分：</span>
-                        {% if comment.8 == 1 %}
-                        <span class="star-rating">★☆☆☆☆</span>
-                        {% elif comment.8 == 2 %}
-                        <span class="star-rating">★★☆☆☆</span>
-                        {% elif comment.8 == 3 %}
-                        <span class="star-rating">★★★☆☆</span>
-                        {% elif comment.8 == 4 %}
-                        <span class="star-rating">★★★★☆</span>
-                        {% elif comment.8 == 5 %}
-                        <span class="star-rating">★★★★★</span>
-                        {% endif %}
-
-                    </div>
-
-                    {% load static %}
-                    <img src="{{ comment.5 }}" alt="评论图片" class="image">
-
 
                     <div class="button-row">
                         <button class="button">
@@ -255,23 +261,22 @@
                             <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
                         </a>
                     </div>
-                    <div> {{ comment.6}} </div>
+                    <div> {{ comment.8 }} </div>
                 </div>
-
-
-
-                {% endfor %}
+            </div>
+            {% endfor %}
         </ul>
-        {% else %}
-        <p>暂无评论</p>
-        {% endif %}
-        <a href="{% url 'add_dish_comment' window_id %}" class="am">
-            {% load static %}
-            <img src="{% static 'icons/创作.svg' %}" alt="创作">
-        </a>
-        <!-- 回到顶部按钮 -->
-        <button id="backToTop">^</button>
-        <!-- 回到顶部按钮 -->
+    </div>
+    {% else %}
+    <p>暂无评论</p>
+    {% endif %}
+    <a href="{% url 'add_dish_comment' window_id %}" class="am">
+        {% load static %}
+        <img src="{% static 'icons/创作.svg' %}" alt="创作">
+    </a>
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop">^</button>
+    <!-- 回到顶部按钮 -->
     </div>
 </body>
 <script>

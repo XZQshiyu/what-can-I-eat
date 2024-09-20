@@ -173,10 +173,10 @@ insert into food_window (window_id, window_name, canteen_id, window_description,
 -- 东苑餐厅
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('1', '1', '瓦香鸡', '1', '感觉不如羊肉面', '/media/images/comments/谁家小猫.png', '20240830', 18, 4);
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('2', '1', '牛肉面', '2', '牛肉面好好吃', '/media/images/comments/额额.png', '20240831', 8, 3);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('3', '1', '泸溪河', '3', '牛肉面是我叠', '113', '20240831', 6, 1);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('4', '1', '牛肉面', '4', '太香了', '114', '20240831', 7, 2);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('5', '1', '热带风味冰红茶', '5', '呃呃了', '115', '20240830', 20, 5);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('00000', '1', '牛肉面', '6', '还凑合', '116', '20240831', 7, 4);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('3', '1', '泸溪河', '3', '牛肉面是我叠', '/media/images/长离.jpg', '20240831', 6, 1);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('4', '1', '牛肉面', '4', '太香了', '/media/images/长离.jpg', '20240831', 7, 2);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('5', '1', '热带风味冰红茶', '5', '呃呃了', '/media/images/长离.jpg', '20240830', 20, 5);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('00000', '1', '牛肉面', '6', '还凑合', '/media/images/长离.jpg', '20240831', 7, 4);
 
 
 -- reply
