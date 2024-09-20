@@ -172,8 +172,9 @@ def food_review(request, window_id):
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
-            cursor.callproc('get_all_comments_from_window', [window_id])
+            cursor.callproc('get_all_dish_comments_from_window', [window_id])
             review_list = cursor.fetchall()
+            print("show the comment list:")
             print(review_list)
 
     return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
@@ -628,18 +629,18 @@ def add_like_number(request, window_id, comment_id):
             print(f"Error: {e}")
             connection.rollback()
         return redirect(reverse('food_review', args=[window_id]))
-    return render(request, 'add_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+    return render(request, 'food_review.html', {'window_id': window_id})
 
-# def cancel_like_number(request, window_id, comment_id):
-#     with connection.cursor() as cursor:
-#         try:
-#             cursor.callproc('cancel_like_number', [comment_id])
-#             connection.commit()
-#         except Exception as e:
-#             print(f"Error: {e}")
-#             connection.rollback()
-#         return redirect(reverse('food_review', args=[window_id]))
-#     return render(request, 'cancel_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+def cancel_like_number(request, window_id, comment_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.callproc('cancel_like_number', [comment_id])
+            connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'food_review.html', {'window_id': window_id})
 
 
 def add_favorite(request, user_id, comment_id, window_id):

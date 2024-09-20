@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>菜品评价</title>
     <style>
-    
         .am {
             z-index: 9999999999;
             position: fixed;
@@ -72,8 +71,8 @@
             position: relative;
             margin: 0 auto;
             /* 添加这一行 */
-           
-         
+
+
         }
 
         .user-info {
@@ -115,7 +114,7 @@
         }
 
 
-        
+
         .image {
             height: 180px;
             width: 180px;
@@ -171,7 +170,7 @@
             gap: 10px;
         }
 
-        
+
         .dishname {
             font-weight: bold;
         }
@@ -179,7 +178,6 @@
         .text {
             font-weight: bold;
         }
-
     </style>
     <script>
         // JavaScript function to go back to the previous page
@@ -199,77 +197,78 @@
 </head>
 
 <body>
-   
-    <h2 class="mt-4">菜品评价</h2>
-    {% for comment in comments %}
+    <div class="container">
+        <h2 class="mt-4">菜品评价</h2>
+        {% for comment in comments %}
 
-    <div class="post" name="post">
-        <div class="user-info">
-            <div class="mini-info">
-                <div class="user-avatar"> </div><br>
-                <div class="user-id">{{ comment.3 }}</div>
+        <div class="post" name="post">
+            <div class="user-info">
+                <div class="mini-info">
+                    <div class="user-avatar"> </div><br>
+                    <div class="user-id">{{ comment.3 }}</div>
+                </div>
+                <br>
+                <div class="dishname">菜品：{{ comment.2}}</div>
+                <div class="text-content">
+                    <div class="text">点评：</div>
+                    <p>{{ comment.4 }}</p>
+                    <span>评分：</span>
+                    {% if comment.8 == 1 %}
+                    <span class="star-rating">★☆☆☆☆</span>
+                    {% elif comment.8 == 2 %}
+                    <span class="star-rating">★★☆☆☆</span>
+                    {% elif comment.8 == 3 %}
+                    <span class="star-rating">★★★☆☆</span>
+                    {% elif comment.8 == 4 %}
+                    <span class="star-rating">★★★★☆</span>
+                    {% elif comment.8 == 5 %}
+                    <span class="star-rating">★★★★★</span>
+                    {% endif %}
+
+                </div>
+
+                {% load static %}
+                <img src="{{ comment.5 }}" alt="评论图片" class="image">
+
+
+                <div class="button-row">
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
+                            onclick="toggleLike(this, '{{ comment.0 }}')" class="image1">
+                        <span>{{ comment.7 }}</span>
+                    </button>
+
+                    <button class="button comment-button">
+                        {% load static %}
+                        <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
+                            data-comment-id="{{ comment.0 }}" class="image1">
+                    </button>
+                    <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id=comment.0
+                        data-user-id="1">
+                        {% load static %}
+                        <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
+                    </button>
+
+                    <a href="{% url 'reply' comment.0 %}">
+                        <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
+                    </a>
+                </div>
+                <div> {{ comment.6}} </div>
             </div>
-            <br>
-            <div class="dishname">菜品：{{ comment.2}}</div>
-            <div class="text-content">
-                <div class="text">点评：</div>
-                <p>{{ comment.4 }}</p>
-                <span>评分：</span>
-                {% if comment.8 == 1 %}
-                <span class="star-rating">★☆☆☆☆</span>
-                {% elif comment.8 == 2 %}
-                <span class="star-rating">★★☆☆☆</span>
-                {% elif comment.8 == 3 %}
-                <span class="star-rating">★★★☆☆</span>
-                {% elif comment.8 == 4 %}
-                <span class="star-rating">★★★★☆</span>
-                {% elif comment.8 == 5 %}
-                <span class="star-rating">★★★★★</span>
-                {% endif %}
 
-            </div>
 
-            {% load static %}
-            <img src="{{ comment.5 }}" alt="评论图片" class="image">
-            
-           
-            <div class="button-row">
-                <button class="button">
-                    {% load static %}
-                    <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                        onclick="toggleLike(this)" class="image1">
-                    <span>{{ comment.7 }}</span>
-                </button>
 
-                <button class="button comment-button">
-                    {% load static %}
-                    <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
-                        data-comment-id="{{ comment.0 }}" class="image1">
-                </button>
-                <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id=comment.0
-                    data-user-id="1">
-                    {% load static %}
-                    <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
-                </button>
+            {% endfor %}
 
-                <a href="{% url 'reply' comment.0 %}">
-                    <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
-                </a>
-            </div>
-            <div> {{ comment.6}} </div>
+            <a href="{% url 'add_dish_comment' window_id %}" class="am">
+                {% load static %}
+                <img src="{% static 'icons/创作.svg' %}" alt="创作">
+            </a>
+            <!-- 回到顶部按钮 -->
+            <button id="backToTop">^</button>
+            <!-- 回到顶部按钮 -->
         </div>
-       
-          
-        
-    {% endfor %}
-
-    <a href="{% url 'add_dish_comment' window_id %}" class="am">
-        {% load static %}
-        <img src="{% static 'icons/创作.svg' %}" alt="创作">
-    </a>
-    <!-- 回到顶部按钮 -->
-    <button id="backToTop">^</button>
-    <!-- 回到顶部按钮 -->
 </body>
 <script>
     var backToTopButton = document.getElementById('backToTop');
@@ -313,7 +312,7 @@
             window.location.href = targetLink;
         }, 200);
     }
- 
+
     // document.addEventListener('DOMContentLoaded', () => {
     //     // 获取所有需要恢复状态的按钮
     //     const buttons = document.querySelectorAll('.favorite-button');

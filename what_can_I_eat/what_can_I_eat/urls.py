@@ -66,7 +66,7 @@ urlpatterns = [
     # path("show_bookmark/",views.show_bookmark),
     # 点赞接口
     path("add_like_number/<str:window_id>/<str:comment_id>/",views.add_like_number,name="add_like_number"),
-    # path("cancel_like_number/<str:window_id>/<str:comment_id>/",views.cancel_like_number,name="cancel_like_number"),
+    path("cancel_like_number/<str:window_id>/<str:comment_id>/",views.cancel_like_number,name="cancel_like_number"),
     # 收藏接口
     path("add_favorite/<str:user_id>/<str:comment_id>/<str:window_id>",views.add_favorite,name="add_favorite"),
     
