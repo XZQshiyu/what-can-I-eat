@@ -54,6 +54,7 @@ def contact(request):
     return render(request,"contact.html")
 
 def myself(request, user_id):
+    result = []
     if request.method == 'GET':
         with connection.cursor() as cursor:
             cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
@@ -64,7 +65,40 @@ def myself(request, user_id):
         with connection.cursor() as cursor:
             cursor.callproc('search_dish_comment_by_user', [user_id])
             comments = cursor.fetchall()
-        return render(request, "myself.html", {"user": user, "comments": comments})
+        with connection.cursor() as cursor:
+            cursor.callproc('search_dish_comment_by_user', [user_id])
+            comment_list = cursor.fetchall()
+            print(comment_list)
+        for comment in comment_list:
+            with connection.cursor() as cursor:
+                cursor.callproc('get_replies_from_comment', [comment[0]])
+                reply_list = cursor.fetchall()
+                print(reply_list)
+                user_id = comment[3]
+                print("user_id: ", user_id)
+                comment_content = comment[4]
+                comment_picture = comment[5]
+                comment_push_time = comment[6]
+                comment_like_number = comment[7]
+                print("comment_content: ", comment_content)
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+                    user = cursor.fetchone()
+                user_name = user[1]
+                print("user_name: ", user_name)
+                # user_picture = user[3]
+                # print("user_picture: ", user_picture)
+                for item in reply_list:
+                    print("item: ", item)
+                    reply_user_id = item[2]
+                    with connection.cursor() as cursor:
+                        cursor.execute("SELECT * FROM user WHERE user_id = %s", reply_user_id)
+                        reply_user = cursor.fetchone()
+                        reply_user_name = reply_user[1]
+                        reply_user_picture = reply_user[3]
+                    result.append([user_name, comment_picture, comment_content, reply_user_name, reply_user_picture, *item, comment_push_time, comment_like_number])    
+                print(result)
+        return render(request, "myself.html", {"user": user, "comments": comments, "reply_list": result})
     return render(request,"myself.html", {"user_id": user_id})
 
 def offCampusFood(request):
@@ -136,15 +170,31 @@ def view_windows(request, canteen_id):
 
 # review test
 def food_review(request, window_id):
-    review_list = []  
+    review_list = [] 
+    result = [] 
     if request.method == 'GET':
         with connection.cursor() as cursor:
             # 获取一个窗口的所有评论
-            cursor.callproc('get_all_comments_from_window', [window_id])
+            cursor.callproc('get_all_dish_comments_from_window', [window_id])
             review_list = cursor.fetchall()
+            print("show the comment list:")
             print(review_list)
-
-    return render(request, 'food_review.html', {'comments': review_list, 'window_id': window_id})
+            for comment in review_list:
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", comment[3])
+                    user = cursor.fetchone()
+                    user_name = user[1]
+                    user_picture = user[3]
+                    comment_content = comment[4]
+                    dish_name = comment[2]
+                    comment_picture = comment[5]
+                    rating = comment[8]
+                    like_number = comment[7]
+                    publish_time = comment[6]
+                    comment_id = comment[0]
+                    result.append([comment_id, user_name, user_picture, dish_name, comment_content, comment_picture, rating, like_number, publish_time])
+            
+    return render(request, 'food_review.html', {'comments': result, 'window_id': window_id})
 
 def reply(request,comment_id):
     
@@ -162,7 +212,7 @@ def reply(request,comment_id):
             print(reply_list)
     return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
 
-#提交回复
+# 提交回复
 def submit_reply(request,comment_id):
     if request.method == 'POST':
        
@@ -596,18 +646,18 @@ def add_like_number(request, window_id, comment_id):
             print(f"Error: {e}")
             connection.rollback()
         return redirect(reverse('food_review', args=[window_id]))
-    return render(request, 'add_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+    return render(request, 'food_review.html', {'window_id': window_id})
 
-# def cancel_like_number(request, window_id, comment_id):
-#     with connection.cursor() as cursor:
-#         try:
-#             cursor.callproc('cancel_like_number', [comment_id])
-#             connection.commit()
-#         except Exception as e:
-#             print(f"Error: {e}")
-#             connection.rollback()
-#         return redirect(reverse('food_review', args=[window_id]))
-#     return render(request, 'cancel_like_number.html', {'window_id': window_id, 'comment_id': comment_id})
+def cancel_like_number(request, window_id, comment_id):
+    with connection.cursor() as cursor:
+        try:
+            cursor.callproc('cancel_like_number', [comment_id])
+            connection.commit()
+        except Exception as e:
+            print(f"Error: {e}")
+            connection.rollback()
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'food_review.html', {'window_id': window_id})
 
 
 def add_favorite(request, user_id, comment_id, window_id):

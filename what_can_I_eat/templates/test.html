@@ -1,91 +1,250 @@
 {% extends 'base.html' %}
 
-{% block title %}我在科大吃什么{% endblock %}
+{% block title %}个人主页{% endblock %}
 
 {% block content %}
+{% load static %}
 <style>
-  /* 增加行之间的间距 */
-  .row-deck {
-    margin-bottom: 5.0rem;
-    /* 调整间距 */
+  .container {
+    display: flex;
+    justify-content: space-between;
+    /* 确保头像在容器内均匀分布 */
+    align-items: center;
+    width: 100%;
+    /* 容器占满可用宽度 */
+  }
+
+  .avatar {
+    flex: 1;
+    /* 每个头像占用同等的空间 */
+    margin: 5px;
+    /* 设置一些间距，使头像之间稍微分开 */
+    background-color: #ddd;
+    /* 占位符背景色 */
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* 自定义每种尺寸的头像 */
+  .avatar-xl {
+    height: 200px;
+  }
+
+  .avatar-lg {
+    height: 180px;
+  }
+
+  .avatar-md {
+    height: 160px;
+  }
+
+  .avatar-sm {
+    height: 140px;
+  }
+
+  .avatar-xs {
+    height: 120px;
+  }
+
+
+  .datagrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 创建两列，平均分配空间 */
+    gap: 20px;
+    /* 设置项目之间的间距 */
+    width: 100%;
+    /* 占据父容器的全部宽度 */
+    padding: 20px;
+    /* 给内容添加适当的内边距 */
+    box-sizing: border-box;
+    /* 包含内边距和边框 */
+  }
+
+  .datagrid-item {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+
+  .datagrid-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .datagrid-content {
+    font-size: 14px;
   }
 </style>
+
 <div class="container">
-  <div class="row row-deck">
-    <!-- 校内美食模块-->
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-status-top bg-danger"></div>
-        <div class="card-body">
-          <h3 class="card-title">校内美食探索模块</h3>
-          <p class="card-text">浏览校内各个食堂的美味佳肴，了解菜品特色。</p>
-          <p class="card-text">查看同学们对校内美食的评价和推荐。</p>
-          <a href="/campusFood" class="btn btn-ghost-primary">前往校内美食</a>
+  <div class="avatar avatar-xl" style="background-image: url('{% static 'images/changli.jpg' %}');"></div>
+  <div class="avatar avatar-lg" style="background-image: url('{% static 'images/changli.jpg' %}');"></div>
+  <div class="avatar avatar-md" style="background-image: url('{% static 'images/changli.jpg' %}');"></div>
+  <div class="avatar avatar-sm" style="background-image: url('{% static 'images/changli.jpg' %}');"></div>
+  <div class="avatar avatar-xs" style="background-image: url('{% static 'images/changli.jpg' %}');"></div>
+  <div class="avatar" style="background-image: url('{% static 'images/changli.jpg' %}'); height: 100px;"></div>
+  <!-- 最小头像 -->
+</div>
+
+<div class="container">
+  <div class="datagrid">
+    <div class="datagrid-item">
+      <div class="datagrid-title">用户名</div>
+      <div class="datagrid-content">{{ user.1 }}</div>
+    </div>
+    <div class="datagrid-item">
+      <div class="datagrid-title">个人简介</div>
+      <div class="datagrid-content">{{ user.2 }}</div>
+    </div>
+    <div class="datagrid-item">
+      <div class="datagrid-title">Edge network</div>
+      <div class="datagrid-content">
+        <span class="status status-green">Active</span>
+      </div>
+    </div>
+    <div class="datagrid-item">
+      <div class="datagrid-title">Avatars list</div>
+      <div class="datagrid-content">
+        <div class="avatar-list avatar-list-stacked">
+          <span class="avatar rounded" style="background-image: url('{% static 'images/changli.jpg' %}');"></span>
+          <span class="avatar rounded" style="background-image: url('{% static 'images/changli.jpg' %}');"></span>
+          <span class="avatar rounded" style="background-image: url('{% static 'images/changli.jpg' %}');"></span>
+          <span class="avatar rounded" style="background-image: url('{% static 'images/changli.jpg' %}');"></span>
+          <span class="avatar rounded">+3</span>
         </div>
       </div>
     </div>
-    <!-- 校外美食模块-->
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-status-top bg-success"></div>
-        <div class="card-body">
-          <h3 class="card-title">校外美食发现模块</h3>
-          <p class="card-text">探索周边的餐厅和小吃摊，发现新的口味。</p>
-          <p class="card-text">分享校外美食的体验和心得。</p>
-          <a href="/offCampusFood" class="btn btn-ghost-success">前往校外美食</a>
-        </div>
+    <div class="datagrid-item">
+      <div class="datagrid-title">Icon</div>
+      <div class="datagrid-content">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24"
+          stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M5 12l5 5l10 -10" />
+        </svg>
+        Checked
       </div>
     </div>
   </div>
-  <div class="row row-deck">
-    <!-- 我要评价模块-->
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-status-top bg-warning"></div>
-        <div class="card-body">
-          <h3 class="card-title">美食评价模块</h3>
-          <p class="card-text">对品尝过的校内校外美食进行评价和打分。</p>
-          <p class="card-text">为其他美食爱好者提供参考。</p>
-          <a href="/comment" class="btn btn-ghost-warning">前往评价</a>
+</div>
+<div class="container">
+  <div class="page-wrapper">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1 class="page-title">
+            收藏、回复、评论列表
+          </h1>
         </div>
       </div>
     </div>
-    <!-- 我的主页模块-->
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-status-top bg-info"></div>
-        <div class="card-body">
-          <h3 class="card-title">个人中心模块</h3>
-          <p class="card-text">查看自己的评价历史和收藏的美食。</p>
-          <p class="card-text">管理个人信息。</p>
-          <a href="{% url 'myself' '1' %}" class="btn btn-ghost-danger">前往我的主页</a>
+    <div class="card">
+      <div class="card-body">
+        <div class="accordion" id="accordion-example">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-1">
+              <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1"
+                aria-expanded="true">
+                评论列表
+              </button>
+            </h2>
+            <div id="collapse-1" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
+              <div class="accordion-body pt-0">
+                <div class="content">
+                  {% for comment in comments %}
+                  <div class="card mb-3">
+                    <div class="card-body">
+                      <div class="row">
+                        <!-- 左侧部分：用户头像和用户信息 -->
+                        <div class="col-md-3 text-center">
+                          <div class="user-avatar mb-2"> </div>
+                          <div class="user-id">{{ comment.3 }}</div>
+                          <div class="dishname mt-3">菜品：{{ comment.2 }}</div>
+                        </div>
+              
+                        <!-- 右侧部分：评论内容 -->
+                        <div class="col-md-9">
+                          <div class="text-content">
+                            <h5 class="card-title">点评：</h5>
+                            <p class="card-text">{{ comment.4 }}</p>
+              
+                            <!-- 星级评分 -->
+                            {% if comment.7 == 1 %}
+                            <span class="star-rating">★☆☆☆☆</span>
+                            {% elif comment.7 == 2 %}
+                            <span class="star-rating">★★☆☆☆</span>
+                            {% elif comment.7 == 3 %}
+                            <span class="star-rating">★★★☆☆</span>
+                            {% elif comment.7 == 4 %}
+                            <span class="star-rating">★★★★☆</span>
+                            {% elif comment.7 == 5 %}
+                            <span class="star-rating">★★★★★</span>
+                            {% endif %}
+                          </div>
+              
+                          <!-- 发布时间 -->
+                          <div class="post_time mt-3">{{ comment.5 }}</div>
+              
+                          <!-- 操作按钮 -->
+                          <div class="button-row mt-3">
+                            <button class="btn btn-outline-primary">
+                              {% load static %}
+                              <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="30px" height="30px"
+                                onclick="toggleLike(this)" class="image1">
+                              <span>{{ comment.6 }}</span>
+                            </button>
+                            <button class="btn btn-outline-secondary">
+                              {% load static %}
+                              <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="30px" height="30px"
+                                onclick="showCommentOptions(this)" class="image1">
+                            </button>
+                            <button class="btn btn-outline-warning">
+                              {% load static %}
+                              <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="30px" height="30px" class="image1">
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse-2" aria-expanded="false">
+                回复列表
+              </button>
+            </h2>
+            <div id="collapse-2" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
+              <div class="accordion-body pt-0">
+                
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading-3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse-3" aria-expanded="false">
+                收藏列表
+              </button>
+            </h2>
+            <div id="collapse-3" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
+              <div class="accordion-body pt-0">
+                
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-{% endblock %}
-
-{% block scripts %}
-<script>
-  // 回到顶部按钮的功能
-  window.onscroll = function () {
-    scrollFunction();
-  };
-
-  function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      document.getElementById("backToTop").style.display = "block";
-    } else {
-      document.getElementById("backToTop").style.display = "none";
-    }
-  }
-
-  document.getElementById("backToTop").addEventListener("click", function () {
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  });
-</script>
-
+</div>
 {% endblock %}
