@@ -176,7 +176,7 @@ insert into dish_comment (comment_id, window_id, dish_name, user_id, context, pi
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('3', '1', '泸溪河', '3', '牛肉面是我叠', '/media/images/长离.jpg', '20240831', 6, 1);
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('4', '1', '牛肉面', '4', '太香了', '/media/images/长离.jpg', '20240831', 7, 2);
 insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('5', '1', '热带风味冰红茶', '5', '呃呃了', '/media/images/长离.jpg', '20240830', 20, 5);
-insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('00000', '1', '牛肉面', '6', '还凑合', '/media/images/长离.jpg', '20240831', 7, 4);
+insert into dish_comment (comment_id, window_id, dish_name, user_id, context, picture, publish_time, like_number, rating) values ('6', '1', '牛肉面', '6', '还凑合', '/media/images/长离.jpg', '20240831', 7, 4);
 
 
 -- reply

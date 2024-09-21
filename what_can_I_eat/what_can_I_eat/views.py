@@ -196,7 +196,7 @@ def food_review(request, window_id):
             
     return render(request, 'food_review.html', {'comments': result, 'window_id': window_id})
 
-def reply(request,comment_id):
+def reply(request, comment_id):
     
     reply_list=[]
     comment = []
