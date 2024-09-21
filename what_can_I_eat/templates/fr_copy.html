@@ -1,0 +1,368 @@
+{% extends "test.html" %}
+{% block title %}
+首页
+{% endblock %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菜品评价</title>
+    <style>
+    
+        .am {
+            z-index: 9999999999;
+            position: fixed;
+            top: 150px;
+            right: 50px;
+        }
+
+        a:hover {
+            /* 改变颜色 */
+            color: rgb(156, 255, 240);
+            /* 增大尺寸 */
+            transform: scale(1.2);
+            /* 添加阴影 */
+            box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
+        }
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* 回到顶部 */
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgb(182, 183, 183);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 16px;
+            z-index: 300402;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+        }
+
+        body {
+            background-color: #f7f4f4;
+            font-family: 'Roboto', sans-serif;
+
+        }
+
+        .post {
+            border: 1px solid hsl(0, 0%, 87%);
+            background-color: rgb(255, 255, 255);
+            padding: 10px;
+            width: 700px;
+            /* 调整宽度使 div 更宽 */
+            height: 450px;
+            /* 调整高度使 div 更扁 */
+            position: relative;
+            margin: 0 auto;
+            /* 添加这一行 */
+           
+         
+        }
+
+        .user-info {
+
+            margin-left: 10px;
+            margin-top: 10px;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+
+        .user-id {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+
+
+        .text-content {
+            margin-top: 10px;
+            position: relative;
+        }
+
+
+        .star-rating {
+            margin-top: 10px;
+            color: gold;
+            position: relative;
+            font-size: 28px;
+        }
+
+
+        
+        .image {
+            height: 180px;
+            width: 180px;
+            border-radius: 10px;
+
+        }
+
+
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            position: relative;
+        }
+
+
+        .button {
+            cursor: pointer;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+            border: none;
+            background-color: #f0f0f0;
+            /* 默认背景色 */
+            padding: 10px;
+        }
+
+        .button.highlighted {
+            background-color: #ffeb3b;
+            /* 被点击时的高亮背景色 */
+            border: 2px solid #ffc107;
+            /* 高亮时的边框颜色 */
+        }
+
+
+        .button:hover {
+            background-color: #d0d0d0;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(95, 177, 183);
+            color: white;
+        }
+
+
+        .image1 {
+            height: 20px;
+            width: 20px;
+        }
+
+        .mini-info {
+            display: flex;
+            gap: 10px;
+        }
+
+        
+        .dishname {
+            font-weight: bold;
+        }
+
+        .text {
+            font-weight: bold;
+        }
+
+    </style>
+    <script>
+        // JavaScript function to go back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // 隐藏所有回复区域的初始状态
+            const replyAreas = document.querySelectorAll('.reply-area-class');
+            replyAreas.forEach(replyArea => {
+                replyArea.style.display = 'none';
+            });
+        });
+    </script>
+</head>
+
+<body>
+   
+    <h2 class="mt-4">菜品评价</h2>
+    {% for comment in comments %}
+
+    <div class="post" name="post">
+        <div class="user-info">
+            <div class="mini-info">
+                <div class="user-avatar"> </div><br>
+                <div class="user-id">{{ comment.3 }}</div>
+            </div>
+            <br>
+            <div class="dishname">菜品：{{ comment.2}}</div>
+            <div class="text-content">
+                <div class="text">点评：</div>
+                <p>{{ comment.4 }}</p>
+                <span>评分：</span>
+                {% if comment.8 == 1 %}
+                <span class="star-rating">★☆☆☆☆</span>
+                {% elif comment.8 == 2 %}
+                <span class="star-rating">★★☆☆☆</span>
+                {% elif comment.8 == 3 %}
+                <span class="star-rating">★★★☆☆</span>
+                {% elif comment.8 == 4 %}
+                <span class="star-rating">★★★★☆</span>
+                {% elif comment.8 == 5 %}
+                <span class="star-rating">★★★★★</span>
+                {% endif %}
+
+            </div>
+
+            {% load static %}
+            <img src="{{ comment.5 }}" alt="评论图片" class="image">
+            
+           
+            <div class="button-row">
+                <button class="button">
+                    {% load static %}
+                    <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
+                        onclick="toggleLike(this)" class="image1">
+                    <span>{{ comment.7 }}</span>
+                </button>
+
+                <button class="button comment-button">
+                    {% load static %}
+                    <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
+                        data-comment-id="{{ comment.0 }}" class="image1">
+                </button>
+                <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id=comment.0
+                    data-user-id="1">
+                    {% load static %}
+                    <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
+                </button>
+
+                <a href="{% url 'reply' comment.0 %}">
+                    <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
+                </a>
+            </div>
+            <div> {{ comment.6}} </div>
+        </div>
+       
+          
+        
+    {% endfor %}
+
+    <a href="{% url 'add_dish_comment' window_id %}" class="am">
+        {% load static %}
+        <img src="{% static 'icons/创作.svg' %}" alt="创作">
+    </a>
+    <!-- 回到顶部按钮 -->
+    <button id="backToTop">^</button>
+    <!-- 回到顶部按钮 -->
+</body>
+<script>
+    var backToTopButton = document.getElementById('backToTop');
+    window.addEventListener('scroll', function () {
+        if (window.scrollY > 200) {
+            backToTopButton.style.display = 'block';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    document.getElementById('backToTop').onclick = function () {
+        // 以较快的速度滚动到页面顶部
+        let scrollStep = -200; // 每次滚动的像素值，可根据需要调整
+        let scrollInterval = setInterval(() => {
+            if (window.scrollY !== 0) {
+                window.scrollBy(0, scrollStep);
+            } else {
+                clearInterval(scrollInterval);
+            }
+        }, 10);
+    };
+
+    function addFavorite(buttonElement) {
+        // 切换按钮的高亮状态
+        buttonElement.classList.toggle('highlighted');
+
+        // 获取按钮的 ID（或者其他唯一标识符）
+        const buttonId = buttonElement.getAttribute('data-id');
+
+        // 更新本地存储
+        if (buttonElement.classList.contains('highlighted')) {
+            localStorage.setItem(`favorite-${buttonId}`, 'true');
+        } else {
+            localStorage.removeItem(`favorite-${buttonId}`);
+        }
+
+        //这里设置定时器重定向，如果需要保留这部分功能
+        let targetLink = "{% url 'add_favorite' 1 1 1 %}";
+        setTimeout(() => {
+            window.location.href = targetLink;
+        }, 200);
+    }
+ 
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     // 获取所有需要恢复状态的按钮
+    //     const buttons = document.querySelectorAll('.favorite-button');
+
+    //     buttons.forEach(button => {
+    //         // 获取按钮的 ID
+    //         const buttonId = button.getAttribute('data-id');
+
+    //         // 检查本地存储中的状态
+    //         if (localStorage.getItem(`favorite-${buttonId}`) === 'true') {
+    //             buttonElement.classList.toggle('highlighted');
+    //         }
+    //     });
+    // });
+
+    function toggleLike(likeButton, comment_id) {
+        console.log('comment_id:', comment_id);
+        let likesCountElement = likeButton.nextElementSibling;
+        let currentLikes = parseInt(likesCountElement.textContent);
+        // 如果已经点赞，就取消点赞
+        if (likeButton.classList.contains('liked')) {
+            likeButton.classList.remove('liked');
+            likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
+            likeButton.style.transform = 'scale(1)';
+
+            let targetLink = "{% url 'cancel_like_number' window_id comment_id %}";
+            setTimeout(() => {
+                window.location.href = argetLink;
+            }, 200);
+            // 如果没有点赞，就点赞
+        } else {
+            // 然后前端出现动画
+            likeButton.classList.add('liked');
+            likesCountElement.textContent = currentLikes + 1;
+            likeButton.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                likeButton.style.transform = 'scale(1)';
+            }, 200);
+            // 先更改数据库
+            let targetLink = "{% url 'add_like_number' window_id comment_id %}";
+            setTimeout(() => {
+                window.location.href = argetLink;
+            }, 200);
+        }
+    }
+
+
+
+</script>
+
+</html>
+{% endblock %}
