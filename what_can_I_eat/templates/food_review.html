@@ -339,9 +339,9 @@
                 if (event.key === 'Enter') {
                     const context = input.value;
                     input.style.display = 'none';
-                    let targetLink = "{% url 'submit_reply' window_id=window_id comment_id='COMMENT_ID' context='CONTEXT' %}"
-                    .replace('COMMENT_ID', comment_id)
-                    .replace('CONTEXT', encodeURIComponent(context));
+                    // let targetLink = "{% url 'submit_reply' window_id=window_id comment_id='COMMENT_ID' context='CONTEXT' %}"
+                    // .replace('COMMENT_ID', comment_id)
+                    // .replace('CONTEXT', encodeURIComponent(context));
                 }
             });
         }

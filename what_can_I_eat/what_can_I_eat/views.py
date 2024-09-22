@@ -197,20 +197,40 @@ def food_review(request, window_id):
     return render(request, 'food_review.html', {'comments': result, 'window_id': window_id})
 
 def reply(request, comment_id):
-    
+    result = []
+    result_comment = []
     reply_list=[]
     comment = []
     if request.method == 'GET':
-      
+        # 获取 原评论的所有信息 并存入 comment
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM dish_comment WHERE comment_id = %s', comment_id)
             comment = cursor.fetchone()
+            user_comment_id = comment[3]
             print(comment)
+            print(user_comment_id)
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM user WHERE user_id = %s", user_comment_id)
+                user = cursor.fetchone()
+            user_name = user[1]
+            user_picture = user[3]
+            result_comment = [user_name, user_picture, *comment]
+            print(result_comment)
+        # 获取 原评论的所有回复，并获取每个回复的用户信息，存入 reply_list
         with connection.cursor() as cursor:
             cursor.callproc('get_replies_from_comment', [comment_id])
             reply_list = cursor.fetchall()
-            print(reply_list)
-    return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
+            for item in reply_list:
+                user_id = item[2]
+                print(user_id)
+                print(item)
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+                    user = cursor.fetchone()
+                user_name = user[1]
+                user_picture = user[3]
+                result.append([user_name, user_picture, *item])
+    return render(request, 'reply.html', {'replies': result, 'comment': result_comment})
 
 # 提交回复
 def submit_reply(request, window_id, comment_id, context):
@@ -739,3 +759,29 @@ def submit_comment(request,user_id):
             connection.commit()
         return redirect(reverse('food_review', args=['1']))
     return render(request, 'submit_comment.html', {'user_id': user_id})
+
+
+# 修改个人主页
+def modify_myself(request, user_id):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM user WHERE user_id = %s', [user_id])
+        user = cursor.fetchone()
+    if not user:
+        return HttpResponse("用户不存在")
+
+    if request.method == 'POST':
+        data = request.POST.dict()
+        user_name = data.get("user_name")
+        user_description = data.get("user_description")  #图片
+        image_file = request.FILES.get('user_image')
+        image_url = None
+        if image_file:
+            image_name = f"images/{user_name.replace(' ', '_').lower()}.jpg"
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            image_url = f"/media/{image_path}"
+        
+        with connection.cursor() as cursor:
+            cursor.callproc('UpdateUser', [user_id, user_name, user_description, image_url])
+            connection.commit()
+        return redirect(reverse('myself', args=[user_id]))
+    return render(request, 'modify_myself.html', {'user_id': user_id, 'user': user})
