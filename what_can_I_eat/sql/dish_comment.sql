@@ -73,7 +73,7 @@ DELIMITER ;
 -- 获取所有评论
 DROP PROCEDURE IF EXISTS get_all_dish_comments_from_window;
 DELIMITER //
-CREATE PROCEDURE get_all_comments_from_window (
+CREATE PROCEDURE get_all_dish_comments_from_window (
     IN p_window_id varchar(18)
 )
 BEGIN

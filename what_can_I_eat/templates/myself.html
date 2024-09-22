@@ -1,438 +1,390 @@
-{% extends "test.html" %}
-{% block title %}
-首页
-{% endblock %}
+{% extends 'base.html' %}
 
+{% block title %}个人主页{% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html>
-
-<head>
-  {% load static %}
-
-</head>
-
+{% load static %}
 <style>
-  .navbar-dark {
-    background-color: rgb(255, 171, 171);
-    /* 你想要的颜色 */
-    padding: 10px 0;
-  }
+    /* 回到顶部 */
+    #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 10px;
+            background-color: rgb(182, 183, 183);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            font-size: 16px;
+            z-index: 300402;
+        }
 
-  .menu-container {
+        #backToTop.show {
+            opacity: 1;
+        }
+
+  .container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-    margin: 0px;
-  }
-
-  .menu {
-    display: flex;
-    justify-content: center;
-    background-color: rgb(255, 255, 255);
-    /* 设置导航栏背景颜色为粉红色 */
-    width: 65%;
-    height: 75px;
-
-  }
-
-  /* 调整 icons 样式 */
-  .icons {
-    display: flex;
-    align-items: flex-start;
     justify-content: space-between;
+    /* 确保头像在容器内均匀分布 */
+    align-items: center;
     width: 100%;
+    /* 容器占满可用宽度 */
   }
 
-  .icons a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: black;
-    padding: 5px;
-    height: 75px;
+  .avatar {
+    flex: 1;
+    /* 每个头像占用同等的空间 */
+    margin: 5px;
+    /* 设置一些间距，使头像之间稍微分开 */
+    background-color: #ddd;
+    /* 占位符背景色 */
+    background-size: cover;
+    background-position: center;
   }
 
-
-  .icons img {
-    width: 30px;
-    height: 30px;
-    transition: transform 0.3s;
-    /* 添加过渡效果，当变换属性改变时，过渡时间为 0.3 秒 */
+  /* 自定义每种尺寸的头像 */
+  .avatar-xl {
+    height: 200px;
   }
 
-  .icons img:hover {
-    transform: scale(1.2);
-    /* 鼠标悬停时，将图标放大 1.2 倍 */
-  }
-
-
-  .icon-text {
-    font-size: 14px;
-    margin-top: 5px;
-  }
-
-  /* 内容区域样式 */
-  .content {
-    max-width: 730px;
-    margin: 0 auto;
-    padding: 0px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .content p {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 10px;
-  }
-
-  /* 回到顶部 */
-  #backToTop {
-    display: none;
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: rgb(182, 183, 183);
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    cursor: pointer;
-    border-radius: 50%;
-    font-size: 16px;
-    z-index: 30040200;
-  }
-
-  #backToTop.show {
-    opacity: 1;
-  }
-
-  .shownow {
-    background-color:  rgb(255, 202, 202);
-    width: 150px;
-    height: 65px;
-  }
-
-  /*评论区域样式*/
-
-  body {
-    background-color: #f7f4f4;
-    font-family: 'Roboto', sans-serif;
-
-  }
-
-  .post {
-    border: 1px solid hsl(0, 0%, 87%);
-    background-color: rgb(255, 196, 188);
-    padding: 10px;
-    width: 700px;
-    /* 调整宽度使 div 更宽 */
-    height: 450px;
-    /* 调整高度使 div 更扁 */
-    position: relative;
-    margin: 0 auto;
-    /* 添加这一行 */
-  }
-
-
-
-  .user-info {
-
-    margin-left: 10px;
-    margin-top: 10px;
-    align-items: center;
-    gap: 10px;
-  }
-
-
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  }
-
-
-  .user-id {
-    font-weight: bold;
-    color: #333;
-    font-size: 18px;
-  }
-
-
-  .text-content {
-    margin-top: 10px;
-    position: relative;
-  }
-
-
-  .star-rating {
-    margin-top: 10px;
-    color: gold;
-    position: relative;
-    font-size: 28px;
-  }
-
-
-  .image-container {
-    display: flex;
-    justify-content: space-between;
-    /* 让两张图片横向排列且间隔开 */
-    margin-top: 50px;
-    position: relative;
-
-  }
-
-
-  .image {
+  .avatar-lg {
     height: 180px;
-    width: 180px;
-    border-radius: 10px;
+  }
 
+  .avatar-md {
+    height: 160px;
+  }
+
+  .avatar-sm {
+    height: 140px;
+  }
+
+  .avatar-xs {
+    height: 120px;
   }
 
 
-
-  .button-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 0px;
-    position: relative;
+  .datagrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 创建两列，平均分配空间 */
+    gap: 20px;
+    /* 设置项目之间的间距 */
+    width: 100%;
+    /* 占据父容器的全部宽度 */
+    padding: 20px;
+    /* 给内容添加适当的内边距 */
+    box-sizing: border-box;
+    /* 包含内边距和边框 */
   }
 
-
-  .button {
-    cursor: pointer;
-    border-radius: 20px;
-    transition: background-color 0.3s;
-    border: none;
-
-  }
-
-
-  .button:hover {
-    background-color: #d0d0d0;
-  }
-
-
-  .image1 {
-    height: 20px;
-    width: 20px;
-  }
-
-  .mini-info {
-    display: flex;
-    gap: 10px;
-  }
-
-  .comment-options {
-    position: absolute;
-    top: 0;
-    left: 100%;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px 0;
-    display: none;
-  }
-
-  .comment-options a {
-    display: block;
-    padding: 5px 10px;
-    text-decoration: none;
-    color: #333;
-  }
-
-  .comment-options a:hover {
-    background-color: #f0f0f0;
-  }
-
-  .dishname {
-    font-weight: bold;
-    font-size: 20px;
-  }
-
-  .text {
-    font-weight: bold;
-    font-size: 20px;
-  }
-
-  /* 用户信息区域样式 */
-  .user-profile {
-   
-    top: 150px;
- 
-    width: 65%;
-    margin: 0 auto;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  .datagrid-item {
     padding: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: wrap;
-    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
 
-  .profile-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* 使内容垂直排列并居中对齐 */
+  .datagrid-title {
+    font-weight: bold;
+    margin-bottom: 5px;
   }
 
-
-  .user-avatar0 {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    border: 3px solid #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-    margin-bottom: 15px;
-  }
-
-  .avatar-img {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-  }
-
-  .user-details {
-    text-align: center;
-  }
-
-  .user-details h5 {
-    font-size: 20px;
-    color: #333;
-    margin: 10px 0;
-  }
-
-  .user-details p {
+  .datagrid-content {
     font-size: 14px;
-    color: #555;
-    margin: 5px 0;
   }
- 
+  .reply-container {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+   .reply-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-size: cover;
+    }
+
+   .reply-info {
+      margin-left: 10px;
+    }
+
+   .reply-name {
+      font-weight: bold;
+    }
+
+   .reply-content {
+      font-size: 14px;
+      color: #555;
+    }
+
+   .reply-icons {
+      margin-left: auto;
+    }
+
+   .original-comment {
+      padding: 10px;
+      background-color: #f0efef;
+      margin-top: 10px;
+    }
+
+    /* 操作按钮 */
+    .three_button {
+      display: flex;
+      gap: 10px;
+      padding: 10px 0;
+    }
+
+   .three_button button {
+      border: none;
+      background-color: transparent;
+      padding: 5px;
+      transition: transform 0.3s ease;
+    }
+
+   .three_button button:hover {
+      transform: scale(1.1);
+    }
+
+   .image1 {
+      display: block;
+    }
+
+    /* 按钮文字样式 */
+   .three_button button span {
+      font-size: 14px;
+      margin-left: 5px;
+    }
+
+   
 </style>
 
-<script>
-  // JavaScript function to go back to the previous page
-  function goBack() {
-    window.history.back();
-  }
+<div class="container">
+  <div class="avatar avatar-xl" style="background-image: url('{{ user.3 }}');"></div>
+  <div class="avatar avatar-lg" style="background-image: url('{{ user.3 }}');"></div>
+  <div class="avatar avatar-md" style="background-image: url('{{ user.3 }}');"></div>
+  <div class="avatar avatar-sm" style="background-image: url('{{ user.3 }}');"></div>
+  <div class="avatar avatar-xs" style="background-image: url('{{ user.3}}');"></div>
+  <div class="avatar" style="background-image: url('{{ user.3 }}'); height: 100px;"></div>
+  <!-- 最小头像 -->
+</div>
 
-</script>
-
-<body>
-
-  <div class="user-profile">
-    <div class="profile-card">
-      <div class="user-avatar0">
-        <img src="{{ user.3 }}" alt="用户头像" class="avatar-img">
-      </div>
-      <div class="user-details">
-        <h5>用户名: {{ user.1 }}</h5>
-        <h5>ID: {{ user.0 }}</h5>
-        <p>个人简介: {{ user.2 }}</p>
+<div class="container">
+  <div class="datagrid">
+    <div class="datagrid-item">
+      <div class="datagrid-title">用户名</div>
+      <div class="datagrid-content">{{ user.1 }}</div>
+    </div>
+    <div class="datagrid-item">
+      <div class="datagrid-title">个人简介</div>
+      <div class="datagrid-content">{{ user.2 }}</div>
+    </div>
+    <div class="datagrid-item">
+      <div class="datagrid-title">Edge network</div>
+      <div class="datagrid-content">
+        <span class="status status-green">Active</span>
       </div>
     </div>
-  </div>
-
-  <div class="menu-container">
-    <div class="menu">
-      <div class="icons">
-
-
-        <a href="{% url 'show_get_reply' '1' %}">
-          <img src="{% static 'icons/评论 (1).svg' %}" alt="评论">
-          <span class="icon-text">收到回复</span>
-        </a>
-
-
-
-        <a href="{% url 'myself' '1' %}" class="shownow">
-          <img src="{% static 'icons/我的作品 (1).svg' %}" alt="我的作品">
-          <span class="icon-text">我的作品</span>
-        </a>
-
-
-
-        <a href="{% url 'show_bookmark' '1' %}">
-          <img src="{% static 'icons/收藏.svg' %}" alt="我的收藏">
-          <span class="icon-text">我的收藏</span>
-        </a>
-
-      </div>
-
-    </div>
-
-  </div>
-  </div>
-  <div class="content">
-    {% for comment in comments %}
-    <div class="post">
-      <div class="user-info">
-        <div class="mini-info">
-          <div class="user-avatar"> </div><br>
-          <div class="user-id">{{ comment.3 }}</div>
-        </div>
-        <br>
-        <div class="dishname">菜品：{{ comment.2}}</div>
-        <div class="text-content">
-          <div class="text">点评：</div>
-          <p>{{ comment.4 }}</p>
-          {% if comment.7 == 1 %}
-          <span class="star-rating">★☆☆☆☆</span>
-          {% elif comment.7 == 2 %}
-          <span class="star-rating">★★☆☆☆</span>
-          {% elif comment.7 == 3 %}
-          <span class="star-rating">★★★☆☆</span>
-          {% elif comment.7 == 4 %}
-          <span class="star-rating">★★★★☆</span>
-          {% elif comment.7 == 5 %}
-          <span class="star-rating">★★★★★</span>
-          {% endif %}
-
-        </div>
-
-       
-        {% load static %}
-        <img src="{{ comment.5 }}" alt="评论图片" class="image">
-       
-        
-       <br><br>
-
-        <div class="button-row">
-          <button class="button">
-            {% load static %}
-            <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px" onclick="toggleLike(this)"
-              class="image1">
-            <span>{{ comment.6 }}</span>
-          </button>
-          <button class="button">
-            {% load static %}
-            <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
-              onclick="showCommentOptions(this)" class="image1">
-
-          </button>
-          <button class="button">
-            {% load static %}
-            <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
-          </button>
+    <div class="datagrid-item">
+      <div class="datagrid-title">Avatars list</div>
+      <div class="datagrid-content">
+        <div class="avatar-list avatar-list-stacked">
+          <span class="avatar rounded" style="background-image: url('{{ user.3 }}');"></span>
+          <span class="avatar rounded" style="background-image: url('{{ user.3 }}');"></span>
+          <span class="avatar rounded" style="background-image: url('{{ user.3 }}');"></span>
+          <span class="avatar rounded" style="background-image: url('{{ user.3 }}');"></span>
+          <span class="avatar rounded">+3</span>
         </div>
       </div>
     </div>
-    {% endfor %}
-
+    <div class="datagrid-item">
+      <div class="datagrid-title">Icon</div>
+      <div class="datagrid-content">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-green" width="24" height="24" viewBox="0 0 24 24"
+          stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+          <path d="M5 12l5 5l10 -10" />
+        </svg>
+        Checked
+      </div>
+    </div>
   </div>
-  <!-- 回到顶部按钮 -->
-  <button id="backToTop">^</button>
-  <!-- 回到顶部按钮 -->
-</body>
+</div>
+<div class="container">
+  <div class="page-wrapper">
+    <!-- Page title -->
+    <div class="page-header d-print-none">
+      <div class="row align-items-center">
+        <div class="col">
+          <h1 class="page-title">
+            收藏、回复、评论列表
+          </h1>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <!-- <div class="card-body"> -->
+      <div class="accordion" id="accordion-example">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading-1">
+            <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapse-1"
+              aria-expanded="true">
+              评论列表
+            </button>
+          </h2>
+          <div id="collapse-1" class="accordion-collapse collapse show" data-bs-parent="#accordion-example">
+            <div class="accordion-body pt-0">
+              <div class="content">
+                {% for comment in comments %}
+                <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="row">
+                      <!-- 左侧部分：用户头像和用户信息 -->
+                      <div class="col-md-3">
+                        <span class="avatar rounded" style="background-image: url('{{ user.3 }}');"></span>
+                        <div class="username">
+                          <h3>用户名: </h3>
+                          <p class="card-text">{{ user.1 }}</p>
+                        </div>
+                        <div class="dishname mt-2">
+                          <h3>菜品: </h3>
+                          <p class="card-text">{{ comment.2 }}</p>
+                        </div>
+                      </div>
+                      <!-- 右侧部分：评论内容 -->
+                      <div class="col-md-3">
+                        <div class="text-content">
+                          <h3 class="card-title">点评: </h3>
+                          <p class="card-text">{{ comment.4 }}</p>
+                          <!-- 星级评分 -->
+                          <h3 class="card-title">评分: </h3>
+                          {% if comment.8 == 1 %}
+                          <span class="star-rating">★☆☆☆☆</span>
+                          {% elif comment.8 == 2 %}
+                          <span class="star-rating">★★☆☆☆</span>
+                          {% elif comment.8 == 3 %}
+                          <span class="star-rating">★★★☆☆</span>
+                          {% elif comment.8 == 4 %}
+                          <span class="star-rating">★★★★☆</span>
+                          {% elif comment.8 == 5 %}
+                          <span class="star-rating">★★★★★</span>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <!-- 发布时间 -->
+                        <h3 class="card-title">发布时间: </h3>
+                        <div class="post_time mt-3">{{ comment.6 }}</div>
+
+                        <h3 class="card-title">一键三连~</h3>
+                        <!-- 操作按钮 -->
+                        <div class="button-row mt-3">
+                          <button class="btn btn-outline-primary">
+                            {% load static %}
+                            <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="30px" height="30px"
+                              onclick="toggleLike(this)" class="image1">
+                            <span>{{ comment.7 }}</span>
+                          </button>
+                          <button class="btn btn-outline-secondary">
+                            {% load static %}
+                            <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="30px" height="30px"
+                              onclick="showCommentOptions(this)" class="image1">
+                          </button>
+                          <button class="btn btn-outline-warning">
+                            {% load static %}
+                            <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="30px" height="30px" class="image1">
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading-2">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapse-2" aria-expanded="false">
+              回复列表
+            </button>
+          </h2>
+          <div id="collapse-2" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
+            <div class="accordion-body pt-0">
+              <div class="content">
+                {% for reply in reply_list %}
+                <div class="reply-container">
+                  <div class="reply-avatar" style="background-image: url('{{ reply.4 }}');"></div>
+                  <div class="reply-info">
+                    <div class="reply-name">{{ reply.3 }}</div>
+                    <div class="reply-content">{{ reply.8 }}</div>
+                  </div>
+                  <div class="reply-icons">
+                    <button class="like-button">
+                      {% load static %}
+                      <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="20px" height="20px">
+                      <span>{{ reply.10 }}</span>
+                    </button>
+                    <div class="text-muted">{{ reply.9 }}</div>
+                  </div>
+                </div>
+                <div class="original-comment">
+               
+                  <img src="{{ reply.1 }}" style="width: 100px; height: auto;" alt="Card side image">
+                  <p>{{ reply.2 }}</p>
+                   <!-- 操作按钮 -->
+                <div class="three_button">
+                  <button class="btn btn-outline-primary">
+                    {% load static %}
+                    <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="30px" height="30px" onclick="toggleLike(this)"
+                      class="image1">
+                    <span>{{ reply.12 }}</span>
+                  </button>
+                  <button class="btn btn-outline-secondary">
+                    {% load static %}
+                    <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="30px" height="30px" class="image1">
+                  </button>
+                  <button class="btn btn-outline-warning">
+                    {% load static %}
+                    <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="30px" height="30px" class="image1">
+                  </button>
+                </div>
+                <div>{{ reply.11 }}</div>
+                </div>
+               
+                {% endfor %}
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading-3">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#collapse-3" aria-expanded="false">
+              收藏列表
+            </button>
+          </h2>
+          <div id="collapse-3" class="accordion-collapse collapse" data-bs-parent="#accordion-example">
+            <div class="accordion-body pt-0">
+              sdasd
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+   <!-- 回到顶部按钮 -->
+   <button id="backToTop">^</button>
+   <!-- 回到顶部按钮 -->
 
 <script>
   var backToTopButton = document.getElementById('backToTop');
@@ -446,14 +398,14 @@
 
   document.getElementById('backToTop').onclick = function () {
     // 以较快的速度滚动到页面顶部
-    let scrollStep = -200; // 每次滚动的像素值，可根据需要调整
+    let scrollStep = -92000; // 每次滚动的像素值，可根据需要调整
     let scrollInterval = setInterval(() => {
       if (window.scrollY !== 0) {
         window.scrollBy(0, scrollStep);
       } else {
         clearInterval(scrollInterval);
       }
-    }, 10);
+    }, 1);
   };
 
 
@@ -474,6 +426,4 @@
     }
   }
 </script>
-
-</html>
 {% endblock %}

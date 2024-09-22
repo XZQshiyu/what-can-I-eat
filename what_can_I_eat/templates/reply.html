@@ -13,7 +13,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>评论详情</title>
     <style>
-       
         .am {
             z-index: 9999999999;
             position: fixed;
@@ -25,9 +24,9 @@
             /* 改变颜色 */
             color: rgb(156, 255, 240);
             /* 增大尺寸 */
-            transform: scale(1.2);
+            transform: scale(1.1);
             /* 添加阴影 */
-            box-shadow: 0 0 5px rgba(175, 175, 175, 0.5);
+
         }
 
         img {
@@ -190,11 +189,11 @@
         .replies-container {
 
             border: 1px solid #ccc;
-           margin: 10px;
+            margin: 10px;
             border-radius: 5px;
         }
 
-       
+
 
         .reply-item {
             display: flex;
@@ -237,81 +236,83 @@
 </head>
 
 <body>
-    <h2 class="mt-4">评价详情</h2>
-    {% if comment %}
-    <div class="post">
-        <div class="user-info">
-            <div class="mini-info">
-                <div class="user-avatar"> </div><br>
-                <div class="user-id">{{ comment.3 }}</div>
+    <div class="container">
+        <h2 class="mt-4">评价详情</h2>
+        {% if comment %}
+        <div class="post">
+            <div class="user-info">
+                <div class="mini-info">
+                    <div class="user-avatar"> </div><br>
+                    <div class="user-id">{{ comment.3 }}</div>
+                </div>
+                <br>
+                <div class="dishname">菜品：{{ comment.2}}</div>
+                <div class="text-content">
+                    <div class="text">点评：</div>
+                    <p>{{ comment.4 }}</p>
+                    {% if comment.7 == 1 %}
+                    <span class="star-rating">★☆☆☆☆</span>
+                    {% elif comment.7 == 2 %}
+                    <span class="star-rating">★★☆☆☆</span>
+                    {% elif comment.7 == 3 %}
+                    <span class="star-rating">★★★☆☆</span>
+                    {% elif comment.7 == 4 %}
+                    <span class="star-rating">★★★★☆</span>
+                    {% elif comment.7 == 5 %}
+                    <span class="star-rating">★★★★★</span>
+                    {% endif %}
+
+                </div>
+
+                {% load static %}
+                <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
+                <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
+
+
+
+                <div class="button-row">
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
+                            onclick="toggleLike(this, '{{ comment.0 }}', '{{ window_id }}')" class="image1">
+                        <span>{{ comment.7 }}</span>
+                    </button>
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
+                            onclick="showCommentOptions(this)" class="image1">
+
+                    </button>
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
+                    </button>
+
+                </div>
             </div>
-            <br>
-            <div class="dishname">菜品：{{ comment.2}}</div>
-            <div class="text-content">
-                <div class="text">点评：</div>
-                <p>{{ comment.4 }}</p>
-                {% if comment.7 == 1 %}
-                <span class="star-rating">★☆☆☆☆</span>
-                {% elif comment.7 == 2 %}
-                <span class="star-rating">★★☆☆☆</span>
-                {% elif comment.7 == 3 %}
-                <span class="star-rating">★★★☆☆</span>
-                {% elif comment.7 == 4 %}
-                <span class="star-rating">★★★★☆</span>
-                {% elif comment.7 == 5 %}
-                <span class="star-rating">★★★★★</span>
-                {% endif %}
-
+            {% for reply in replies %}
+            <div class="parent-div">
+                <div class="replies-container">
+                    <div
+                        class="reply-item {% if forloop.counter|divisibleby:2 %}reply-item-even{% else %}reply-item-odd{% endif %}">
+                        <span class="replier">user:{{ reply.2 }}</span>:
+                        <span class="rpl-text">{{ reply.4 }}</span> -
+                        <span class="rpl-time">{{ reply.5 }}</span>
+                        <button class="button">
+                            {% load static %}
+                            <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
+                                onclick="toggleLike(this)" class="image1">
+                            <span>{{ reply.6 }}</span>
+                        </button>
+                    </div>
+                </div>
             </div>
-
-            {% load static %}
-            <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
-            <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
-
-           
-
-            <div class="button-row">
-                <button class="button">
-                    {% load static %}
-                    <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                        onclick="toggleLike(this)" class="image1">
-                    <span>{{ comment.6 }}</span>
-                </button>
-                <button class="button">
-                    {% load static %}
-                    <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
-                        onclick="showCommentOptions(this)" class="image1">
-
-                </button>
-                <button class="button">
-                    {% load static %}
-                    <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
-                </button>
-
-            </div>
+            {% endfor %}
+            {% endif %}
+            <!-- 回到顶部按钮 -->
+            <button id="backToTop">^</button>
+            <!-- 回到顶部按钮 -->
         </div>
-        {% for reply in replies %}
-        <div class="parent-div">
-        <div class="replies-container">
-            <div
-                class="reply-item {% if forloop.counter|divisibleby:2 %}reply-item-even{% else %}reply-item-odd{% endif %}">
-                <span class="replier">user:{{ reply.2 }}</span>:
-                <span class="rpl-text">{{ reply.4 }}</span> -
-                <span class="rpl-time">{{ reply.5 }}</span>
-                <button class="button">
-                    {% load static %}
-                    <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                        onclick="toggleLike(this)" class="image1">
-                    <span>{{ reply.6 }}</span>
-                </button>
-            </div>
-        </div>
-        </div>
-        {% endfor %}
-        {% endif %}
-        <!-- 回到顶部按钮 -->
-        <button id="backToTop">^</button>
-        <!-- 回到顶部按钮 -->
 </body>
 <script>
     var backToTopButton = document.getElementById('backToTop');

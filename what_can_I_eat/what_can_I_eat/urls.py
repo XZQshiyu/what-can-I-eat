@@ -71,10 +71,10 @@ urlpatterns = [
     path("add_favorite/<str:user_id>/<str:comment_id>/<str:window_id>",views.add_favorite,name="add_favorite"),
     
     path("show_get_reply/<str:user_id>",views.show_get_reply, name="show_get_reply"),
-    path("submit_reply/<str:comment_id>",views.submit_reply, name="submit_reply"),
+  
 
     # user_fav
     path("show_bookmark/<str:user_id>",views.show_bookmark, name="show_bookmark"),
-    path("submit_reply/<str:comment_id>",views.submit_reply, name="submit_reply"),
+    path("submit_reply/<str:window_id>/<str:comment_id>/<str:context>",views.submit_reply, name="submit_reply"),
     path("submit_comment/<str:user_id>",views.submit_comment, name="submit_comment"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
