@@ -197,20 +197,40 @@ def food_review(request, window_id):
     return render(request, 'food_review.html', {'comments': result, 'window_id': window_id})
 
 def reply(request, comment_id):
-    
+    result = []
+    result_comment = []
     reply_list=[]
     comment = []
     if request.method == 'GET':
-      
+        # 获取 原评论的所有信息 并存入 comment
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM dish_comment WHERE comment_id = %s', comment_id)
             comment = cursor.fetchone()
+            user_comment_id = comment[3]
             print(comment)
+            print(user_comment_id)
+            with connection.cursor() as cursor:
+                cursor.execute("SELECT * FROM user WHERE user_id = %s", user_comment_id)
+                user = cursor.fetchone()
+            user_name = user[1]
+            user_picture = user[3]
+            result_comment = [user_name, user_picture, *comment]
+            print(result_comment)
+        # 获取 原评论的所有回复，并获取每个回复的用户信息，存入 reply_list
         with connection.cursor() as cursor:
             cursor.callproc('get_replies_from_comment', [comment_id])
             reply_list = cursor.fetchall()
-            print(reply_list)
-    return render(request, 'reply.html', {'replies': reply_list, 'comment_id': comment_id, 'comment': comment})
+            for item in reply_list:
+                user_id = item[2]
+                print(user_id)
+                print(item)
+                with connection.cursor() as cursor:
+                    cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+                    user = cursor.fetchone()
+                user_name = user[1]
+                user_picture = user[3]
+                result.append([user_name, user_picture, *item])
+    return render(request, 'reply.html', {'replies': result, 'comment': result_comment})
 
 # 提交回复
 def submit_reply(request,comment_id):
