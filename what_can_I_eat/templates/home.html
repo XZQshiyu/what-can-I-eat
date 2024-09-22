@@ -12,7 +12,7 @@
  .card {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.8s ease-in-out;
+    transition: transform 0.5s ease-in-out;
   }
 
  .card:hover {
@@ -114,7 +114,9 @@
           <h3 class="card-title">校内美食探索模块</h3>
           <p class="card-text">浏览校内各个食堂的美味佳肴，了解菜品特色。</p>
           <p class="card-text">查看同学们对校内美食的评价和推荐。</p>
-          <button class="btn btn-ghost-primary">前往校内美食</button>
+          <a href="/campusFood">
+          <button class="btn btn-ghost-primary" href="">前往校内美食</button>
+        </a>
         </div>
       </div>
     </div>
@@ -126,7 +128,9 @@
           <h3 class="card-title">校外美食发现模块</h3>
           <p class="card-text">探索周边的餐厅和小吃摊，发现新的口味。</p>
           <p class="card-text">分享校外美食的体验和心得。</p>
+          <a href="/offCampusFood">
           <button class="btn btn-ghost-success">前往校外美食</button>
+        </a>
         </div>
       </div>
     </div>
@@ -140,7 +144,9 @@
           <h3 class="card-title">美食评价模块</h3>
           <p class="card-text">对品尝过的校内校外美食进行评价和打分。</p>
           <p class="card-text">为其他美食爱好者提供参考。</p>
+          <a href="/comment">
           <button class="btn btn-ghost-warning">前往评价</button>
+        </a>
         </div>
       </div>
     </div>
@@ -152,7 +158,9 @@
           <h3 class="card-title">个人中心模块</h3>
           <p class="card-text">查看自己的评价历史和收藏的美食。</p>
           <p class="card-text">管理个人信息。</p>
+          <a href="{% url 'myself' '1'%}">
           <button class="btn btn-ghost-danger">前往我的主页</button>
+        </a>
         </div>
       </div>
     </div>

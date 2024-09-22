@@ -1,3 +1,10 @@
+{% extends "test.html" %}
+{% block title %}
+首页
+{% endblock %}
+
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +14,15 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'home.css' %}">
     <style>
+          .navbar-dark {
+            background-color: #eab28a;
+            /* 你想要的颜色 */
+            padding: 10px 0;
+        }
+
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #fffefe;
         }
 
         .paper-box {
@@ -18,7 +31,7 @@
             margin-left: 250px;
             padding: 20px;
             width: 700px;
-            background-color: #ffffffe0;
+            background-color: #ffd4b1;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
@@ -30,14 +43,14 @@
         textarea,
         select {
             padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            border: 2px solid #888; /* 加粗边框 */
+            border-radius: 5px; /* 增加圆角 */
             margin-bottom: 10px;
-            /* 调整宽度为大约一半屏幕宽度 */
             width: 80%;
             box-sizing: border-box;
+            background-color: #f9f9f9; /* 浅灰色背景 */
+            color: #333; /* 深色文本颜色 */
         }
-
         input[type="file"] {
             border: none;
             padding: 0;
@@ -48,31 +61,36 @@
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
-            background-color: #077c83;
-            color: white;
+            background-color: #b49579;
+            color: #b49579;
             cursor: pointer;
+            width: 90px;
+            margin-top: 20px;
         }
 
-        /* 打星样式 */
-        .star-rating {
+         /* 打星样式 */
+         .star-rating {
             display: flex;
             flex-direction: row-reverse;
             /* Reverse the order of the stars */
             justify-content: flex-end;
-            font-size: 24px;
+            font-size: 30px; /* 增大星星尺寸 */
             /* 确保字体大小一致 */
             position: relative;
         }
 
         /* 确保标签的伪元素显示 */
-        .star-rating label::before {
+       .star-rating label::before {
             content: '\2606';
             /* 星星符号 */
-            color: #ddd;
+            color: #000000;
             /* 默认星星颜色 */
             transition: color 0.2s, text-shadow 0.2s;
             /* 平滑过渡效果 */
+           
+            border-radius: 50%; /* 使星星更圆 */
         }
+
 
         /* 悬停时显示金色的星星 */
         .star-rating label:hover::before,
@@ -228,7 +246,7 @@
 
 
             var fileInputs = [];
-            for (var i = 0; i < 2; i++) {
+            for (var i = 0; i < 1; i++) {
                 var fileInput = document.createElement('input');
                 fileInput.type = 'file';
                 fileInput.style.marginRight = '10px';
@@ -269,22 +287,7 @@
 </head>
 
 <body>
-    <!--导航 start-->
-    <div class="navi">
-        <div class="wrap">
-            <ul class="navi-text">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/campusFood">校内美食</a></li>
-                <li><a href="/offCampusFood">校外美食</a></li>
-                <li><a href="/comment">我要点评</a></li>
-                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
-                <li><a href="/contact">联系我们</a></li>
-                <li><a href="/user_management">用户列表</a></li>
-                <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
-            </ul>
-        </div>
-    </div>
-    <!--导航 end-->
+   
     <div class="paper-box">
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -318,9 +321,24 @@
             <select name="window" id="windowOptions"></select>
         </form>
         <br>
-        <input type="submit" value="上传" style="background-color:#077c83; color: white; margin-top: 20px;">
+        <a href= "{% url 'submit_comment' 'user_id'%}">
+        <input type="submit" value="上传" style="background-color:#6d5642; color: rgb(255, 255, 255); 
+         transition: all 0.3s ease; cursor: pointer; ">
+        </a>
     </div>
 
 </body>
-
+<script>
+    // JavaScript 代码，添加悬浮特效
+    document.querySelector('input[type="submit"]').addEventListener('mouseover', function() {
+      this.style.backgroundColor = '#886e58';
+      this.style.transform = 'scale(1.1)';
+    });
+  
+    document.querySelector('input[type="submit"]').addEventListener('mouseout', function() {
+      this.style.backgroundColor = '#6d5642';
+      this.style.transform = 'scale(1)';
+    });
+  </script>
 </html>
+{% endblock %}

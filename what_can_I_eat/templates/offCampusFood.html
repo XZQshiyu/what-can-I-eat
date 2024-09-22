@@ -1,3 +1,10 @@
+{% extends "test.html" %}
+{% block title %}
+首页
+{% endblock %}
+
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,45 +13,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>contact</title>
     <style>
-        /* 导航栏样式 */
-      .navi {
-            background-color: #343a40;
+        .navbar-dark {
+            background-color: #a9e3bf;
+            /* 你想要的颜色 */
             padding: 10px 0;
         }
-
-      .wrap {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-      .navi-text li {
-            display: inline-block;
-            margin-right: 20px;
-        }
-
-      .navi-text a {
-            text-decoration: none;
-            color: #fff;
-            font-size: 16px;
-            transition: color 0.3s ease;
-        }
-
-      .navi-text a:hover {
-            color: #ffc107;
-        }
-
-        /* 表单样式 */
-      .paper-box {
-            max-width: 600px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
+        
       .paper-box label {
             font-size: 18px;
             color: #343a40;
@@ -86,23 +60,9 @@
 </head>
 
 <body>
-    <!--导航 start-->
-    <div class="navi">
-        <div class="wrap">
-            <ul class="navi-text">
-                <li><a href="/home">Home</a></li>
-                <li><a href="/campusFood">校内美食</a></li>
-                <li><a href="/offCampusFood">校外美食</a></li>
-                <li><a href="/comment">我要点评</a></li>
-                <li><a href="{% url 'myself' '1' %}">我的主页</a></li>
-                <li><a href="/contact">联系我们</a></li>
-                <li><a href="/user_management">用户列表</a></li>
-                <li><a href="javascript:void(0);" onclick="goBack()">返回</a></li> <!-- 返回按钮 -->
-            </ul>
-        </div>
-    </div>
-    <!--导航 end-->
+    
    
 </body>
 
 </html>
+{% endblock %}
