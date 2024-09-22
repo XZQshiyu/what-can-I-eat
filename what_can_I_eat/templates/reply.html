@@ -239,80 +239,96 @@
     <div class="container">
         <h2 class="mt-4">评价详情</h2>
         {% if comment %}
-        <div class="post">
-            <div class="user-info">
-                <div class="mini-info">
-                    <div class="user-avatar"> </div><br>
-                    <div class="user-id">{{ comment.3 }}</div>
+        <!-- 原评论-->
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <!-- 左侧部分: 原评论-->
+                    <div class="col-md-3">
+                        <div class="user-info">
+                            <span class="avatar rounded" style="background-image: url('{{ comment.1 }}');"></span>
+                            <div class="user-id">{{ comment.0 }}</div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-3">
+                        <h2 class="card-title">菜品: </h2>
+                        <h3 class="card-text">{{ comment.4 }}</h3>
+                        <h2 class="card-title">点评: </h2>
+                        <h3 class="card-text">{{ comment.6 }}</h3>
+                    </div>
+                    <div class="col-md-3">
+                        <img src="{{ comment.7 }}" alt="菜品图片" class="image">
+                    </div>
+                    <div class="col-md-3">
+                        <span>评分：</span>
+                        {% if comment.10 == 1 %}
+                        <span class="star-rating">★☆☆☆☆</span>
+                        {% elif comment.10 == 2 %}
+                        <span class="star-rating">★★☆☆☆</span>
+                        {% elif comment.10 == 3 %}
+                        <span class="star-rating">★★★☆☆</span>
+                        {% elif comment.10 == 4 %}
+                        <span class="star-rating">★★★★☆</span>
+                        {% elif comment.10 == 5 %}
+                        <span class="star-rating">★★★★★</span>
+                        {% endif %}
+                    </div>
                 </div>
-                <br>
-                <div class="dishname">菜品：{{ comment.2}}</div>
-                <div class="text-content">
-                    <div class="text">点评：</div>
-                    <p>{{ comment.4 }}</p>
-                    {% if comment.7 == 1 %}
-                    <span class="star-rating">★☆☆☆☆</span>
-                    {% elif comment.7 == 2 %}
-                    <span class="star-rating">★★☆☆☆</span>
-                    {% elif comment.7 == 3 %}
-                    <span class="star-rating">★★★☆☆</span>
-                    {% elif comment.7 == 4 %}
-                    <span class="star-rating">★★★★☆</span>
-                    {% elif comment.7 == 5 %}
-                    <span class="star-rating">★★★★★</span>
-                    {% endif %}
-
-                </div>
-
-                {% load static %}
-                <img src="{% static 'icons/自选.jpg' %}" alt="图片 1" class="image">
-                <img src="{% static 'icons/自选.jpg' %}" alt="图片 2" class="image">
-
-
 
                 <div class="button-row">
                     <button class="button">
                         {% load static %}
                         <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                            onclick="toggleLike(this)" class="image1">
-                        <span>{{ comment.6 }}</span>
+                            onclick="toggleLike(this, '{{ comment.3 }}', '{{ comment.2 }}')" class="image1">
+                        <span>{{ comment.9 }}</span>
                     </button>
-                    <button class="button">
+
+                    <button class="button comment-button">
                         {% load static %}
                         <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
-                            onclick="showCommentOptions(this)" class="image1">
-
+                            data-comment-id="{{ comment.2 }}" class="image1">
                     </button>
-                    <button class="button">
+                    <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id=comment.0
+                        data-user-id="1">
                         {% load static %}
                         <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
                     </button>
-
                 </div>
+                <div> {{ comment.8 }} </div>
             </div>
-            {% for reply in replies %}
-            <div class="parent-div">
-                <div class="replies-container">
-                    <div
-                        class="reply-item {% if forloop.counter|divisibleby:2 %}reply-item-even{% else %}reply-item-odd{% endif %}">
-                        <span class="replier">user:{{ reply.2 }}</span>:
-                        <span class="rpl-text">{{ reply.4 }}</span> -
-                        <span class="rpl-time">{{ reply.5 }}</span>
-                        <button class="button">
-                            {% load static %}
-                            <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                                onclick="toggleLike(this)" class="image1">
-                            <span>{{ reply.6 }}</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-            {% endif %}
-            <!-- 回到顶部按钮 -->
-            <button id="backToTop">^</button>
-            <!-- 回到顶部按钮 -->
         </div>
+        {% endif %}
+    </div>
+    <!-- 回复列表 -->
+    <div class="container">
+        {% for reply in replies %}
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="user-info">
+                            <span class="avatar rounded" style="background-image: url('{{ reply.1 }}');"></span>
+                            <div class="user-id">{{ reply.0 }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="card-title">回复</h2>
+                        <h3 class="card-text">{{ reply.5 }}</h3>
+                        <h3 class="card-title">发布时间: </h3>
+                        <div class="post_time mt-3">{{ reply.6 }}</div>
+                    </div>
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
+                            class="image1">
+                        <span>{{ reply.7 }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </body>
 <script>
     var backToTopButton = document.getElementById('backToTop');
@@ -336,25 +352,40 @@
         }, 10);
     };
 
-    function toggleLike(likeButton) {
+    function toggleLike(likeButton, comment_id, window_id) {
+        console.log('comment_id:', comment_id);
         let likesCountElement = likeButton.nextElementSibling;
         let currentLikes = parseInt(likesCountElement.textContent);
-        if (likeButton.classList.contains('liked')) {
-            likeButton.classList.remove('liked');
+
+        const isLiked = localStorage.getItem('like_' + comment_id) === 'true';
+        if (isLiked) {
             likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
             likeButton.style.transform = 'scale(1)';
+            localStorage.setItem('like_' + comment_id, 'false'); // 取消点赞
+
+            if (comment_id && window_id) {
+                // 手动拼接取消点赞的 URL
+                let targetLink = `/cancel_like_number/${window_id}/${comment_id}/`;
+                setTimeout(() => {
+                    window.location.href = targetLink;
+                }, 200);
+            }
         } else {
-            likeButton.classList.add('liked');
             likesCountElement.textContent = currentLikes + 1;
             likeButton.style.transform = 'scale(1.2)';
             setTimeout(() => {
                 likeButton.style.transform = 'scale(1)';
             }, 200);
+            localStorage.setItem('like_' + comment_id, 'true'); // 点赞
+
+            if (comment_id && window_id) {
+                // 手动拼接点赞的 URL
+                let targetLink = `/add_like_number/${window_id}/${comment_id}/`;
+                setTimeout(() => {
+                    window.location.href = targetLink;
+                }, 200);
+            }
         }
-        let targetLink = "/reply";
-        setTimeout(() => {
-            window.location.href = targetLink;
-        }, 200);
     }
 
 </script>
