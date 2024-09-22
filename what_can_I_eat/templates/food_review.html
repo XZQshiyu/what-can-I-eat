@@ -18,6 +18,8 @@
             position: fixed;
             top: 130px;
             right: 20px;
+            height: 30px;
+            width: 30px;
         }
 
         a:hover {
@@ -26,13 +28,16 @@
             /* 增大尺寸 */
             transform: scale(1.1);
             /* 添加阴影 */
-          
+
         }
 
-        img {
-            width: 30px;
-            height: 30px;
+        button:hover {
+
+            transform: scale(1.1);
+            /* 添加阴影 */
+
         }
+
 
         /* 回到顶部 */
         #backToTop {
@@ -60,27 +65,39 @@
 
         }
 
-        .post {
+        .comment-card {
             border: 1px solid hsl(0, 0%, 87%);
             background-color: rgb(255, 255, 255);
-            padding: 10px;
-            width: 700px;
-            /* 调整宽度使 div 更宽 */
-            height: 450px;
-            /* 调整高度使 div 更扁 */
+            padding: 50px;
+            width: 500px;
+            /* 将宽度调整为原来的一半左右，以便一行容纳两个 */
+            height: 420px;
             position: relative;
             margin: 0 auto;
-            /* 添加这一行 */
-
-
+            display: inline-block;
+            /* 将其设置为行内块元素，以便在同一行显示 */
+            margin-right: 20px;
+            /* 添加一些右间距，可根据需要调整 */
+            margin-bottom: 20px; /* 添加底部边距以实现间距 */
         }
 
-        .user-info {
+        /* 为每一行的第二个元素去除右间距 */
+        .comment-card:nth-child(2n) {
+            margin-right: 0;
+        }
 
+        .comment-card:hover {
+    outline: 3px solid#ffdada; /* 增加轮廓线的宽度 */
+    box-shadow: 0 0 10px #f7cfcf, 0 5px 10px #fbc9c9;
+    transition: outline 0.3s ease, box-shadow 0.3s ease;
+}
+
+        .user-info {
+            
             margin-left: 10px;
             margin-top: 10px;
             align-items: center;
-            gap: 10px;
+
         }
 
 
@@ -94,23 +111,23 @@
 
 
         .user-id {
-            font-weight: bold;
+            font-weight: 400;
             color: #333;
             font-size: 18px;
         }
 
 
         .text-content {
-            margin-top: 10px;
+
             position: relative;
         }
 
 
         .star-rating {
-            margin-top: 10px;
+
             color: gold;
             position: relative;
-            font-size: 28px;
+            font-size: 25px;
         }
 
 
@@ -123,14 +140,11 @@
         }
 
 
-
-        .button-row {
+        .button-section {
             display: flex;
-            justify-content: space-between;
-            margin-top: 5px;
-            position: relative;
+            gap: 20px;
+            /* 设置按钮之间的间距 */
         }
-
 
         .button {
             cursor: pointer;
@@ -142,6 +156,7 @@
             padding: 10px;
         }
 
+        
         .button.highlighted {
             background-color: #ffeb3b;
             /* 被点击时的高亮背景色 */
@@ -150,9 +165,6 @@
         }
 
 
-        .button:hover {
-            background-color: #d0d0d0;
-        }
 
         input[type="submit"] {
             background-color: rgb(95, 177, 183);
@@ -165,10 +177,6 @@
             width: 20px;
         }
 
-        .mini-info {
-            display: flex;
-            gap: 10px;
-        }
 
 
         .dishname {
@@ -177,6 +185,16 @@
 
         .text {
             font-weight: bold;
+        }
+
+        .food-image {
+            height: 120px;
+            width: 150px;
+        }
+
+        h3 {
+            margin: 0;
+            padding: 0;
         }
     </style>
     <script>
@@ -202,81 +220,90 @@
         {% if comments %}
         <ul>
             {% for comment in comments %}
-            <div class="card mb-3">
-                <div class="card-body">
-                    <div class="row">
-                        <!-- 左侧部分: 原评论-->
-                        <div class="col-md-3">
-                            <div class="user-info">
-                                <span class="avatar rounded" style="background-image: url('{{ comment.2 }}');"></span>
-                                <div class="user-id">{{ comment.1 }}</div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="col-md-3">
-                            <h2 class="card-title">菜品: </h2>
-                            <h3 class="card-text">{{ comment.3 }}</h3>
-                            <h2 class="card-title">点评: </h2>
-                            <h3 class="card-text">{{ comment.4 }}</h3>
-                        </div>
-                        <div class="col-md-3">
-                            <img src="{{ comment.5 }}" alt="菜品图片" class="image">
-                        </div>
-                        <div class="col-md-3">
-                            <span>评分：</span>
-                            {% if comment.6 == 1 %}
-                            <span class="star-rating">★☆☆☆☆</span>
-                            {% elif comment.6 == 2 %}
-                            <span class="star-rating">★★☆☆☆</span>
-                            {% elif comment.6 == 3 %}
-                            <span class="star-rating">★★★☆☆</span>
-                            {% elif comment.6 == 4 %}
-                            <span class="star-rating">★★★★☆</span>
-                            {% elif comment.6 == 5 %}
-                            <span class="star-rating">★★★★★</span>
-                            {% endif %}
-                        </div>
-                    </div>
+            <div class="comment-card">
+                <!-- 用户信息和头像 -->
+                <div class="user-info-section">
+                    <span class="avatar rounded" style="background-image: url('{{ comment.2 }}');"></span>
+                    <span class="user-id">{{ comment.1 }}</span>
+                </div>
+                <br>
 
-                    <div class="button-row">
-                        <button class="button">
-                            {% load static %}
-                            <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
-                                onclick="toggleLike(this, '{{ comment.0 }}', '{{ window_id }}')" class="image1">
-                            <span>{{ comment.7 }}</span>
-                        </button>
+                <!-- 菜品名称 -->
+                <div class="dish-name-section">
+                    <h3>菜品: {{ comment.3 }}</h3>
+                </div>
 
-                        <button class="button comment-button">
-                            {% load static %}
-                            <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
-                                data-comment-id="{{ comment.0 }}" class="image1">
-                        </button>
-                        <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id=comment.0
-                            data-user-id="1">
-                            {% load static %}
-                            <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
-                        </button>
+                <!-- 评分 -->
+                <div class="rating-section">
+                    <span style="font-weight: bold; font-size: 16.5px;">评分：</span>
+                    {% if comment.6 == 1 %}
+                    <span class="star-rating">★☆☆☆☆</span>
+                    {% elif comment.6 == 2 %}
+                    <span class="star-rating">★★☆☆☆</span>
+                    {% elif comment.6 == 3 %}
+                    <span class="star-rating">★★★☆☆</span>
+                    {% elif comment.6 == 4 %}
+                    <span class="star-rating">★★★★☆</span>
+                    {% elif comment.6 == 5 %}
+                    <span class="star-rating">★★★★★</span>
+                    {% endif %}
+                </div>
 
+                <!-- 菜品评价 -->
+
+                <div class="comment-section">
+                    <span style="font-weight: bold; font-size: 16.5px;">点评：</span>
+                    <span>{{ comment.4 }}</span>
+                </div>
+
+                <!-- 菜品图片 -->
+                <div class="image-section">
+                    <img src="{{ comment.5 }}" alt="菜品图片" class="food-image">
+                </div>
+
+                <!-- 时间 -->
+                <div class="time-section">
+                    {{ comment.8 }}
+                </div>
+                <br>
+                <!-- 操作按钮 -->
+                <div class="button-section">
+                    <button class="button">
+                        {% load static %}
+                        <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
+                            onclick="toggleLike(this, '{{ comment.0 }}', '{{ window_id }}')" class="image1">
+                        <span>{{ comment.7 }}</span>
+                    </button>
+
+                    <button class="button comment-button">
+                        {% load static %}
+                        <img src="{% static 'icons/评论 (1).svg' %}" alt="评论" width="50px" height="50px"
+                            data-comment-id="{{ comment.0 }}" class="image1">
+                    </button>
+                    <button class="button" onclick="addFavorite(this)" data-id="123" data-comment-id="{{ comment.0 }}"
+                        data-user-id="1">
+                        {% load static %}
+                        <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
+                    </button>
+                 
                         <a href="{% url 'reply' comment.0 %}">
-                            <button id="showRepliesButton" class="reply" color="pink">查看回复</button>
+                            <button id="showRepliesButton" class="button" color="pink">查看回复</button>
                         </a>
-                    </div>
-                    <div> {{ comment.8 }} </div>
+                   
+
                 </div>
             </div>
             {% endfor %}
-        </ul>
-    </div>
-    {% else %}
-    <p>暂无评论</p>
-    {% endif %}
-    <a href="{% url 'add_dish_comment' window_id %}" class="am">
-        {% load static %}
-        <img src="{% static 'icons/创作.svg' %}" alt="创作">
-    </a>
-    <!-- 回到顶部按钮 -->
-    <button id="backToTop">^</button>
-    <!-- 回到顶部按钮 -->
+            {% else %}
+            <p>暂无评论</p>
+            {% endif %}
+            <a href="{% url 'add_dish_comment' window_id %}" class="am">
+                {% load static %}
+                <img src="{% static 'icons/创作.svg' %}" alt="创作">
+            </a>
+            <!-- 回到顶部按钮 -->
+            <button id="backToTop">^</button>
+            <!-- 回到顶部按钮 -->
     </div>
 </body>
 <script>
