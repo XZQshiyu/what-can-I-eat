@@ -78,7 +78,8 @@
             /* 将其设置为行内块元素，以便在同一行显示 */
             margin-right: 20px;
             /* 添加一些右间距，可根据需要调整 */
-            margin-bottom: 20px; /* 添加底部边距以实现间距 */
+            margin-bottom: 20px;
+            /* 添加底部边距以实现间距 */
         }
 
         /* 为每一行的第二个元素去除右间距 */
@@ -87,13 +88,14 @@
         }
 
         .comment-card:hover {
-    outline: 3px solid#ffdada; /* 增加轮廓线的宽度 */
-    box-shadow: 0 0 10px #f7cfcf, 0 5px 10px #fbc9c9;
-    transition: outline 0.3s ease, box-shadow 0.3s ease;
-}
+            outline: 3px solid#ffdada;
+            /* 增加轮廓线的宽度 */
+            box-shadow: 0 0 10px #f7cfcf, 0 5px 10px #fbc9c9;
+            transition: outline 0.3s ease, box-shadow 0.3s ease;
+        }
 
         .user-info {
-            
+
             margin-left: 10px;
             margin-top: 10px;
             align-items: center;
@@ -156,7 +158,7 @@
             padding: 10px;
         }
 
-        
+
         .button.highlighted {
             background-color: #ffeb3b;
             /* 被点击时的高亮背景色 */
@@ -285,11 +287,11 @@
                         {% load static %}
                         <img src="{% static 'icons/收藏.svg' %}" alt="收藏" width="50px" height="50px" class="image1">
                     </button>
-                 
-                        <a href="{% url 'reply' comment.0 %}">
-                            <button id="showRepliesButton" class="button" color="pink">查看回复</button>
-                        </a>
-                   
+
+                    <a href="{% url 'reply' comment.0 %}">
+                        <button id="showRepliesButton" class="button" color="pink">查看回复</button>
+                    </a>
+
 
                 </div>
             </div>
