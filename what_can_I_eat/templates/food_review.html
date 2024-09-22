@@ -351,20 +351,31 @@
         }, 200);
     }
 
-    // document.addEventListener('DOMContentLoaded', () => {
-    //     // 获取所有需要恢复状态的按钮
-    //     const buttons = document.querySelectorAll('.favorite-button');
+    function add_reply(button, comment_id, window_id) {
+        let input = button.nextElementSibling;
+        console.log('comment_id:', comment_id);
 
-    //     buttons.forEach(button => {
-    //         // 获取按钮的 ID
-    //         const buttonId = button.getAttribute('data-id');
+        if (input && input.className === 'comment-input') {
+            input.style.display = input.style.display === 'none' ? 'block' : 'none';
+        } else {
+            input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = '输入评论...';
+            input.className = 'comment-input';
+            button.parentNode.insertBefore(input, button.nextSibling);
 
-    //         // 检查本地存储中的状态
-    //         if (localStorage.getItem(`favorite-${buttonId}`) === 'true') {
-    //             buttonElement.classList.toggle('highlighted');
-    //         }
-    //     });
-    // });
+            input.addEventListener('keypress', function (event) {
+                if (event.key === 'Enter') {
+                    const context = input.value;
+                    input.style.display = 'none';
+                    // let targetLink = "{% url 'submit_reply' window_id=window_id comment_id='COMMENT_ID' context='CONTEXT' %}"
+                    // .replace('COMMENT_ID', comment_id)
+                    // .replace('CONTEXT', encodeURIComponent(context));
+                }
+            });
+        }
+    }
+
 
     function toggleLike(likeButton, comment_id, window_id) {
         console.log('comment_id:', comment_id);
@@ -401,6 +412,6 @@
 
 
 </script>
-
+</body>
 </html>
 {% endblock %}
