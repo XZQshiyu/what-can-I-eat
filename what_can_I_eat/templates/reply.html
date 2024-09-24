@@ -266,7 +266,9 @@
                 <div class="action-buttons">
                     <button class="action-button">
                         {% load static %}
-                        <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞">
+                        {% csrf_token %}
+                        <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞"
+                        onclick="toggleLike(this, '{{ comment.2 }}', '{{ comment.3 }}')">
                         <span>{{ comment.9 }}</span>
                     </button>
                     <button class="action-button">
@@ -323,10 +325,12 @@
     };
 
     function toggleLike(likeButton, comment_id, window_id) {
-        console.log('comment_id:', comment_id);
+        console.log('test');
+        console.log('comment_id:', comment_id, 'window_id:', window_id);
+        console.log('test2');
         let likesCountElement = likeButton.nextElementSibling;
         let currentLikes = parseInt(likesCountElement.textContent);
-
+        console.log('currentLikes:', currentLikes);
         const isLiked = localStorage.getItem('like_' + comment_id) === 'true';
         if (isLiked) {
             likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
@@ -340,11 +344,12 @@
                 // setTimeout(() => {
                 //     window.location.href = targetLink;
                 // }, 200);
+                console.log('test3');
                 fetch('/toggle_like/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': getCSRFToken(), // Django 的 CSRF 保护
+                        'X-CSRFToken': getCSRFToken(), // 确保这里获取的 token 是有效的
                     },
                     body: JSON.stringify({
                         action: 'cancel',
@@ -373,7 +378,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'X-CSRFToken': getCSRFToken(), // Django 的 CSRF 保护
+                        'X-CSRFToken': getCSRFToken(), // 确保这里获取的 token 是有效的
                     },
                     body: JSON.stringify({
                         action: 'add',
@@ -393,8 +398,9 @@
 
     // 获取 CSRF token 的函数（Django 通常需要 CSRF 保护）
     function getCSRFToken() {
-        return document.querySelector('[name=csrfmiddlewaretoken]').value;
-    }
+    const tokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
+    return tokenElement ? tokenElement.value : null; // 如果元素存在，返回其值，否则返回 null
+}
 
 </script>
 

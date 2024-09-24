@@ -272,6 +272,7 @@
                 <div class="button-section">
                     <button class="button">
                         {% load static %}
+                        {% csrf_token %}
                         <img src="{% static 'icons/赞 (1) copy.svg' %}" alt="赞" width="50px" height="50px"
                             onclick="toggleLike(this, '{{ comment.0 }}', '{{ window_id }}')" class="image1">
                         <span>{{ comment.7 }}</span>
@@ -378,21 +379,44 @@
 
 
     function toggleLike(likeButton, comment_id, window_id) {
-        console.log('comment_id:', comment_id);
+        console.log('test');
+        console.log('comment_id:', comment_id, 'window_id:', window_id);
+        console.log('test2');
         let likesCountElement = likeButton.nextElementSibling;
         let currentLikes = parseInt(likesCountElement.textContent);
-
+        console.log('currentLikes:', currentLikes);
         const isLiked = localStorage.getItem('like_' + comment_id) === 'true';
         if (isLiked) {
             likesCountElement.textContent = currentLikes > 0 ? currentLikes - 1 : 0;
             likeButton.style.transform = 'scale(1)';
             localStorage.setItem('like_' + comment_id, 'false'); // 取消点赞
 
-            if (comment_id) {
-                let targetLink = "{% url 'cancel_like_number' window_id=window_id comment_id='COMMENT_ID' %}".replace('COMMENT_ID', comment_id);
-                setTimeout(() => {
-                    window.location.href = targetLink;
-                }, 200);
+            if (comment_id && window_id) {
+                // 手动拼接取消点赞的 URL
+
+                // let targetLink = `/cancel_like_number/${window_id}/${comment_id}/`;
+                // setTimeout(() => {
+                //     window.location.href = targetLink;
+                // }, 200);
+                console.log('test3');
+                fetch('/toggle_like/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken(), // 确保这里获取的 token 是有效的
+                    },
+                    body: JSON.stringify({
+                        action: 'cancel',
+                        comment_id: comment_id,
+                        window_id: window_id
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('取消点赞成功:', data);
+                        // 处理返回的结果
+                    })
+                    .catch(error => console.error('取消点赞失败:', error));
             }
         } else {
             likesCountElement.textContent = currentLikes + 1;
@@ -401,17 +425,39 @@
                 likeButton.style.transform = 'scale(1)';
             }, 200);
             localStorage.setItem('like_' + comment_id, 'true'); // 点赞
-            if (comment_id) {
-                let targetLink = "{% url 'add_like_number' window_id=window_id comment_id='COMMENT_ID' %}".replace('COMMENT_ID', comment_id);
-                setTimeout(() => {
-                    window.location.href = targetLink;
-                }, 200);
+
+            if (comment_id && window_id) {
+                // 手动拼接点赞的 URL
+                fetch('/toggle_like/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCSRFToken(), // 确保这里获取的 token 是有效的
+                    },
+                    body: JSON.stringify({
+                        action: 'add',
+                        comment_id: comment_id,
+                        window_id: window_id
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('点赞成功:', data);
+                        // 处理返回的结果
+                    })
+                    .catch(error => console.error('点赞失败:', error));
             }
         }
     }
 
+    // 获取 CSRF token 的函数（Django 通常需要 CSRF 保护）
+    function getCSRFToken() {
+        const tokenElement = document.querySelector('[name=csrfmiddlewaretoken]');
+        return tokenElement ? tokenElement.value : null; // 如果元素存在，返回其值，否则返回 null
+    }
 
 </script>
 </body>
+
 </html>
 {% endblock %}

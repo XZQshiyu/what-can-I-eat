@@ -666,13 +666,6 @@ def show_bookmark(request, user_id):
     return render(request,"show_bookmark.html",)
 
 
-# def add_like_number(request,window_id,comment_id):
-#     print(111)
-#     with connection.cursor() as cursor:
-#         cursor.callproc('add_like_number', [comment_id])
-#         connection.commit()
-#     return redirect(reverse('food_review', args=[window_id]))
-
 def add_like_number(request, window_id, comment_id):
     with connection.cursor() as cursor:
         try:
@@ -757,7 +750,7 @@ def submit_comment(request,user_id):
         like_number = 0
         publish_time = datetime.datetime.now()
         with connection.cursor() as cursor:
-            cursor.callproc('add_dish_comment', [comszzment_id, '1', dish_name, user_id, review_text, image_files, publish_time, like_number, rating])
+            cursor.callproc('add_dish_comment', ['1', dish_name, user_id, review_text, publish_time, like_number, rating])
             connection.commit()
         return redirect(reverse('food_review', args=['1']))
     return render(request, 'submit_comment.html', {'user_id': user_id})
