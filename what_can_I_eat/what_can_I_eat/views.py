@@ -762,6 +762,29 @@ def submit_comment(request,user_id):
         return redirect(reverse('food_review', args=['1']))
     return render(request, 'submit_comment.html', {'user_id': user_id})
 
+import json
+def toggle_like(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        action = data.get('action')
+        comment_id = data.get('comment_id')
+        window_id = data.get('window_id')
+
+        # 根据不同的 action 调用不同的 SQL 存储过程
+        if action == 'add':
+            with connection.cursor() as cursor:
+                print("executing add_like_number")
+                cursor.callproc('add_like_number', [comment_id])
+        elif action == 'cancel':
+            with connection.cursor() as cursor:
+                print("executing cancel_like_number")
+                cursor.callproc('cancel_like_number', [comment_id])
+
+        # 返回处理结果
+        return JsonResponse({'status': 'success', 'message': f'{action} like complete'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+
 
 # 修改个人主页
 def modify_myself(request, user_id):
@@ -774,14 +797,16 @@ def modify_myself(request, user_id):
     if request.method == 'POST':
         data = request.POST.dict()
         user_name = data.get("user_name")
-        user_description = data.get("user_description")  #图片
-        image_file = request.FILES.get('user_image')
+        user_description = data.get("user_description")  
+        image_file = request.FILES.get('user_image')    #图片
+        
         image_url = None
         if image_file:
             image_name = f"images/{user_name.replace(' ', '_').lower()}.jpg"
             image_path = default_storage.save(image_name, ContentFile(image_file.read()))
             image_url = f"/media/{image_path}"
-        
+        else:
+            image_url = user[3]
         with connection.cursor() as cursor:
             cursor.callproc('UpdateUser', [user_id, user_name, user_description, image_url])
             connection.commit()

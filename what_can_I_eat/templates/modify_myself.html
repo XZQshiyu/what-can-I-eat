@@ -115,6 +115,25 @@
             window.history.back();
         }
     </script>
+    <script>
+        function previewImage(event) {
+            const imagePreview = document.getElementById('image_preview');
+            const fileInput = document.getElementById('user_image_input');
+            const file = event.target.files[0];
+        
+            if (fileInput.files && file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result; // 更新预览图像的源
+                }
+                reader.readAsDataURL(file);
+            } else {
+                // 用户未选择新文件，使用 user.3 的值
+                imagePreview.src = "{{ user.3 }}"; // 使用 user.3 作为默认图像
+                fileInput.value = "{{ user.3 }}"; // 将文件输入的值设置为 user.3 的值
+            }
+        }
+        </script>
 </head>
 
 <body>
@@ -131,11 +150,14 @@
             <div class="mb-3">
                 <label for="user_description" class="form-control">个人简介：</label>
                 <input type="text" class="form-control" id="user_description" name="user_description" ,
-                    value="{{ window.2 }}" required><br><br>
+                    value="{{ user.2 }}" required><br><br>
             </div>
             <div class="mb-3">
-                <label for="window_location" class="form-control">用户头像：</label>
-                <input type="file" class="form-control" id="user_image" name="user_image" accept="image/*"><br><br>
+                <label for="user_image_input" class="form-control">用户头像：</label>
+                <input type="file" class="form-control" id="user_image_input" name="user_image" accept="image/*"
+                    onchange="previewImage(event)">
+                <img id="image_preview" src="{{ user.3 }}" alt="头像预览" style="max-width: 100px; margin-top: 10px;">
+                <br><br>
             </div>
             <button type="submit" class="btn btn-primary">提交更新</button>
         </form>
