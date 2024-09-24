@@ -235,7 +235,7 @@ def reply(request, comment_id):
     return render(request, 'reply.html', {'replies': result, 'comment': result_comment})
 
 # 提交回复
-def submit_reply(request,comment_id):
+def submit_reply(request, window_id, comment_id, context):
     if request.method == 'POST':
        
         data = request.POST.dict()
@@ -252,17 +252,15 @@ def submit_reply(request,comment_id):
             reply_id = 0
 
         #获取表单数据
-        user_id = 1
-        parent_id = 1
-        reply_text = data.get("reply_text")
+        user_id = '1'
+        reply_text = context
         publish_time = datetime.datetime.now()
         like_number = 0
         with connection.cursor() as cursor:
-            cursor.callproc('add_reply', [reply_id , comment_id, user_id , parent_id, reply_text, publish_time, like_number])
+            cursor.callproc('add_reply', [reply_id, comment_id, user_id, reply_text, publish_time, like_number])
             connection.commit()
-        return redirect(reverse('reply', args=[comment_id]))
-    return render(request, 'reply.html', {'comment_id': comment_id})
-
+        return redirect(reverse('food_review', args=[window_id]))
+    return render(request, 'food_review.html', {'window_id': window_id})
 
 
 
@@ -310,19 +308,22 @@ def update_window(request, window_id):
 # 添加窗口
 def add_window(request,canteen_id):
     if request.method == 'POST':
-        data = request.POST.dict()   
+        data = request.POST.dict()
+        # 创建数据库游标，执行游标查询   
         with connection.cursor() as cursor:
+            # 执行sql查询，从表中获取所有的记录
             cursor.execute('SELECT * FROM food_window')
             window_id_list = cursor.fetchall()
-        window_id = 0
         # print(window_id_list)
+        # window_id初始化到表单的最后
         if window_id_list:
             window_id = int(window_id_list[-1][0]) + 1
         else:
             window_id = 0
+        # 从字典data中获取表单中的window_name    
         window_name = data.get("window_name")     
         window_description = data.get("window_description")  #描述
-        # 读取图像文件
+        # 从request.file中获取用户上传的文件，没上传则为NONE
         image_file = request.FILES.get('window_image')
         print(image_file)
         image_url = None
@@ -356,7 +357,17 @@ def add_dish_comment(request, window_id):
             comment_id = int(comment_id_list[-1][0]) + 1
         else:
             comment_id = 0
-
+        # 需要保证真的有这个picture
+        image_file = request.FILES.get('picture')
+        print(image_file)
+        image_url = None
+        if image_file:
+            # 生成图片文件名,路径指定
+            image_name =  f"images/comments/{dish_name.replace(' ', '_').lower()}.jpg"
+            # 保存图片文件
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            # 获取文件路径
+            image_url = f"/media/{image_path}"
         # 获取表单数据
         user_id = data.get("id")
         dish_name = data.get("dish_name")
@@ -616,35 +627,43 @@ def show_get_reply(request, user_id):
 
 
 def show_bookmark(request, user_id):
-#     result = []
-#     # 获取用户的信息，制成表单user，用来和输入的user_id匹配
-#     if request.method == 'GET':
-#         with connection.cursor() as cursor:
-#             cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
-#             user = cursor.fetchone()
-#         if not user:
-#             return HttpResponse("用户不存在")
+    result = []
+    # 获取用户的信息，制成表单user，用来和输入的user_id匹配
+    if request.method == 'GET':
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+            user = cursor.fetchone()
+        if not user:
+            return HttpResponse("用户不存在")
         
-#         # 获得所有的收藏，为之后基于收藏获取评论做准备
-#         with connection.cursor() as cursor:
-#             cursor.callproc('search_fav_by_user', [user_id])
-#             fav_list = cursor.fetchall()
+        # 获得所有的收藏，为之后基于收藏获取评论做准备
+        with connection.cursor() as cursor:
+            cursor.callproc('search_fav_by_user', [user_id])
+            fav_list = cursor.fetchall()
 
-#         # 通过fav中的评论id获取评论和回复
-#         for fav in fav_list:
-#             # 获取评论，再根据评论获得回复
-#             with connection.cursor() as cursor:
-#                 cursor.callproc('get_dish_comment_by_id', [fav[1]])
-#                 comment_list = cursor.fetchall()
+        # 通过fav中的评论id获取评论和回复
+        for fav in fav_list:
+            # 获取评论，再根据评论获得回复
+            with connection.cursor() as cursor:
+                cursor.callproc('get_dish_comment_by_id', [fav[1]])
+                comment_list = cursor.fetchall()
 
-#                 # 所有收藏的评论组成列表
-#                 for comment in comment_list:
-#                     with connection.cursor() as cursor:
-
-
+                # 所有收藏的评论组成列表
+                for comment in comment_list:
+                    with connection.cursor() as cursor:
+                        user_id = comment[3]
+                        comment_content = comment[4]
+                        comment_picture = comment[5]
+                        time = comment[6]
+                        like_number = comment[7]
+                        with connection.cursor() as cursor:
+                            cursor.execute("SELECT * FROM user WHERE user_id = %s", user_id)
+                            user = cursor.fetchone()
+                        user_name = user[1]
+                        result.append([user_name, comment_picture, comment_content, time, like_number])
             
                 
-     return render(request,"show_bookmark.html")
+    return render(request,"show_bookmark.html",)
 
 
 # def add_like_number(request,window_id,comment_id):
@@ -655,9 +674,6 @@ def show_bookmark(request, user_id):
 #     return redirect(reverse('food_review', args=[window_id]))
 
 def add_like_number(request, window_id, comment_id):
-    print("Entering add_like_number function")
-    print(f"Parameters: window_id={window_id}, comment_id={comment_id}")
-
     with connection.cursor() as cursor:
         try:
             print("Calling stored procedure")
@@ -694,7 +710,6 @@ def add_favorite(request, user_id, comment_id, window_id):
         try:
             cursor.callproc('add_fav', [favorite_id, comment_id, user_id])
             connection.commit()
-            print("Stored procedure called and transaction committed")
         except Exception as e:
             print(f"Error: {e}")
             connection.rollback()
@@ -742,30 +757,33 @@ def submit_comment(request,user_id):
         like_number = 0
         publish_time = datetime.datetime.now()
         with connection.cursor() as cursor:
-            cursor.callproc('add_dish_comment', [comment_id, window_id, dish_name, user_id, review_text, image_files, publish_time, like_number, rating])
+            cursor.callproc('add_dish_comment', [comszzment_id, '1', dish_name, user_id, review_text, image_files, publish_time, like_number, rating])
             connection.commit()
-        return redirect(reverse('food_review', args=[window_id]))
+        return redirect(reverse('food_review', args=['1']))
     return render(request, 'submit_comment.html', {'user_id': user_id})
 
-import json
-def toggle_like(request):
+
+# 修改个人主页
+def modify_myself(request, user_id):
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM user WHERE user_id = %s', [user_id])
+        user = cursor.fetchone()
+    if not user:
+        return HttpResponse("用户不存在")
+
     if request.method == 'POST':
-        data = json.loads(request.body)
-        action = data.get('action')
-        comment_id = data.get('comment_id')
-        window_id = data.get('window_id')
-
-        # 根据不同的 action 调用不同的 SQL 存储过程
-        if action == 'add':
-            with connection.cursor() as cursor:
-                print("executing add_like_number")
-                cursor.callproc('add_like_number', [comment_id])
-        elif action == 'cancel':
-            with connection.cursor() as cursor:
-                print("executing cancel_like_number")
-                cursor.callproc('cancel_like_number', [comment_id])
-
-        # 返回处理结果
-        return JsonResponse({'status': 'success', 'message': f'{action} like complete'})
-
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
+        data = request.POST.dict()
+        user_name = data.get("user_name")
+        user_description = data.get("user_description")  #图片
+        image_file = request.FILES.get('user_image')
+        image_url = None
+        if image_file:
+            image_name = f"images/{user_name.replace(' ', '_').lower()}.jpg"
+            image_path = default_storage.save(image_name, ContentFile(image_file.read()))
+            image_url = f"/media/{image_path}"
+        
+        with connection.cursor() as cursor:
+            cursor.callproc('UpdateUser', [user_id, user_name, user_description, image_url])
+            connection.commit()
+        return redirect(reverse('myself', args=[user_id]))
+    return render(request, 'modify_myself.html', {'user_id': user_id, 'user': user})

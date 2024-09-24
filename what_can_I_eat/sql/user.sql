@@ -39,7 +39,7 @@ CREATE PROCEDURE UpdateUser(
 BEGIN 
     Update user
     SET user_name = p_user_name, introduction = p_introduction, head_portrait= p_head_portrait 
-    WHERE user_id = p_user_id ;
+    WHERE user_id = p_user_id;
 END //
 delimiter ;
 

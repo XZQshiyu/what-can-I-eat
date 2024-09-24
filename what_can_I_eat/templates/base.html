@@ -140,8 +140,8 @@
                 </div>
               </a>
               <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                <a href="{% url 'myself' '1' %}" class="dropdown-item">个人主页</a>
-                <a href="#" class="dropdown-item">修改个人主页</a>
+                <a href="{% url 'myself' user_id %}" class="dropdown-item">个人主页</a>
+                <a href="{% url 'modify_myself' user_id %}" class="dropdown-item">修改个人主页</a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">设置</a>
                 <a href="#" class="dropdown-item">退出登录</a>
@@ -194,7 +194,7 @@
                     <span class="nav-link-title">
                       校内美食
                     </span>
-                    <span class="badge bg-red">2</span>
+                  
                   </a>
                 </li>
                 <li class="nav-item"></li>
@@ -214,7 +214,7 @@
                   <span class="nav-link-title">
                     校外美食
                   </span>
-                  <span class="badge bg-red">2</span>
+                  
                 </a>
                 </li>
                 <li class="nav-item dropdown">
