@@ -6,6 +6,8 @@ from django.urls import reverse
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 import datetime
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def signin(request):
     if request.method == 'POST':
@@ -744,3 +746,26 @@ def submit_comment(request,user_id):
             connection.commit()
         return redirect(reverse('food_review', args=[window_id]))
     return render(request, 'submit_comment.html', {'user_id': user_id})
+
+import json
+def toggle_like(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        action = data.get('action')
+        comment_id = data.get('comment_id')
+        window_id = data.get('window_id')
+
+        # 根据不同的 action 调用不同的 SQL 存储过程
+        if action == 'add':
+            with connection.cursor() as cursor:
+                print("executing add_like_number")
+                cursor.callproc('add_like_number', [comment_id])
+        elif action == 'cancel':
+            with connection.cursor() as cursor:
+                print("executing cancel_like_number")
+                cursor.callproc('cancel_like_number', [comment_id])
+
+        # 返回处理结果
+        return JsonResponse({'status': 'success', 'message': f'{action} like complete'})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)

@@ -77,4 +77,5 @@ urlpatterns = [
     path("show_bookmark/<str:user_id>",views.show_bookmark, name="show_bookmark"),
     path("submit_reply/<str:comment_id>",views.submit_reply, name="submit_reply"),
     path("submit_comment/<str:user_id>",views.submit_comment, name="submit_comment"),
+    path("toggle_like/", views.toggle_like, name="toggle_like"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
